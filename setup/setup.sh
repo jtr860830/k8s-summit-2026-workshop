@@ -5,7 +5,10 @@ set -euo pipefail
 cd "$(dirname "$0")"
 source ./versions.env
 
-CACHE_DIR="${HOME}/.summit-workshop"
+# sudo 執行時快取仍放原使用者家目錄（否則之後 kind load 找不到）
+REAL_HOME="${HOME}"
+[ -n "${SUDO_USER:-}" ] && REAL_HOME=$(eval echo "~${SUDO_USER}")
+CACHE_DIR="${REAL_HOME}/.summit-workshop"
 mkdir -p "${CACHE_DIR}"
 FAIL=0
 
@@ -71,8 +74,53 @@ done
 [ "${FAIL}" = 1 ] && { echo "有映像檔拉取失敗 —— 檢查網路後重跑（已成功的不會重拉）。"; exit 1; }
 
 say "產生離線快取（${CACHE_DIR}/images.tar）"
-docker save -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}"
+# --platform 必要：新版 Docker（containerd 映像庫）的 save 會夾帶缺 blob 的
+# attestation manifest，之後 kind load 會以「digest not found」失敗
+ARCH=$(docker version --format '{{.Server.Arch}}')
+docker save --platform "linux/${ARCH}" -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}" 2>/dev/null \
+  || docker save -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}"   # 舊版 Docker 無此 flag、也無此問題
 good "$(du -h "${CACHE_DIR}/images.tar" | cut -f1) 已存檔"
+
+say "預載 Cluster API provider 定義（離線 clusterctl init 用）"
+REPO="${CACHE_DIR}/capi-repo"
+CAPI_BASE="https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}"
+CAPD_BASE="https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPD_VERSION}"
+mkdir -p "${REPO}/cluster-api/${CAPI_VERSION}" "${REPO}/bootstrap-kubeadm/${CAPI_VERSION}" \
+         "${REPO}/control-plane-kubeadm/${CAPI_VERSION}" "${REPO}/infrastructure-docker/${CAPD_VERSION}" \
+         "${REPO}/cert-manager/${CERT_MANAGER_VERSION}"
+curl -fsSLo "${REPO}/cluster-api/${CAPI_VERSION}/core-components.yaml"                 "${CAPI_BASE}/core-components.yaml"
+curl -fsSLo "${REPO}/cluster-api/${CAPI_VERSION}/metadata.yaml"                        "${CAPI_BASE}/metadata.yaml"
+curl -fsSLo "${REPO}/bootstrap-kubeadm/${CAPI_VERSION}/bootstrap-components.yaml"      "${CAPI_BASE}/bootstrap-components.yaml"
+curl -fsSLo "${REPO}/bootstrap-kubeadm/${CAPI_VERSION}/metadata.yaml"                  "${CAPI_BASE}/metadata.yaml"
+curl -fsSLo "${REPO}/control-plane-kubeadm/${CAPI_VERSION}/control-plane-components.yaml" "${CAPI_BASE}/control-plane-components.yaml"
+curl -fsSLo "${REPO}/control-plane-kubeadm/${CAPI_VERSION}/metadata.yaml"              "${CAPI_BASE}/metadata.yaml"
+curl -fsSLo "${REPO}/infrastructure-docker/${CAPD_VERSION}/infrastructure-components-development.yaml" "${CAPD_BASE}/infrastructure-components-development.yaml"
+curl -fsSLo "${REPO}/infrastructure-docker/${CAPD_VERSION}/metadata.yaml"              "${CAPD_BASE}/metadata.yaml"
+curl -fsSLo "${REPO}/cert-manager/${CERT_MANAGER_VERSION}/cert-manager.yaml" \
+  "https://github.com/cert-manager/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml"
+
+# clusterctl 設定：providers 全部指向本地檔案（file://），init 就完全不需要網路
+mkdir -p "${REAL_HOME}/.config/cluster-api"
+cat > "${REAL_HOME}/.config/cluster-api/clusterctl.yaml" <<CLUSTERCTL_EOF
+cert-manager:
+  url: "file://${REPO}/cert-manager/${CERT_MANAGER_VERSION}/cert-manager.yaml"
+  version: "${CERT_MANAGER_VERSION}"
+providers:
+  - name: cluster-api
+    type: CoreProvider
+    url: "file://${REPO}/cluster-api/${CAPI_VERSION}/core-components.yaml"
+  - name: kubeadm
+    type: BootstrapProvider
+    url: "file://${REPO}/bootstrap-kubeadm/${CAPI_VERSION}/bootstrap-components.yaml"
+  - name: kubeadm
+    type: ControlPlaneProvider
+    url: "file://${REPO}/control-plane-kubeadm/${CAPI_VERSION}/control-plane-components.yaml"
+  - name: docker
+    type: InfrastructureProvider
+    url: "file://${REPO}/infrastructure-docker/${CAPD_VERSION}/infrastructure-components-development.yaml"
+CLUSTERCTL_EOF
+good "provider 本地倉庫與 clusterctl.yaml 已就位"
+[ -n "${SUDO_USER:-}" ] && chown -R "${SUDO_USER}" "${REAL_HOME}/.config" "${CACHE_DIR}" 2>/dev/null || true
 
 say "下載 kro chart"
 helm pull oci://registry.k8s.io/kro/charts/kro --version "${KRO_VERSION}" -d "${CACHE_DIR}"

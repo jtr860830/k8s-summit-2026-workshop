@@ -24,8 +24,12 @@ kind load image-archive ~/.summit-workshop/images.tar --name mgmt
 ## 2. 安裝 Cluster API（約 1 分鐘）
 
 ```bash
-clusterctl init --infrastructure docker
+clusterctl init --core cluster-api:v1.13.4 --bootstrap kubeadm:v1.13.4 \
+  --control-plane kubeadm:v1.13.4 --infrastructure docker:v1.14.0
 ```
+
+> 版本寫死不是囉唆 —— 這讓 clusterctl 直接使用會前預載的本地定義檔，
+> 全程不需要網路（不寫版本它會上網查最新版）。
 
 **預期**：結尾出現 `Your management cluster has been initialized successfully!`。
 用 `kubectl get pods -A` 看看多了哪些 controller。
@@ -114,6 +118,7 @@ watch docker ps
 
 ## 這步失敗看這裡
 
+- apply 出現 `conversion webhook ... connection refused` → controller 剛裝好還在暖身，等 30 秒重跑同一個 apply 即可
 - `kind create` 卡住或失敗 → 確認 Docker 資源（4 CPU / 8 GB）；跑過舊實驗先 `kind delete cluster --name mgmt`
 - Machine 卡在 `Provisioning` 超過 5 分鐘 → `kubectl -n capd-system logs deploy/capd-controller-manager --tail 20` 看錯誤；最常見是 docker socket 沒掛到（重做步驟 1）
 - 節點一直 `NotReady` → `kubectl --kubeconfig /tmp/demo.kubeconfig -n kube-system get pods` 看 kindnet 是否 Running
