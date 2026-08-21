@@ -1,0 +1,9 @@
+# 管理叢集：掛載 docker socket 是 CAPD 的硬前置 ——
+# CAPD controller 在叢集內，需透過這個 socket 請宿主的 Docker 開「機器」容器
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: /var/run/docker.sock
+        containerPath: /var/run/docker.sock
