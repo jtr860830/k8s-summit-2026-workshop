@@ -24,6 +24,21 @@ else
   exit 1
 fi
 
+if [ "$(uname)" = "Linux" ]; then
+  say "檢查 inotify 限額（kind 多叢集的常見地雷）"
+  WATCHES=$(sysctl -n fs.inotify.max_user_watches)
+  INSTANCES=$(sysctl -n fs.inotify.max_user_instances)
+  if [ "${WATCHES}" -lt 524288 ] || [ "${INSTANCES}" -lt 512 ]; then
+    echo "   目前 watches=${WATCHES} instances=${INSTANCES}，偏低 —— 嘗試調高（需要 sudo）："
+    sudo sysctl -w fs.inotify.max_user_watches=1048576 fs.inotify.max_user_instances=8192 \
+      && printf 'fs.inotify.max_user_watches=1048576\nfs.inotify.max_user_instances=8192\n' | sudo tee /etc/sysctl.d/99-kind.conf >/dev/null \
+      && good "已調高並寫入 /etc/sysctl.d/99-kind.conf" \
+      || bad "調整失敗 —— 請手動執行：sudo sysctl -w fs.inotify.max_user_watches=1048576 fs.inotify.max_user_instances=8192"
+  else
+    good "watches=${WATCHES} instances=${INSTANCES}"
+  fi
+fi
+
 say "檢查工具鏈版本"
 check_tool() { # name expected_version version_cmd install_hint
   local name="$1" want="$2" got

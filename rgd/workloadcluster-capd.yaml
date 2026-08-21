@@ -1,0 +1,153 @@
+# ============================================================================
+# 平台 API：WorkloadCluster —— 第一幕那 200 行的「產品化」版本
+#
+# 四層設計（與我們真實私有雲平台的 API 完全同構）：
+#   1. 頂層精簡：version / nodes / profile，全部有預設值
+#   2. advanced 選填：網段、kubelet 參數 —— 要調的人才需要知道
+#   3. object 逃生門：kubeletExtraArgs 原樣透傳到底層（錨點整段替換）
+#   4. 紀律鎖死：certSANs、hostpath-provisioner 等寫死在模板 ——
+#      schema 沒宣告的欄位，apply 時會被直接拒絕
+# ============================================================================
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: workloadcluster
+spec:
+  schema:
+    apiVersion: v1alpha1
+    kind: WorkloadCluster
+    spec:
+      version: string | default="v1.34.0"
+      nodes: integer | default=1 minimum=0 maximum=3
+      profile: string | default="single-node" enum="single-node,ha"
+      advanced:
+        podCIDR: string | default="10.244.0.0/16"
+        serviceCIDR: string | default="10.128.0.0/12"
+        kubeletExtraArgs: object | default={}
+    status:
+      controlPlaneReady: ${kcp.status.initialized}
+  resources:
+    - id: cluster
+      template:
+        apiVersion: cluster.x-k8s.io/v1beta1
+        kind: Cluster
+        metadata:
+          name: ${schema.metadata.name}
+          namespace: default
+        spec:
+          clusterNetwork:
+            pods:
+              cidrBlocks: ["${schema.spec.advanced.podCIDR}"]
+            services:
+              cidrBlocks: ["${schema.spec.advanced.serviceCIDR}"]
+          infrastructureRef:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: DockerCluster
+            name: ${schema.metadata.name}
+            namespace: default
+          controlPlaneRef:
+            apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+            kind: KubeadmControlPlane
+            name: ${schema.metadata.name}-control-plane
+            namespace: default
+    - id: dockercluster
+      template:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: DockerCluster
+        metadata:
+          name: ${schema.metadata.name}
+          namespace: default
+        spec: {}
+    - id: cpTemplate
+      template:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: DockerMachineTemplate
+        metadata:
+          name: ${schema.metadata.name}-control-plane
+          namespace: default
+        spec:
+          template:
+            spec:
+              extraMounts:
+                - containerPath: /var/run/docker.sock
+                  hostPath: /var/run/docker.sock
+    - id: kcp
+      template:
+        apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+        kind: KubeadmControlPlane
+        metadata:
+          name: ${schema.metadata.name}-control-plane
+          namespace: default
+        spec:
+          # D4 profile：ha → 3 台 control plane、single-node → 1 台
+          replicas: '${schema.spec.profile == "ha" ? 3 : 1}'
+          machineTemplate:
+            infrastructureRef:
+              apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+              kind: DockerMachineTemplate
+              name: ${schema.metadata.name}-control-plane
+              namespace: default
+          kubeadmConfigSpec:
+            clusterConfiguration:
+              apiServer:
+                certSANs: [localhost, 127.0.0.1, 0.0.0.0, host.docker.internal]   # 鎖死
+              controllerManager:
+                extraArgs:
+                  enable-hostpath-provisioner: "true"                              # 鎖死
+            initConfiguration:
+              nodeRegistration:
+                kubeletExtraArgs: ${schema.spec.advanced.kubeletExtraArgs}         # 逃生門
+            joinConfiguration:
+              nodeRegistration:
+                kubeletExtraArgs: ${schema.spec.advanced.kubeletExtraArgs}
+          version: ${schema.spec.version}
+    - id: mdTemplate
+      template:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: DockerMachineTemplate
+        metadata:
+          name: ${schema.metadata.name}-md-0
+          namespace: default
+        spec:
+          template:
+            spec: {}
+    - id: bootstrapTemplate
+      template:
+        apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+        kind: KubeadmConfigTemplate
+        metadata:
+          name: ${schema.metadata.name}-md-0
+          namespace: default
+        spec:
+          template:
+            spec:
+              joinConfiguration:
+                nodeRegistration:
+                  kubeletExtraArgs: ${schema.spec.advanced.kubeletExtraArgs}
+    - id: md
+      template:
+        apiVersion: cluster.x-k8s.io/v1beta1
+        kind: MachineDeployment
+        metadata:
+          name: ${schema.metadata.name}-md-0
+          namespace: default
+        spec:
+          clusterName: ${schema.metadata.name}
+          replicas: ${schema.spec.nodes}
+          selector:
+            matchLabels:
+          template:
+            spec:
+              clusterName: ${schema.metadata.name}
+              version: ${schema.spec.version}
+              bootstrap:
+                configRef:
+                  apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+                  kind: KubeadmConfigTemplate
+                  name: ${schema.metadata.name}-md-0
+                  namespace: default
+              infrastructureRef:
+                apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+                kind: DockerMachineTemplate
+                name: ${schema.metadata.name}-md-0
+                namespace: default
