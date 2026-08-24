@@ -121,7 +121,7 @@ const Thesis: Page = () => (
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>商用虛擬化的雙重成本：<Red>授權費年年漲</Red>，還要養一批只熟該平台的技能</Li>
       <Li gap={30}>被鎖住的不只是錢 —— 是<Red>團隊的技術路徑</Red></Li>
-      <Li gap={30}>主張：K8s 團隊用<Red>單一技能棧</Red>管理整個基礎設施，從服務目錄一路到裸機</Li>
+      <Li gap={30}>主張：K8s 團隊用<Red>單一技術堆疊</Red>管理整個基礎設施，從服務目錄一路到裸機</Li>
     </ul>
   </Dark>
 );
