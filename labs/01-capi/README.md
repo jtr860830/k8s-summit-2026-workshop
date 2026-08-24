@@ -6,7 +6,7 @@
 > 預估時間：20 分鐘。卡住了？跑 `../checkpoints/reset-to-01-end.sh` 一鍵追上，
 > 或舉手找助教。
 
-## 1. 建立管理叢集（約 2 分鐘）
+## 1. 建立管理叢集（約 6 分鐘 —— 講師示範時就可以先跑這步）
 
 ```bash
 kind create cluster --config labs/01-capi/kind-mgmt.yaml --name mgmt
@@ -21,7 +21,7 @@ kind load image-archive ~/.summit-workshop/images.tar --name mgmt
 
 **預期**：`kubectl get nodes` 看到 `mgmt-control-plane` Ready。
 
-## 2. 安裝 Cluster API（約 1 分鐘）
+## 2. 安裝 Cluster API（約 2–3 分鐘）
 
 ```bash
 clusterctl init --core cluster-api:v1.13.4 --bootstrap kubeadm:v1.13.4 \
@@ -52,7 +52,7 @@ watch kubectl get machines
 開第二個終端機跑 `watch docker ps`，對照著看 ——
 **每個 Machine 就是一個容器**（生產環境裡它會是一台真的伺服器）。
 
-**預期**（約 3–4 分鐘）：`demo-control-plane-xxxxx` 變 `Running`，
+**預期**（約 4–6 分鐘）：`demo-control-plane-xxxxx` 變 `Running`，
 `docker ps` 出現 `demo-control-plane-*`、`demo-md-0-*`、`demo-lb` 三個容器。
 
 ## 4. 進入新叢集、裝 CNI（約 2 分鐘）
