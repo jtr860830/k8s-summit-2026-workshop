@@ -219,6 +219,49 @@ const Principles: Page = () => (
   </Light>
 );
 
+/* ── 07b Tinkerbell 建置 ─────────────────────────────── */
+const TinkRow = ({ name, role }: { name: string; role: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 28, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '17px 30px' }}>
+    <div style={{ width: 300, fontFamily: mono, fontSize: 30, fontWeight: 700, color: 'var(--osd-accent)' }}>{name}</div>
+    <div style={{ fontSize: 29, color: '#5a5148' }}>{role}</div>
+  </div>
+);
+
+const TinkerbellStack: Page = () => (
+  <Light eyebrow="上架系統怎麼搭" title="Tinkerbell：五個元件，全部跑在 K8s 上">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
+      <TinkRow name="smee" role="監聽 PXE 廣播、補答開機資訊 —— 不搶機房 DHCP 的位置" />
+      <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
+      <TinkRow name="hegel" role="中繼資料服務 —— 機器開機時來拿自己的設定" />
+      <TinkRow name="tink" role="工作流引擎 —— 定義「裝機要做哪幾步」，每步是一個容器" />
+      <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有它連斷電的機器都能遠端拉起來" />
+    </div>
+    <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
+      機器、模板、工作流全部是 CRD —— 對 K8s 團隊來說，就是幾個 <span style={{ fontFamily: mono }}>kubectl apply</span>。
+    </p>
+  </Light>
+);
+
+/* ── 07c 上架流程 ────────────────────────────────────── */
+const FlowStep = ({ n, text }: { n: string; text: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+    <div style={{ width: 56, height: 56, borderRadius: 28, background: 'var(--osd-accent)', color: '#fff', fontSize: 30, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+    <div style={{ fontSize: 32, lineHeight: 1.4 }}>{text}</div>
+  </div>
+);
+
+const EnrollFlow: Page = () => (
+  <Light eyebrow="上架系統怎麼搭" title="從插電到入列，機器經歷了什麼">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 6 }}>
+      <FlowStep n="1" text="插電開機 —— 網卡韌體廣播「我是 MAC xx:xx，該做什麼？」（PXE）" />
+      <FlowStep n="2" text="smee 補答開機資訊 → 機器載入 HookOS（記憶體內，硬碟不動）" />
+      <FlowStep n="3" text="HookOS 回報硬體規格 → 叢集裡自動出現一個 Hardware 物件" />
+      <FlowStep n="4" text="符合規則就觸發 Workflow：把作業系統映像寫進指定硬碟" />
+      <FlowStep n="5" text="重開機進正式系統 → 自動加入叢集 —— 全程沒有人碰鍵盤" />
+    </div>
+  </Light>
+);
+
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
   <Dark eyebrow="DEMO ①（同時：請開始跑第一幕步驟 1）" title="插電，然後看著它自己上架">
@@ -906,7 +949,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
+  TinkerbellStack, EnrollFlow, Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
   Mine1, Mine2, Mine3,
