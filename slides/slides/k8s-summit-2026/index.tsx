@@ -94,7 +94,7 @@ const Cover: Page = () => (
       用 Kubernetes 打造<br />自動化私有雲基礎設施
     </h1>
     <p style={{ fontSize: 36, color: mutedDark, marginTop: 48 }}>
-      插電上架 · 宣告式叢集 · 自助服務目錄 —— 90 分鐘，親手體驗
+      插電上架 · 宣告式叢集 · 自助服務 —— 90 分鐘，親手體驗
     </p>
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh）<span style={{ color: '#f0b5a1', margin: '0 16px' }}>|</span>Platform Engineer, 寬橋
@@ -131,7 +131,7 @@ const Agenda: Page = () => (
       <AgendaRow time="00–15" name="為什麼這樣做" note="白牌硬體、K8s 原生、Pod 哲學怎麼影響機器管理" />
       <AgendaRow time="15–20" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
       <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
-      <AgendaRow time="40–65" name="動手：kro 服務目錄" note="同一個叢集，6 行就好" />
+      <AgendaRow time="40–65" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
       <AgendaRow time="65–75" name="示範②③：重灌與升級" note="資料不丟、機器不重開" />
       <AgendaRow time="75–90" name="排雷故事與問答" note="三個實際踩過的坑，加上下一步" />
     </div>
@@ -144,7 +144,7 @@ const Thesis: Page = () => (
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>商用虛擬化的雙重成本：<Red>授權費年年漲</Red>，還要養一批只熟該平台的技能</Li>
       <Li gap={30}>被鎖住的不只是錢 —— 是<Red>團隊的技術路徑</Red></Li>
-      <Li gap={30}>主張：K8s 團隊用<Red>單一技術堆疊</Red>管理整個基礎設施，從服務目錄一路到裸機</Li>
+      <Li gap={30}>主張：K8s 團隊用<Red>單一技術堆疊</Red>管理整個基礎設施，從自助服務一路到裸機</Li>
     </ul>
   </Dark>
 );
@@ -196,7 +196,7 @@ const LayerRow = ({ name, tool, note }: { name: string; tool: string; note: stri
 const Architecture: Page = () => (
   <Light eyebrow="架構全景" title="每一層，都是 K8s 的 API">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 4 }}>
-      <LayerRow name="服務目錄" tool="kro" note="使用者看到的高階 API —— 今天第二幕" />
+      <LayerRow name="自助服務" tool="kro" note="使用者看到的高階 API（service catalog）—— 今天第二幕" />
       <LayerRow name="叢集生命週期" tool="Cluster API" note="宣告式開叢集 —— 今天第一幕" />
       <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
@@ -342,7 +342,7 @@ const FourLayers: Page = () => (
 
 /* ── 14 第二幕指引 ───────────────────────────────────── */
 const Act2Guide: Page = () => (
-  <Dark eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 服務目錄：三頂帽子輪流戴">
+  <Dark eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當">
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`less labs/02-kro/README.md

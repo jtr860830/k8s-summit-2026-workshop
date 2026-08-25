@@ -3,7 +3,7 @@
 KubeSummit 2026 體驗工作坊（9/10、9/11）的學員教材。90 分鐘內，你會在自己的筆電上親手體驗：
 
 - 用 **Cluster API** 以宣告式的方式建立、擴縮、汰換一整個 Kubernetes 叢集
-- 用 **kro** 把 200 行的基礎設施定義收斂成 6 行的平台 API —— 也就是「私有雲的自助服務目錄」
+- 用 **kro** 把 200 行的基礎設施定義收斂成 6 行的平台 API —— 讓使用者自助開通（也就是所謂的 service catalog）
 
 工作坊現場另有真實裸機測試床的三段示範：插電自動上架、保留資料碟的節點重灌、零停機原地升級。
 
@@ -33,7 +33,7 @@ cd k8s-summit-2026-workshop
 |---|---|
 | `setup/` | 前置指南、一鍵準備腳本、USB 備援工具 |
 | `labs/01-capi/` | 第一幕：裸 Cluster API —— 感受 200 行的份量 |
-| `labs/02-kro/` | 第二幕：kro 服務目錄 —— 6 行開出一個叢集 |
+| `labs/02-kro/` | 第二幕：kro 自助服務 —— 6 行開出一個叢集 |
 | `labs/checkpoints/` | 各段落的追趕腳本 |
 | `rgd/` | 工作坊版 `WorkloadCluster` 平台 API（kro ResourceGraphDefinition） |
 | `slides/` | 簡報 |
