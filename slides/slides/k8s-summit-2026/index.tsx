@@ -219,6 +219,32 @@ const Principles: Page = () => (
   </Light>
 );
 
+/* ── 07a2 建置步驟 ───────────────────────────────────── */
+const BuildStep = ({ n, title, cmd }: { n: string; title: string; cmd: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 24, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '14px 26px' }}>
+    <div style={{ width: 52, height: 52, borderRadius: 26, background: 'var(--osd-accent)', color: '#fff', fontSize: 28, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+    <div style={{ width: 420, fontSize: 30, fontWeight: 800 }}>{title}</div>
+    <div style={{ fontFamily: mono, fontSize: 25, color: '#5a5148' }}>{cmd}</div>
+  </div>
+);
+
+const EnrollBuild: Page = () => (
+  <Light eyebrow="上架系統怎麼搭" title="建置只有四步，之後每台機器都是插電的事">
+    <p style={{ fontSize: 31, margin: '0 0 26px', lineHeight: 1.5 }}>
+      前置需求：一個小 K8s 叢集（筆電上的 kind 也行）、一段能收到 PXE 廣播的網路、放 OS 映像檔的空間。
+    </p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <BuildStep n="1" title="裝 Tinkerbell（一次）" cmd="helm install tink-stack ..." />
+      <BuildStep n="2" title="放好 OS 映像檔" cmd="flatcar_production_image.bin.gz → artifacts" />
+      <BuildStep n="3" title="定義安裝範本" cmd="kubectl apply -f template.yaml   # 寫碟 → 設定 → 重開" />
+      <BuildStep n="4" title="定義自動上架規則" cmd="kubectl apply -f ruleset.yaml   # 誰進來、裝什麼" />
+    </div>
+    <p style={{ fontSize: 32, marginTop: 30, fontWeight: 700 }}>
+      四步之後 —— 剛才示範裡的每台新機器，只剩「插電」這一個動作。
+    </p>
+  </Light>
+);
+
 /* ── 07b Tinkerbell 建置 ─────────────────────────────── */
 const TinkRow = ({ name, role }: { name: string; role: string }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 28, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '17px 30px' }}>
@@ -973,7 +999,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda,
-  Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollBuild, EnrollFlow, HowPxe,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
