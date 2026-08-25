@@ -82,21 +82,19 @@ watch kubectl get machines
 **預期**：多出一台 worker Machine，`docker ps` 多一個容器 ——
 擴容一台「機器」，就是改一個數字。
 
-## 6. 觸發換機（rolling update，約 4 分鐘）
+## 6. 砍一台機器，看它自動補（約 3 分鐘）
 
-Cluster API 的世界觀：機器不修，**換**。改 MachineDeployment 模板的 **spec**
-任何欄位都會觸發逐台汰換（注意：改 metadata 的標籤不算，實測不會動）。
-我們改一個無實質影響的 spec 欄位：
+Cluster API 的世界觀：機器是 cattle。直接刪掉一台 worker，
+MachineDeployment 會像 Deployment 補 Pod 一樣補一台新機器：
 
 ```bash
-kubectl patch machinedeployment demo-md-0 --type merge \
-  -p '{"spec":{"template":{"spec":{"nodeDrainTimeout":"10s"}}}}'
+kubectl delete machine $(kubectl get machines -o name | grep md-0 | head -1 | cut -d/ -f2) &
 watch kubectl get machines
 ```
 
-**預期**：舊 worker 進入 `Deleting`、新 worker 從 `Provisioning` 到 `Running` ——
-一台換一台，服務不中斷。這個「reconcile by replacement」哲學，
-正是 Kubernetes 把 Pod 換掉不修 Pod 的同一套思想，往下延伸到了機器層。
+**預期**：被刪的 worker 進入 `Deleting`，同時一台新 worker 從 `Provisioning`
+到 `Running` —— 這就是 Kubernetes 把 Pod 換掉不修 Pod 的同一套思想，
+往下延伸到了機器層（reconcile by replacement）。
 
 ## 7. 拆掉（約 1 分鐘）
 
