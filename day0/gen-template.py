@@ -47,12 +47,13 @@ template_inner = {
             },
             {
                 # waitdaemon：先向 tink-server 回報完成、再重開機（否則回報不出去）
+                # 45 秒緩衝：留時間給「裝後收尾」把 allowPXE 關掉，重開機才會落到硬碟
                 "name": "reboot",
                 "image": "ghcr.io/jacobweinstock/waitdaemon:latest",
                 "timeout": 90,
                 "pid": "host",
                 "command": ["reboot"],
-                "environment": {"IMAGE": "alpine", "WAIT_SECONDS": "10"},
+                "environment": {"IMAGE": "alpine", "WAIT_SECONDS": "45"},
                 "volumes": ["/var/run/docker.sock:/var/run/docker.sock"],
             },
         ],
