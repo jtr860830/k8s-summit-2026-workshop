@@ -262,6 +262,30 @@ const EnrollFlow: Page = () => (
   </Light>
 );
 
+/* ── 03b 步驟 0：環境就緒 ────────────────────────────── */
+const step0Lines: RLine[] = [
+  { t: 0.5, text: 'cd k8s-summit-2026-workshop && ./setup/setup.sh', kind: 'cmd' },
+  { t: 1.5, text: '==> 檢查 Docker\n ✓ CPU：4 核\n ✓ 記憶體：8 GB' },
+  { t: 3.0, text: '==> 檢查工具鏈版本\n ✓ kind v0.30.0\n ✓ clusterctl v1.13.4\n ✓ kubectl\n ✓ helm' },
+  { t: 5.0, text: '==> 預拉映像檔（會前已完成的話這裡秒過）\n ✓ kindest/node:v1.34.0\n ✓ registry.k8s.io/kro/kro:v0.9.3\n ✓ ……（共 10 個）' },
+  { t: 7.0, text: '==> 產生離線快取\n ✓ 603M 已存檔' },
+  { t: 8.5, text: '==> 自我驗證' },
+  { t: 9.5, text: 'SETUP-OK —— 環境就緒，工作坊見！', kind: 'ok' },
+];
+const Step0Cmd: Page = () => (
+  <StepCmd act="開始動手前" step={0} total={7} title="確認環境就緒"
+    cmd={`cd k8s-summit-2026-workshop
+./setup/setup.sh        # 會前跑過的話，這裡只是再驗證一次
+# 沒跑過？舉手拿 USB：
+./setup/load-from-usb.sh /path/to/usb`}
+    expect="看到 SETUP-OK 就緒；有任何 ✗ 照訊息排除或舉手找助教" />
+);
+const Step0Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="開始動手前 —— 環境驗證" lines={step0Lines} />
+  </div>
+);
+
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
   <Dark eyebrow="DEMO ①（同時：請開始跑第一幕步驟 1）" title="插電，然後看著它自己上架">
@@ -949,7 +973,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda,
-  Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
