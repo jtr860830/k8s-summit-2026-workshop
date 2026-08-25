@@ -9,6 +9,13 @@ artifactsFileServer: http://172.16.91.4:7173
 deployment:
   init:
     sourceInterface: ens19                  # 必填：收 PXE 廣播的網卡（預設會抓錯到出網卡）
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi                         # 預設 128Mi 會被 OOM 反覆重啟（實測）
+    requests:
+      cpu: 500m
+      memory: 256Mi
   envs:
     smee:
       # auto-proxy：已登記的機器走保留行為；未知機器 IP 由機房 DHCP 發、smee 只補開機資訊
