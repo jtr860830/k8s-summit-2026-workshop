@@ -154,7 +154,7 @@ const WhiteBox: Page = () => (
   <Light eyebrow="為什麼是現在" title="Hyperscaler 的做法，每一層都有開源實作了">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>Google、Meta、AWS 的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
-      <Li>那些白牌伺服器，大多是台灣代工的 —— 廣達、緯穎、英業達</Li>
+      <Li>那些白牌伺服器，大多是台灣代工的</Li>
       <Li>以前的門檻：管理系統要自己寫，只有他們寫得起</Li>
       <Li>現在：裸機供裝、叢集管理、VM、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
       <Li>Kubernetes 自己就是例子：從 Google 內部的 Borg 演化出來</Li>
