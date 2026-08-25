@@ -33,4 +33,9 @@ clusterctl init --core "cluster-api:${CAPI_VERSION}" \
 for ns in capi-system capi-kubeadm-bootstrap-system capi-kubeadm-control-plane-system capt-system; do
   kubectl -n "$ns" wait --for=condition=Available deploy --all --timeout=300s
 done
+
+# CAPT 要知道 Tinkerbell 的位址（灌機時 workflow 的檔案來源）
+kubectl -n capt-system set env deployment/capt-controller-manager TINKERBELL_IP=172.16.91.3
+kubectl -n capt-system rollout status deploy/capt-controller-manager --timeout=120s >/dev/null
+
 kubectl get pods -A | grep -E "capi-|capt-"

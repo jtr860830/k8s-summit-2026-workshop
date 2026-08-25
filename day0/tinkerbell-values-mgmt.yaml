@@ -1,0 +1,40 @@
+# Tinkerbell 安裝設定 — 管理叢集版（day-0 第 9 步：pivot 自我承載）
+# 與 seed 版差異：
+# - VIP 先用 .6/.7 暫代（seed 還在服役，正宮 .3/.4 交接時再換 — helm upgrade 即可）
+# - sourceInterface=eth0（Flatcar 節點的網卡名）
+# - hookos 檔案目錄改 /opt/hook（Flatcar 的 /tmp 是 tmpfs，重開機就消失）
+publicIP: 172.16.91.6
+trustedProxies: ["10.44.0.0/16"]   # 管理叢集 pod 網段
+artifactsFileServer: http://172.16.91.7:7173
+
+deployment:
+  init:
+    sourceInterface: eth0
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 500m
+      memory: 256Mi
+  envs:
+    smee:
+      dhcpMode: auto-proxy
+    tinkServer:
+      autoDiscoveryEnabled: true
+      autoDiscoveryNamespace: tinkerbell
+      autoEnrollmentEnabled: false   # 交接完成前不在 mgmt 上開自動裝機
+
+optional:
+  kubevip:
+    interface: eth0
+  osie:
+    service:
+      loadBalancerIP: "172.16.91.7"
+  hookos:
+    arch: x86_64
+    kernelVersion: "6.6"
+    extension: tar.gz
+    persistence:
+      localPersistentVolume:
+        path: /opt/hook
