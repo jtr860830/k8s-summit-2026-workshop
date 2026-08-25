@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
-import { useSlidePageNumber } from '@open-slide/core';
+import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
@@ -275,6 +276,134 @@ less labs/01-capi/README.md   # 跟著走
   </Dark>
 );
 
+
+/* ── 終端重播元件 ────────────────────────────────────── */
+type RLine = { t: number; text: string; kind?: 'cmd' | 'ok' | 'frame' };
+
+const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: string; speed?: number }) => {
+  const active = useIsActivePage();
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    setElapsed(0);
+    const t0 = performance.now();
+    const id = setInterval(() => setElapsed(((performance.now() - t0) / 1000) * speed), 100);
+    return () => clearInterval(id);
+  }, [active, speed]);
+
+  const visible = lines.filter((l) => l.t <= elapsed && l.kind !== 'frame');
+  const frames = lines.filter((l) => l.kind === 'frame' && l.t <= elapsed);
+  const frame = frames.length ? frames[frames.length - 1] : null;
+  const done = lines.length > 0 && elapsed >= lines[lines.length - 1].t;
+
+  return (
+    <div style={{ background: codeBg, border: `1px solid ${codeBorder}`, borderRadius: 'var(--osd-radius)', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 24px', borderBottom: `1px solid ${codeBorder}` }}>
+        <span style={{ width: 16, height: 16, borderRadius: 8, background: '#ff5f57' }} />
+        <span style={{ width: 16, height: 16, borderRadius: 8, background: '#febc2e' }} />
+        <span style={{ width: 16, height: 16, borderRadius: 8, background: '#28c840' }} />
+        <span style={{ marginLeft: 18, fontFamily: mono, fontSize: 22, color: '#909aa4' }}>{title}</span>
+        <span style={{ marginLeft: 'auto', fontFamily: mono, fontSize: 20, color: done ? '#7ee787' : '#909aa4' }}>
+          {done ? '完成' : '播放中…'}
+        </span>
+      </div>
+      <pre style={{ flex: 1, margin: 0, padding: '24px 32px', fontFamily: mono, fontSize: 26, lineHeight: 1.5, color: '#e8e8e8', userSelect: 'text', whiteSpace: 'pre-wrap', overflow: 'hidden' }}>
+        {visible.map((l, i) => (
+          <div key={i} style={{ color: l.kind === 'cmd' ? '#7ee787' : l.kind === 'ok' ? '#79c0ff' : '#e8e8e8' }}>
+            {l.kind === 'cmd' ? '$ ' + l.text : l.text}
+          </div>
+        ))}
+        {frame && <div style={{ color: '#e8e8e8' }}>{frame.text}</div>}
+        {!done && <span style={{ display: 'inline-block', width: 14, height: 30, background: '#e8e8e8', verticalAlign: 'text-bottom' }} />}
+      </pre>
+    </div>
+  );
+};
+
+const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: number; total: number; title: string; cmd: string; expect: string }) => (
+  <div style={{ ...fill, background: 'var(--osd-bg)', color: 'var(--osd-text)', padding: 120, position: 'relative' }}>
+    <Eyebrow>{`${act} · 步驟 ${step}/${total}`}</Eyebrow>
+    <H>{title}</H>
+    <div style={{ marginTop: 56 }}>
+      <Code size={34}>{cmd}</Code>
+      <p style={{ fontSize: 34, marginTop: 44, lineHeight: 1.55 }}>
+        <Red>預期：</Red>{expect}
+      </p>
+    </div>
+    <Footer />
+  </div>
+);
+
+// 真實輸出（2026-08-25 錄於驗收機；時間軸壓縮為演講節奏，雜訊行已剪）
+const step1Lines: RLine[] = [
+  { t: 0.5, text: 'kind create cluster --config labs/01-capi/kind-mgmt.yaml --name mgmt', kind: 'cmd' },
+  { t: 1.2, text: 'Creating cluster "mgmt" ...' },
+  { t: 2.4, text: ' ✓ Ensuring node image (kindest/node:v1.34.0) 🖼' },
+  { t: 3.6, text: ' ✓ Preparing nodes 📦' },
+  { t: 4.4, text: ' ✓ Writing configuration 📜' },
+  { t: 6.2, text: ' ✓ Starting control-plane 🕹️' },
+  { t: 7.0, text: ' ✓ Installing CNI 🔌' },
+  { t: 7.6, text: ' ✓ Installing StorageClass 💾' },
+  { t: 8.4, text: 'Set kubectl context to "kind-mgmt"', kind: 'ok' },
+  { t: 10.0, text: 'kind load image-archive ~/.summit-workshop/images.tar --name mgmt', kind: 'cmd' },
+  { t: 12.0, text: '（載入約 4 分鐘 —— 實際等待已快轉）' },
+  { t: 13.5, text: 'Image archive loaded into node mgmt-control-plane', kind: 'ok' },
+];
+
+const machinesHeader = 'NAME                       CLUSTER   NODE NAME                  PHASE          AGE     VERSION';
+const step3Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl apply -f labs/01-capi/cluster-raw.yaml', kind: 'cmd' },
+  { t: 1.4, text: 'cluster.cluster.x-k8s.io/demo created' },
+  { t: 1.8, text: 'dockercluster.infrastructure.cluster.x-k8s.io/demo created' },
+  { t: 2.2, text: 'dockermachinetemplate.infrastructure.cluster.x-k8s.io/demo-control-plane created' },
+  { t: 2.6, text: 'kubeadmcontrolplane.controlplane.cluster.x-k8s.io/demo-control-plane created' },
+  { t: 3.0, text: 'dockermachinetemplate.infrastructure.cluster.x-k8s.io/demo-md-0 created' },
+  { t: 3.4, text: 'kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io/demo-md-0 created' },
+  { t: 3.8, text: 'machinedeployment.cluster.x-k8s.io/demo-md-0 created' },
+  { t: 5.5, text: 'watch kubectl get machines', kind: 'cmd' },
+  { t: 6.5, kind: 'frame', text: machinesHeader + '\n' +
+    'demo-control-plane-grlj9   demo                                 Pending        6s      v1.34.0' },
+  { t: 10.0, kind: 'frame', text: machinesHeader + '\n' +
+    'demo-control-plane-grlj9   demo                                 Provisioning   41s     v1.34.0\n' +
+    'demo-md-0-rw9sc-r44fv      demo                                 Pending        19s     v1.34.0' },
+  { t: 14.0, kind: 'frame', text: machinesHeader + '\n' +
+    'demo-control-plane-grlj9   demo                                 Provisioned    2m19s   v1.34.0\n' +
+    'demo-md-0-rw9sc-r44fv      demo                                 Pending        1m57s   v1.34.0' },
+  { t: 18.0, kind: 'frame', text: machinesHeader + '\n' +
+    'demo-control-plane-grlj9   demo   demo-control-plane-grlj9      Running        2m57s   v1.34.0\n' +
+    'demo-md-0-rw9sc-r44fv      demo                                 Provisioning   2m35s   v1.34.0' },
+  { t: 20.0, text: '（另一個終端機同時 watch docker ps —— 每台 Machine 就是一個容器）', kind: 'ok' },
+];
+
+const Step1Cmd: Page = () => (
+  <StepCmd act="第一幕" step={1} total={7} title="建立管理叢集"
+    cmd={`kind create cluster \\
+  --config labs/01-capi/kind-mgmt.yaml --name mgmt
+kind load image-archive \\
+  ~/.summit-workshop/images.tar --name mgmt`}
+    expect="兩個指令共約 7 分鐘 —— 跑著就好，先聽台上的示範" />
+);
+
+const Step1Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 1 —— 實際執行過程" lines={step1Lines} />
+  </div>
+);
+
+const Step3Cmd: Page = () => (
+  <StepCmd act="第一幕" step={3} total={7} title="開一個叢集 —— 原始的方式"
+    cmd={`less labs/01-capi/cluster-raw.yaml   # 先看看 200 行長什麼樣
+kubectl apply -f labs/01-capi/cluster-raw.yaml
+watch kubectl get machines`}
+    expect="七個物件建立後，Machine 約 3 分鐘轉為 Running；docker ps 會多出三個容器" />
+);
+
+const Step3Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 3 —— 實際執行過程" lines={step3Lines} />
+  </div>
+);
+
 /* ── 11 第一幕回收 ───────────────────────────────────── */
 const Act1Recap: Page = () => (
   <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
@@ -498,7 +627,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Demo1, HowPxe, Act1Guide, Act1Recap,
+  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step3Cmd, Step3Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, Act2Recap,
   Demo2, Demo3,
   Mine1, Mine2, Mine3,
