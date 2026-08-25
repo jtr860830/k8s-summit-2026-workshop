@@ -129,8 +129,8 @@ const AgendaRow = ({ time, name, note }: { time: string; name: string; note: str
 const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼走">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <AgendaRow time="00–15" name="為什麼這樣做" note="白牌硬體、K8s 原生、Pod 哲學怎麼影響機器管理" />
-      <AgendaRow time="15–20" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
+      <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
+      <AgendaRow time="10–20" name="怎麼做到、為什麼這樣做" note="上架系統的組成、白牌硬體與 K8s 原生" />
       <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="40–65" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
       <AgendaRow time="65–75" name="示範②③：重灌與升級" note="資料不丟、機器不重開" />
@@ -948,8 +948,10 @@ export const meta: SlideMeta = {
 };
 
 export default [
-  Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
-  TinkerbellStack, EnrollFlow, Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
+  Cover, Housekeeping, Agenda,
+  Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Thesis, WhiteBox, Lineage, Architecture, Principles,
+  Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
   Mine1, Mine2, Mine3,
