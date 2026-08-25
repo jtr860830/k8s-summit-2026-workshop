@@ -104,7 +104,7 @@ const Cover: Page = () => (
 
 /* ── 02 開場約定 ─────────────────────────────────────── */
 const Housekeeping: Page = () => (
-  <Light eyebrow="開始之前" title="今天的玩法">
+  <Light eyebrow="開始之前" title="今天怎麼進行">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li><Red>一半時間你動手</Red>：筆電開 Docker，跟著教材開出自己的叢集</Li>
       <Li><Red>一半時間看真的</Red>：真實裸機測試床的三段現場示範</Li>
@@ -128,7 +128,7 @@ const AgendaRow = ({ time, name, note }: { time: string; name: string; note: str
 const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼走">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <AgendaRow time="00–15" name="為什麼這樣做" note="白牌硬體、K8s 原生、一條思想的系譜" />
+      <AgendaRow time="00–15" name="為什麼這樣做" note="白牌硬體、K8s 原生、Pod 哲學怎麼影響機器管理" />
       <AgendaRow time="15–20" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
       <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="40–65" name="動手：kro 服務目錄" note="同一個叢集，6 行就好" />
@@ -164,7 +164,7 @@ const WhiteBox: Page = () => (
 
 /* ── 05 Pod 哲學系譜 ─────────────────────────────────── */
 const Lineage: Page = () => (
-  <Light eyebrow="一條思想的系譜" title="Reconcile by Replacement">
+  <Light eyebrow="從 Pod 到裸機" title="Reconcile by Replacement">
     <div style={{ display: 'flex', gap: 40, fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>Pod</div>
