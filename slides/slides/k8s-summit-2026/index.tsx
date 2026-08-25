@@ -145,7 +145,7 @@ const Lineage: Page = () => (
     <div style={{ display: 'flex', gap: 40, fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>Pod</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>壞了不修，<b>換一個</b>。<br />替換成本 ≈ 0，天才設計</p>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>壞了不修，<b>換一個</b>。<br />替換成本趨近於零</p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
@@ -155,7 +155,7 @@ const Lineage: Page = () => (
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>裸機？</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌 + 資料 + 小時級<br /><b>這個落差，就是本場的劇情</b></p>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌 + 資料 + 小時級<br /><b>這個落差，就是今天要解的問題</b></p>
       </div>
     </div>
   </Light>
@@ -254,7 +254,7 @@ less labs/01-capi/README.md   # 跟著走
 
 /* ── 11 第一幕回收 ───────────────────────────────────── */
 const Act1Recap: Page = () => (
-  <Light eyebrow="第一幕 · 你剛剛做了什麼" title="威力是真的，重量也是真的">
+  <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
     <div style={{ display: 'flex', gap: 48 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontSize: 34, fontWeight: 900, color: '#3d7a3d' }}>得到的</div>
@@ -274,7 +274,7 @@ const Act1Recap: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 38, marginTop: 44, fontWeight: 700 }}>
-      這是「基礎設施工程師」的世界 —— 你的使用者不該住在這裡。
+      這是基礎設施工程師的日常，但不該是使用者的日常。
     </p>
   </Light>
 );
@@ -379,7 +379,7 @@ const Demo3: Page = () => (
 
 /* ── 18 排雷一 ───────────────────────────────────────── */
 const Mine1: Page = () => (
-  <Light eyebrow="排雷 · 一" title="最貴的失敗，是不報錯的失敗">
+  <Light eyebrow="排雷 · 一" title="不報錯的失敗，最難查">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>一台 VM 開機完全正常：有 IP、有主機名、sshd 在跑 —— 但誰都連不進去</Li>
       <Li>兇手：映像檔缺一行 <span style={{ fontFamily: mono }}>oem_id</span>，開機設定系統<Red>安靜地忽略</Red>了所有設定</Li>
@@ -391,7 +391,7 @@ const Mine1: Page = () => (
 
 /* ── 19 排雷二 ───────────────────────────────────────── */
 const Mine2: Page = () => (
-  <Light eyebrow="排雷 · 二" title="安全網要自己打開，否則它不存在">
+  <Light eyebrow="排雷 · 二" title="保護機制預設沒開，等於沒有">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>例行維運：排空一台節點 —— 結果儲存叢集的仲裁成員被<Red>一起趕走</Red></Li>
       <Li>連鎖：失去仲裁 → 儲存全面凍結 → 連自我修復的元件也癱了</Li>
@@ -459,7 +459,7 @@ const Thanks: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 900, margin: 0 }}>謝謝</h1>
     <p style={{ fontSize: 40, color: mutedDark, marginTop: 44 }}>
-      插上電源的那一刻，剩下的交給宣告式。
+      機器插電，剩下的交給 YAML。
     </p>
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh） · 寬橋 · KubeSummit 2026
