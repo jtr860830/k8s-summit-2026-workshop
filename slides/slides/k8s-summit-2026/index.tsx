@@ -220,29 +220,260 @@ const Principles: Page = () => (
 );
 
 /* ── 07a2 建置步驟 ───────────────────────────────────── */
-const BuildStep = ({ n, title, cmd }: { n: string; title: string; cmd: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 24, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '14px 26px' }}>
-    <div style={{ width: 52, height: 52, borderRadius: 26, background: 'var(--osd-accent)', color: '#fff', fontSize: 28, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
-    <div style={{ width: 420, fontSize: 30, fontWeight: 800 }}>{title}</div>
-    <div style={{ fontFamily: mono, fontSize: 25, color: '#5a5148' }}>{cmd}</div>
+const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] }) => (
+  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
+    <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 18 }}>{title}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {steps.map(([n, s]) => (
+        <div key={n} style={{ display: 'flex', gap: 16, alignItems: 'baseline' }}>
+          <div style={{ fontFamily: mono, fontSize: 26, fontWeight: 700, color: 'var(--osd-accent)', width: 34, flexShrink: 0 }}>{n}</div>
+          <div style={{ fontSize: 28, lineHeight: 1.35 }}>{s}</div>
+        </div>
+      ))}
+    </div>
   </div>
 );
 
-const EnrollBuild: Page = () => (
-  <Light eyebrow="上架系統怎麼搭" title="建置只有四步，之後每台機器都是插電的事">
-    <p style={{ fontSize: 31, margin: '0 0 26px', lineHeight: 1.5 }}>
-      前置需求：一個小 K8s 叢集（筆電上的 kind 也行）、一段能收到 PXE 廣播的網路、放 OS 映像檔的空間。
+const D0Intro: Page = () => (
+  <Light eyebrow="DAY-0 · 從零建起" title="九步，從一台 Linux 到自我承載的平台">
+    <p style={{ fontSize: 31, margin: '0 0 28px', lineHeight: 1.5 }}>
+      接下來每一步都是<b>指令一頁、真實輸出一頁</b> —— 從全新環境連續重演驗證過，回家照做就能重現。
     </p>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <BuildStep n="1" title="裝 Tinkerbell（一次）" cmd="helm install tink-stack ..." />
-      <BuildStep n="2" title="放好 OS 映像檔" cmd="flatcar_production_image.bin.gz → artifacts" />
-      <BuildStep n="3" title="定義安裝範本" cmd="kubectl apply -f template.yaml   # 寫碟 → 設定 → 重開" />
-      <BuildStep n="4" title="定義自動上架規則" cmd="kubectl apply -f ruleset.yaml   # 誰進來、裝什麼" />
+    <div style={{ display: 'flex', gap: 24 }}>
+      <D0Phase title="打地基（起始機）" steps={[['1', '裝 k3s —— 一台 Linux 就夠'], ['2', '裝 Tinkerbell（helm 一次）'], ['3', '備妥 OS 映像']]} />
+      <D0Phase title="開自動上架" steps={[['4', '安裝範本（怎麼裝）'], ['5', '上架規則（誰進來）'], ['6', '插電時刻 —— 見證全自動']]} />
+      <D0Phase title="平台自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集（裸機）'], ['9', 'pivot —— 平台管理自己']]} />
     </div>
     <p style={{ fontSize: 32, marginTop: 30, fontWeight: 700 }}>
-      四步之後 —— 剛才示範裡的每台新機器，只剩「插電」這一個動作。
+      九步之後，起始機關機下台 —— 之後每台新機器，只剩「插電」這一個動作。
     </p>
   </Light>
+);
+
+/* ── DAY-0 九組：指令頁 + 真實錄製重播頁 ─────────────── */
+const d0s1Lines: RLine[] = [
+  { t: 0.5, text: 'curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb', kind: 'cmd' },
+  { t: 1.6, text: '[INFO]  Finding release for channel stable\n[INFO]  Using v1.36.3+k3s1 as release' },
+  { t: 3.2, text: '[INFO]  Downloading binary .../k3s-io/k3s/releases/download/v1.36.3+k3s1/k3s\n[INFO]  Verifying binary download\n[INFO]  Installing k3s to /usr/local/bin/k3s' },
+  { t: 5.0, text: '[INFO]  Creating /usr/local/bin/kubectl symlink to k3s\n[INFO]  systemd: Enabling k3s unit\n[INFO]  systemd: Starting k3s' },
+  { t: 7.0, text: 'sudo k3s kubectl get nodes', kind: 'cmd' },
+  { t: 8.2, text: 'NAME        STATUS   ROLES           AGE   VERSION\nday0-seed   Ready    control-plane   20s   v1.36.3+k3s1' },
+  { t: 9.4, text: '一台機器的 K8s —— 平台的第一塊地基', kind: 'ok' },
+];
+const D0S1Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={1} total={9} title="起始機裝上 K8s（k3s）"
+    cmd={`curl -sfL https://get.k3s.io | sh -s - \\
+  --disable traefik --disable servicelb`}
+    expect="get nodes 看到 Ready。servicelb 必關 —— 它會跟 Tinkerbell 的 kube-vip 搶 IP，映像傳輸會斷在半路（實測）" />
+);
+const D0S1Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 1 步 —— 實際執行過程" lines={d0s1Lines} />
+  </div>
+);
+
+const d0s2Lines: RLine[] = [
+  { t: 0.5, text: 'helm install tinkerbell oci://ghcr.io/tinkerbell/charts/tinkerbell --version v0.25.0 \\\n  -n tinkerbell --create-namespace -f tinkerbell-values.yaml --wait', kind: 'cmd' },
+  { t: 2.5, text: 'STATUS: deployed\nREVISION: 1' },
+  { t: 4.0, text: 'kubectl -n tinkerbell get pods', kind: 'cmd' },
+  { t: 5.2, text: 'NAME                          READY   STATUS    RESTARTS   AGE\nhookos-7878fc4769-75w27       2/2     Running   0          62s\nkube-vip-l8s68                1/1     Running   0          62s\ntinkerbell-59f4654b69-mhjd5   1/1     Running   0          62s' },
+  { t: 7.0, text: 'kubectl get crd | grep tinkerbell.org', kind: 'cmd' },
+  { t: 8.2, text: 'hardware.tinkerbell.org           2026-08-25T14:08:42Z\ntemplates.tinkerbell.org          2026-08-25T14:08:42Z\nworkflows.tinkerbell.org          2026-08-25T14:08:42Z\nworkflowrulesets.tinkerbell.org   2026-08-25T14:08:42Z\nmachines.bmc.tinkerbell.org       2026-08-25T14:08:42Z\n……（共 7 個）' },
+  { t: 10.0, text: '機器、範本、工作流從此都是 K8s 物件', kind: 'ok' },
+];
+const D0S2Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={2} total={9} title="裝 Tinkerbell"
+    cmd={`helm install tinkerbell \\
+  oci://ghcr.io/tinkerbell/charts/tinkerbell \\
+  --version v0.25.0 \\
+  -n tinkerbell --create-namespace \\
+  -f tinkerbell-values.yaml --wait`}
+    expect="values 只設四件事：收 PXE 廣播的網卡、兩個服務 IP、auto-proxy 模式、自動發現/上架開關" />
+);
+const D0S2Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 2 步 —— 實際執行過程" lines={d0s2Lines} />
+  </div>
+);
+
+const d0s3Lines: RLine[] = [
+  { t: 0.5, text: './fetch-artifacts.sh', kind: 'cmd' },
+  { t: 2.5, text: 'Flatcar image SHA512 OK' },
+  { t: 4.5, text: '-rw-rw-r-- 1 ubuntu ubuntu 479M Aug 25 14:09 flatcar_production_image.bin.gz\n-rw-rw-r-- 1 ubuntu ubuntu 108M Aug 25 14:15 kubernetes-v1.34.6-x86-64.raw' },
+  { t: 6.5, text: '驗證檔案可經映像伺服器取得：\nHTTP/1.1 200 OK' },
+  { t: 8.0, text: '原廠映像 + 官方雜湊驗證 —— 供應鏈基本功', kind: 'ok' },
+];
+const D0S3Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={3} total={9} title="備妥作業系統映像"
+    cmd={`./fetch-artifacts.sh
+# 內容三件事：
+#   下載 Flatcar 原廠映像（驗 SHA512）
+#   下載 kubelet sysext（疊加映像）
+#   放進映像伺服器目錄`}
+    expect="兩個檔案就緒、HTTP 200 —— 之後每台新機器都從這裡拿系統" />
+);
+const D0S3Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 3 步 —— 實際執行過程" lines={d0s3Lines} />
+  </div>
+);
+
+const d0s4Lines: RLine[] = [
+  { t: 0.5, text: 'butane base.bu > config.ign', kind: 'cmd' },
+  { t: 2.0, text: 'python3 gen-template.py config.ign | kubectl apply -f -', kind: 'cmd' },
+  { t: 3.2, text: 'template.tinkerbell.org/flatcar-install created' },
+  { t: 4.6, text: 'kubectl -n tinkerbell get template', kind: 'cmd' },
+  { t: 5.8, text: 'NAME              STATE\nflatcar-install' },
+  { t: 7.0, text: '安裝流程三個動作：寫映像 → 寫設定 → 重開機', kind: 'ok' },
+];
+const D0S4Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 機器進來「怎麼裝」"
+    cmd={`butane base.bu > config.ign
+python3 gen-template.py config.ign \\
+  | kubectl apply -f -`}
+    expect="base.bu 是新機器的最小設定（主機名、SSH 金鑰、kubelet sysext）；範本本身也只是一個 K8s 物件" />
+);
+const D0S4Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 4 步 —— 實際執行過程" lines={d0s4Lines} />
+  </div>
+);
+
+const d0s5Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl -n tinkerbell get hardware,workflow', kind: 'cmd' },
+  { t: 1.7, text: 'No resources found in tinkerbell namespace.' },
+  { t: 3.4, text: 'kubectl apply -f ruleset.yaml', kind: 'cmd' },
+  { t: 4.6, text: 'workflowruleset.tinkerbell.org/enroll-flatcar-all created' },
+  { t: 6.0, text: 'kubectl -n tinkerbell get workflowruleset', kind: 'cmd' },
+  { t: 7.2, text: 'NAME                 AGE\nenroll-flatcar-all   1s' },
+  { t: 8.6, text: '舞台空著、規則就位 —— 就等第一台機器插電', kind: 'ok' },
+];
+const D0S5Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={5} total={9} title="上架規則 —— 「誰進來」自動裝"
+    cmd={`kubectl apply -f ruleset.yaml
+# match-all：任何新機器回報屬性
+# 就觸發安裝；正式環境可收斂成
+# 精準條件（例：特定機箱廠商）`}
+    expect="此刻叢集裡沒有任何 Hardware、任何 Workflow —— 記住這個空景" />
+);
+const D0S5Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 5 步 —— 實際執行過程" lines={d0s5Lines} />
+  </div>
+);
+
+const d0s6Hdr = 'NAME                                    STATE     ACTION          AGENT';
+const d0s6Lines: RLine[] = [
+  { t: 0.5, text: 'watch kubectl -n tinkerbell get hardware,workflow', kind: 'cmd' },
+  { t: 1.8, text: `${d0s6Hdr}\n（No resources found —— 機器剛接上電源）`, kind: 'frame' },
+  { t: 5.0, text: `hardware/discovery-bc-24-11-5e-4f-a9\n\n${d0s6Hdr}\nenrollment-bc-24-11-5e-4f-a9            RUNNING   write-image     bc:24:11:5e:4f:a9`, kind: 'frame' },
+  { t: 12.0, text: `hardware/discovery-bc-24-11-5e-4f-a9\n\n${d0s6Hdr}\nenrollment-bc-24-11-5e-4f-a9            RUNNING   write-ignition  bc:24:11:5e:4f:a9`, kind: 'frame' },
+  { t: 14.5, text: `hardware/discovery-bc-24-11-5e-4f-a9\n\n${d0s6Hdr}\nenrollment-bc-24-11-5e-4f-a9            RUNNING   reboot          bc:24:11:5e:4f:a9`, kind: 'frame' },
+  { t: 17.0, text: `hardware/discovery-bc-24-11-5e-4f-a9\n\n${d0s6Hdr}\nenrollment-bc-24-11-5e-4f-a9            SUCCESS   reboot          bc:24:11:5e:4f:a9   （實測 +332 秒）`, kind: 'frame' },
+  { t: 19.5, text: "kubectl -n tinkerbell patch hardware discovery-bc-24-11-5e-4f-a9 --type=merge \\\n  -p '{\"spec\":{\"interfaces\":[{\"dhcp\":{\"mac\":\"bc:24:11:5e:4f:a9\"},\"netboot\":{\"allowPXE\":false}}]}}'", kind: 'cmd' },
+  { t: 20.7, text: 'hardware.tinkerbell.org/discovery-bc-24-11-5e-4f-a9 patched' },
+  { t: 22.5, text: 'ssh core@172.16.91.192 hostnamectl', kind: 'cmd' },
+  { t: 23.7, text: ' Static hostname: pool-node\nOperating System: Flatcar Container Linux by Kinvolk 4593.2.5 (Oklo)\n          Kernel: Linux 6.12.102-flatcar' },
+  { t: 25.5, text: '資源池第一台機器上線 —— 插電之後，人沒碰過它', kind: 'ok' },
+];
+const D0S6Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={6} total={9} title="插電時刻"
+    cmd={`# 把空白機器接上網路，開機。
+# 然後 —— 什麼都不用做。
+
+watch kubectl -n tinkerbell \\
+  get hardware,workflow`}
+    expect="Hardware 無中生有 → 安裝 workflow 自動出現並逐步執行 → 機器重開進 Flatcar。裝完補一手收尾（關 allowPXE）—— 這是上游留白，正是 enrollment controller 未來的職責" />
+);
+const D0S6Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 6 步 —— 插電，然後看著（實錄 5.5 分鐘）" lines={d0s6Lines} />
+  </div>
+);
+
+const d0s7Lines: RLine[] = [
+  { t: 0.5, text: './install-capi.sh', kind: 'cmd' },
+  { t: 1.7, text: 'clusterctl version: v1.12.5' },
+  { t: 3.2, text: 'Fetching providers\nInstalling cert-manager version="v1.20.1"' },
+  { t: 5.2, text: 'Installing provider="cluster-api" version="v1.12.5"\nInstalling provider="bootstrap-kubeadm" version="v1.12.5"\nInstalling provider="control-plane-kubeadm" version="v1.12.5"\nInstalling provider="infrastructure-tinkerbell" version="v0.7.0"' },
+  { t: 7.5, text: 'Your management cluster has been initialized successfully!' },
+  { t: 9.0, text: 'deployment.apps/capt-controller-manager env updated\ncapi-system    capi-controller-manager-...    1/1   Running\ncapt-system    capt-controller-manager-...    1/1   Running' },
+  { t: 10.8, text: '「開叢集」從此也是宣告式 —— 下一步就開在裸機上', kind: 'ok' },
+];
+const D0S7Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={7} total={9} title="裝 Cluster API（含裸機 provider）"
+    cmd={`./install-capi.sh
+# 兩個上游沒寫清楚的必要設定：
+#   provider 名錄要手動登記 tinkerbell
+#   CAPT 要知道 Tinkerbell 的位址`}
+    expect="Ignition 格式的 feature gate 必須在 init 前開（Flatcar 用 Ignition 不用 cloud-init）" />
+);
+const D0S7Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 7 步 —— 實際執行過程" lines={d0s7Lines} />
+  </div>
+);
+
+const d0s8Hdr = 'NAME            CLUSTER   NODE NAME   PHASE          AGE   VERSION';
+const d0s8Lines: RLine[] = [
+  { t: 0.5, text: 'python3 gen-mgmt-hardware.py 1 bc:24:11:df:f3:32 | kubectl apply -f -', kind: 'cmd' },
+  { t: 1.6, text: 'hardware.tinkerbell.org/mgmt-1 created' },
+  { t: 3.0, text: 'python3 gen-mgmt-cluster.py mgmt 1 oem-stub.json "$(cat ~/.ssh/id_ed25519.pub)" | kubectl apply -f -', kind: 'cmd' },
+  { t: 4.2, text: 'cluster.cluster.x-k8s.io/mgmt created\ntinkerbellcluster.infrastructure.cluster.x-k8s.io/mgmt created\nkubeadmcontrolplane.controlplane.cluster.x-k8s.io/mgmt-cp created\ntinkerbellmachinetemplate.infrastructure.cluster.x-k8s.io/mgmt-cp created' },
+  { t: 6.5, text: `${d0s8Hdr}\nmgmt-cp-nbwj8   mgmt                  Provisioning   5s    v1.34.6`, kind: 'frame' },
+  { t: 10.0, text: `${d0s8Hdr}\nmgmt-cp-nbwj8   mgmt                  Provisioning   2m    v1.34.6\n（workflow：寫映像 → 寫 OEM stub → 重開 → kubeadm init）`, kind: 'frame' },
+  { t: 14.0, text: `${d0s8Hdr}\nmgmt-cp-nbwj8   mgmt      mgmt-1      Running        13m   v1.34.6   （實測 +773 秒）`, kind: 'frame' },
+  { t: 16.5, text: 'clusterctl get kubeconfig mgmt > mgmt.kubeconfig\nhelm install cilium cilium/cilium --kubeconfig mgmt.kubeconfig ...', kind: 'cmd' },
+  { t: 18.0, text: 'kubectl --kubeconfig mgmt.kubeconfig get nodes', kind: 'cmd' },
+  { t: 19.2, text: 'NAME     STATUS   ROLES           AGE    VERSION\nmgmt-1   Ready    control-plane   3m8s   v1.34.6' },
+  { t: 21.0, text: '一份 YAML，開出一座跑在裸機上的 Kubernetes', kind: 'ok' },
+];
+const D0S8Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={8} total={9} title="開出管理叢集 —— 這次是裸機"
+    cmd={`# 管理節點預先登記（固定 IP + 角色標籤）
+python3 gen-mgmt-hardware.py 1 <MAC> \\
+  | kubectl apply -f -
+# 一個 Cluster API 叢集定義
+python3 gen-mgmt-cluster.py mgmt 1 \\
+  oem-stub.json "<你的公鑰>" \\
+  | kubectl apply -f -`}
+    expect="機器開機後全自動：PXE 裝 Flatcar → 開機設定接上 kubeadm → 節點註冊；裝上 CNI 就 Ready" />
+);
+const D0S8Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 8 步 —— 實際執行過程（實錄 13 分鐘）" lines={d0s8Lines} />
+  </div>
+);
+
+const d0s9Hdr = 'NAME            CLUSTER   NODE NAME   READY   PHASE     AGE   VERSION';
+const d0s9Lines: RLine[] = [
+  { t: 0.5, text: 'helm install tinkerbell ... --kubeconfig mgmt.kubeconfig -f tinkerbell-values-mgmt.yaml\nEXP_KUBEADM_BOOTSTRAP_FORMAT_IGNITION=true clusterctl init --kubeconfig mgmt.kubeconfig ...', kind: 'cmd' },
+  { t: 2.0, text: 'STATUS: deployed\nYour management cluster has been initialized successfully!' },
+  { t: 4.0, text: '# 搬資料面：Hardware 與 Template（Workflow 歷史絕不搬）', kind: 'cmd' },
+  { t: 5.2, text: 'hardware.tinkerbell.org/discovery-bc-24-11-5e-4f-a9 created\nhardware.tinkerbell.org/mgmt-1 created\ntemplate.tinkerbell.org/flatcar-install created' },
+  { t: 7.2, text: 'clusterctl move --to-kubeconfig mgmt.kubeconfig', kind: 'cmd' },
+  { t: 8.4, text: 'Creating objects in the target cluster\nDeleting objects from the source cluster' },
+  { t: 10.4, text: 'kubectl --kubeconfig mgmt.kubeconfig get machines.cluster.x-k8s.io', kind: 'cmd' },
+  { t: 11.6, text: `${d0s9Hdr}\nmgmt-cp-nbwj8   mgmt      mgmt-1      True    Running   15s   v1.34.6` },
+  { t: 13.6, text: 'sudo systemctl stop k3s   # seed 停役', kind: 'cmd' },
+  { t: 15.2, text: 'kubectl --kubeconfig mgmt.kubeconfig get machines.cluster.x-k8s.io', kind: 'cmd' },
+  { t: 16.4, text: `${d0s9Hdr}\nmgmt-cp-nbwj8   mgmt      mgmt-1      True    Running   18s   v1.34.6` },
+  { t: 18.4, text: '起始機已關 —— 平台管理著自己。day-0 完成', kind: 'ok' },
+];
+const D0S9Cmd: Page = () => (
+  <StepCmd act="DAY-0 建置" step={9} total={9} title="pivot —— 平台開始管理自己"
+    cmd={`# mgmt 就位：Tinkerbell + Cluster API
+# 搬資料面（Workflow 歷史不搬 ——
+#   匯入後狀態歸零會把機器重灌！）
+clusterctl move \\
+  --to-kubeconfig mgmt.kubeconfig
+sudo systemctl stop k3s   # seed 停役`}
+    expect="move 之後，管理叢集裡看得到「自己」的 Machine；把起始機關掉，它依然好好的" />
+);
+const D0S9Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DAY-0 · 第 9 步 —— 實際執行過程" lines={d0s9Lines} />
+  </div>
 );
 
 /* ── 07b Tinkerbell 建置 ─────────────────────────────── */
@@ -999,7 +1230,11 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda,
-  Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollBuild, EnrollFlow, HowPxe,
+  Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  D0Intro,
+  D0S1Cmd, D0S1Replay, D0S2Cmd, D0S2Replay, D0S3Cmd, D0S3Replay,
+  D0S4Cmd, D0S4Replay, D0S5Cmd, D0S5Replay, D0S6Cmd, D0S6Replay,
+  D0S7Cmd, D0S7Replay, D0S8Cmd, D0S8Replay, D0S9Cmd, D0S9Replay,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
