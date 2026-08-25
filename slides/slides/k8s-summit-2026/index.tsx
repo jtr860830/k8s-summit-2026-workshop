@@ -404,6 +404,101 @@ const Step3Replay: Page = () => (
   </div>
 );
 
+const step2Lines: RLine[] = [
+  { t: 0.5, text: 'clusterctl init --core cluster-api:v1.13.4 --bootstrap kubeadm:v1.13.4 \\', kind: 'cmd' },
+  { t: 0.5, text: '    --control-plane kubeadm:v1.13.4 --infrastructure docker:v1.14.0', kind: 'cmd' },
+  { t: 1.6, text: 'Fetching providers' },
+  { t: 2.6, text: 'Installing cert-manager version="v1.20.3"' },
+  { t: 4.2, text: 'Waiting for cert-manager to be available...' },
+  { t: 6.0, text: 'Installing provider="cluster-api" version="v1.13.4" targetNamespace="capi-system"' },
+  { t: 7.0, text: 'Installing provider="bootstrap-kubeadm" version="v1.13.4" targetNamespace="capi-kubeadm-bootstrap-system"' },
+  { t: 8.0, text: 'Installing provider="control-plane-kubeadm" version="v1.13.4" targetNamespace="capi-kubeadm-control-plane-system"' },
+  { t: 9.0, text: 'Installing provider="infrastructure-docker" version="v1.14.0" targetNamespace="capd-system"' },
+  { t: 10.5, text: 'Your management cluster has been initialized successfully!', kind: 'ok' },
+];
+
+const Step2Cmd: Page = () => (
+  <StepCmd act="第一幕" step={2} total={7} title="安裝 Cluster API"
+    cmd={`clusterctl init --core cluster-api:v1.13.4 \\
+  --bootstrap kubeadm:v1.13.4 \\
+  --control-plane kubeadm:v1.13.4 \\
+  --infrastructure docker:v1.14.0`}
+    expect="約 2–3 分鐘。版本寫死是為了讀會前預載的本地定義檔，全程不需要網路" />
+);
+const Step2Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 2 —— 實際執行過程" lines={step2Lines} />
+  </div>
+);
+
+const step4Lines: RLine[] = [
+  { t: 0.5, text: 'clusterctl get kubeconfig demo > /tmp/demo.kubeconfig', kind: 'cmd' },
+  { t: 1.5, text: 'kubectl --kubeconfig /tmp/demo.kubeconfig get nodes', kind: 'cmd' },
+  { t: 2.5, text: 'NAME                       STATUS     ROLES           AGE   VERSION\ndemo-control-plane-945t7   NotReady   control-plane   71s   v1.34.0' },
+  { t: 4.5, text: 'kubectl --kubeconfig /tmp/demo.kubeconfig apply -f labs/01-capi/kindnet.yaml', kind: 'cmd' },
+  { t: 5.5, text: 'daemonset.apps/kindnet created（其餘 RBAC 物件略）' },
+  { t: 7.5, text: 'kubectl --kubeconfig /tmp/demo.kubeconfig get nodes', kind: 'cmd' },
+  { t: 9.0, text: 'NAME                       STATUS   ROLES           AGE    VERSION\ndemo-control-plane-945t7   Ready    control-plane   119s   v1.34.0', kind: 'ok' },
+];
+const Step4Cmd: Page = () => (
+  <StepCmd act="第一幕" step={4} total={7} title="進入新叢集、裝 CNI"
+    cmd={`clusterctl get kubeconfig demo > /tmp/demo.kubeconfig
+kubectl --kubeconfig /tmp/demo.kubeconfig \\
+  apply -f labs/01-capi/kindnet.yaml`}
+    expect="剛出爐的叢集是裸的（NotReady）；裝上 CNI 後約 1 分鐘轉 Ready" />
+);
+const Step4Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 4 —— 實際執行過程" lines={step4Lines} />
+  </div>
+);
+
+const mHdr = 'NAME                       PHASE          AGE';
+const step5Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl scale machinedeployment demo-md-0 --replicas=2', kind: 'cmd' },
+  { t: 1.4, text: 'machinedeployment.cluster.x-k8s.io/demo-md-0 scaled' },
+  { t: 2.6, text: 'watch kubectl get machines', kind: 'cmd' },
+  { t: 3.6, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        4m\ndemo-md-0-dllkk-qclx2      Running        3m59s' },
+  { t: 6.5, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        4m11s\ndemo-md-0-dllkk-8qfxp      Provisioning   17s\ndemo-md-0-dllkk-qclx2      Running        3m59s' },
+  { t: 10.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        4m54s\ndemo-md-0-dllkk-8qfxp      Provisioned    60s\ndemo-md-0-dllkk-qclx2      Running        4m42s' },
+  { t: 13.5, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        5m15s\ndemo-md-0-dllkk-8qfxp      Running        81s\ndemo-md-0-dllkk-qclx2      Running        5m3s' },
+  { t: 15.5, text: '（docker ps 同步多出一個容器）', kind: 'ok' },
+];
+const Step5Cmd: Page = () => (
+  <StepCmd act="第一幕" step={5} total={7} title="擴容"
+    cmd={`kubectl scale machinedeployment demo-md-0 --replicas=2
+watch kubectl get machines`}
+    expect="約 90 秒多出一台 worker —— 擴一台機器，就是改一個數字" />
+);
+const Step5Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 5 —— 實際執行過程" lines={step5Lines} />
+  </div>
+);
+
+const dHdr = 'NAMES                      STATUS';
+const step7Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl delete cluster demo', kind: 'cmd' },
+  { t: 1.5, text: 'cluster.cluster.x-k8s.io "demo" deleted' },
+  { t: 3.0, text: 'watch docker ps', kind: 'cmd' },
+  { t: 4.0, kind: 'frame', text: dHdr + '\ndemo-md-0-dllkk-8qfxp      Up 6 minutes\ndemo-md-0-dllkk-qclx2      Up 7 minutes\ndemo-control-plane-945t7   Up 10 minutes\ndemo-lb                    Up 10 minutes' },
+  { t: 8.0, kind: 'frame', text: dHdr + '\ndemo-control-plane-945t7   Up 10 minutes\ndemo-lb                    Up 11 minutes' },
+  { t: 11.0, kind: 'frame', text: dHdr + '\ndemo-lb                    Up 11 minutes' },
+  { t: 13.5, kind: 'frame', text: dHdr },
+  { t: 15.0, text: '（三台機器與負載平衡器全部回收 —— 管理叢集 mgmt 保留，第二幕要用）', kind: 'ok' },
+];
+const Step7Cmd: Page = () => (
+  <StepCmd act="第一幕" step={7} total={7} title="拆掉"
+    cmd={`kubectl delete cluster demo
+watch docker ps`}
+    expect="機器容器依序消失；mgmt 管理叢集保留給第二幕" />
+);
+const Step7Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 7 —— 實際執行過程" lines={step7Lines} />
+  </div>
+);
+
 /* ── 11 第一幕回收 ───────────────────────────────────── */
 const Act1Recap: Page = () => (
   <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
@@ -488,6 +583,166 @@ const Act2Guide: Page = () => (
       </ul>
     </div>
   </Dark>
+);
+
+const a2s1Lines: RLine[] = [
+  { t: 0.5, text: 'helm install kro ~/.summit-workshop/kro-0.9.3.tgz -n kro-system --create-namespace', kind: 'cmd' },
+  { t: 1.6, text: 'NAME: kro\nSTATUS: deployed\nREVISION: 1' },
+  { t: 3.4, text: 'kubectl apply -f rgd/workloadcluster-capd.yaml', kind: 'cmd' },
+  { t: 4.4, text: 'resourcegraphdefinition.kro.run/workloadcluster created' },
+  { t: 6.0, text: 'kubectl get rgd', kind: 'cmd' },
+  { t: 7.0, text: 'NAME              APIVERSION   KIND              STATE    READY\nworkloadcluster   v1alpha1     WorkloadCluster   Active   True' },
+  { t: 9.0, text: 'kubectl get crd workloadclusters.kro.run', kind: 'cmd' },
+  { t: 10.2, text: 'workloadclusters.kro.run（你剛在 Kubernetes 裡創造了一個新的 API）', kind: 'ok' },
+];
+const A2S1Cmd: Page = () => (
+  <StepCmd act="第二幕" step={1} total={7} title="安裝 kro、定義平台 API"
+    cmd={`helm install kro ~/.summit-workshop/kro-0.9.3.tgz \\
+  -n kro-system --create-namespace
+kubectl apply -f rgd/workloadcluster-capd.yaml
+kubectl get rgd -w   # 等 STATE 變 Active`}
+    expect="RGD 轉 Active 後，叢集裡多了一個新的 API：WorkloadCluster" />
+);
+const A2S1Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 1 —— 實際執行過程" lines={a2s1Lines} />
+  </div>
+);
+
+const wHdr = 'NAME     STATE    READY   |  MACHINE                        PHASE          AGE';
+const a2s2Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl apply -f - <<EOF', kind: 'cmd' },
+  { t: 0.5, text: 'apiVersion: kro.run/v1alpha1\nkind: WorkloadCluster\nmetadata: {name: team-a}\nspec: {}\nEOF' },
+  { t: 2.0, text: 'workloadcluster.kro.run/team-a created' },
+  { t: 3.5, text: 'watch kubectl get workloadclusters,machines', kind: 'cmd' },
+  { t: 4.5, kind: 'frame', text: wHdr + '\nteam-a   ACTIVE   False   |  team-a-control-plane-zwlvk     Pending        4s' },
+  { t: 8.0, kind: 'frame', text: wHdr + '\nteam-a   ACTIVE   False   |  team-a-control-plane-zwlvk     Provisioning   31s\n                          |  team-a-md-0-9t7q5-jwwmd        Pending        6s' },
+  { t: 12.0, kind: 'frame', text: wHdr + '\nteam-a   ACTIVE   False   |  team-a-control-plane-zwlvk     Provisioned    83s\n                          |  team-a-md-0-9t7q5-jwwmd        Pending        58s' },
+  { t: 16.0, kind: 'frame', text: wHdr + '\nteam-a   ACTIVE   True    |  team-a-control-plane-zwlvk     Running        4m\n                          |  team-a-md-0-9t7q5-jwwmd        Running        3m35s' },
+  { t: 18.5, text: '（spec: {} —— 所有欄位都有預設值；status 由底層自動匯總）', kind: 'ok' },
+];
+const A2S2Cmd: Page = () => (
+  <StepCmd act="第二幕" step={2} total={7} title="六行，一個叢集"
+    cmd={`cat <<EOF | kubectl apply -f -
+apiVersion: kro.run/v1alpha1
+kind: WorkloadCluster
+metadata: {name: team-a}
+spec: {}
+EOF`}
+    expect="第一幕的 200 行，現在是 6 行 —— 約 4 分鐘收斂，CONTROLPLANEREADY 轉 true" />
+);
+const A2S2Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 2 —— 實際執行過程" lines={a2s2Lines} />
+  </div>
+);
+
+const a2s3Lines: RLine[] = [
+  { t: 0.5, text: "kubectl patch workloadcluster team-a --type merge -p '{\"spec\":{\"nodes\":2}}'", kind: 'cmd' },
+  { t: 1.5, text: 'workloadcluster.kro.run/team-a patched' },
+  { t: 3.0, text: 'watch kubectl get machines', kind: 'cmd' },
+  { t: 4.0, kind: 'frame', text: mHdr + '\nteam-a-control-plane-zwlvk   Running        5m4s\nteam-a-md-0-9t7q5-jwwmd      Running        4m39s' },
+  { t: 7.5, kind: 'frame', text: mHdr + '\nteam-a-control-plane-zwlvk   Running        5m24s\nteam-a-md-0-9t7q5-6drmh      Provisioning   20s\nteam-a-md-0-9t7q5-jwwmd      Running        4m59s' },
+  { t: 11.0, kind: 'frame', text: mHdr + '\nteam-a-control-plane-zwlvk   Running        5m44s\nteam-a-md-0-9t7q5-6drmh      Running        80s\nteam-a-md-0-9t7q5-jwwmd      Running        5m19s' },
+  { t: 13.0, text: '（高階 API 改一個數字，底層 MachineDeployment 跟著動）', kind: 'ok' },
+];
+const A2S3Cmd: Page = () => (
+  <StepCmd act="第二幕" step={3} total={7} title="用平台使用者的方式擴容"
+    cmd={`kubectl patch workloadcluster team-a \\
+  --type merge -p '{"spec":{"nodes":2}}'
+watch kubectl get machines`}
+    expect="約 90 秒多一台 worker —— 更新語義穿透抽象層" />
+);
+const A2S3Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 3 —— 實際執行過程" lines={a2s3Lines} />
+  </div>
+);
+
+const a2s4Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl apply -f - <<EOF', kind: 'cmd' },
+  { t: 0.5, text: 'apiVersion: kro.run/v1alpha1\nkind: WorkloadCluster\nmetadata: {name: team-ha}\nspec: {profile: ha, nodes: 0}\nEOF' },
+  { t: 2.0, text: 'workloadcluster.kro.run/team-ha created' },
+  { t: 4.0, text: 'kubectl get kubeadmcontrolplane team-ha-control-plane', kind: 'cmd' },
+  { t: 5.5, text: 'NAME                    CLUSTER   DESIRED   AGE\nteam-ha-control-plane   team-ha   3         17s', kind: 'ok' },
+  { t: 8.0, text: 'kubectl delete workloadcluster team-ha   # 看到 3 就好，資源留給 team-a', kind: 'cmd' },
+  { t: 9.0, text: 'workloadcluster.kro.run "team-ha" deleted' },
+];
+const A2S4Cmd: Page = () => (
+  <StepCmd act="第二幕" step={4} total={7} title="高可用？改一個字"
+    cmd={`# spec 加一行：profile: ha
+kubectl get kubeadmcontrolplane team-ha-control-plane`}
+    expect="DESIRED = 3 —— 控制平面從 1 台變 3 台，架構決策由平台代勞" />
+);
+const A2S4Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 4 —— 實際執行過程" lines={a2s4Lines} />
+  </div>
+);
+
+const a2s5Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl apply -f - <<EOF', kind: 'cmd' },
+  { t: 0.5, text: 'apiVersion: kro.run/v1alpha1\nkind: WorkloadCluster\nmetadata: {name: bad}\nspec: {certSANs: [evil.example]}\nEOF' },
+  { t: 2.5, text: 'Error from server (BadRequest): error when creating "STDIN":' },
+  { t: 3.0, text: 'WorkloadCluster in version "v1alpha1" cannot be handled as a WorkloadCluster:' },
+  { t: 3.5, text: 'strict decoding error: unknown field "spec.certSANs"' },
+  { t: 6.0, text: '（schema 沒開放的欄位碰不到 —— 哪些鎖死，本身就是平台設計）', kind: 'ok' },
+];
+const A2S5Cmd: Page = () => (
+  <StepCmd act="第二幕" step={5} total={7} title="想搞破壞？平台說不"
+    cmd={`# 試著直接改憑證設定
+spec: {certSANs: [evil.example]}`}
+    expect="apply 直接被拒：unknown field —— 危險欄位根本不存在於這個 API" />
+);
+const A2S5Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 5 —— 實際執行過程" lines={a2s5Lines} />
+  </div>
+);
+
+const a2s6Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl apply -f - <<EOF', kind: 'cmd' },
+  { t: 0.5, text: 'apiVersion: kro.run/v1alpha1\nkind: WorkloadCluster\nmetadata: {name: team-a}\nspec:\n  nodes: 2\n  advanced:\n    kubeletExtraArgs: {v: "2"}\nEOF' },
+  { t: 2.5, text: 'workloadcluster.kro.run/team-a configured' },
+  { t: 4.5, text: 'kubectl get kcp team-a-control-plane -o jsonpath=\'{...kubeletExtraArgs}\'', kind: 'cmd' },
+  { t: 6.0, text: '[{"name":"v","value":"2"}]', kind: 'ok' },
+  { t: 9.0, text: '（進階設定原樣到達底層；同時注意 —— 控制平面開始滾動換機：', kind: 'ok' },
+  { t: 9.5, text: '  改了 kubeadm 設定，Cluster API 就照換機哲學行動）', kind: 'ok' },
+];
+const A2S6Cmd: Page = () => (
+  <StepCmd act="第二幕" step={6} total={7} title="但留了逃生門"
+    cmd={`spec:
+  nodes: 2
+  advanced:
+    kubeletExtraArgs: {v: "2"}`}
+    expect="設定原樣透傳到底層 kubeadm；控制平面隨之滾動換機（spec 變更的正確行為）" />
+);
+const A2S6Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 6 —— 實際執行過程" lines={a2s6Lines} />
+  </div>
+);
+
+const cHdr = 'NAME     PHASE         |  MACHINE                        PHASE      AGE';
+const a2s7Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl delete workloadcluster team-a', kind: 'cmd' },
+  { t: 1.5, text: 'workloadcluster.kro.run "team-a" deleted' },
+  { t: 3.0, text: 'watch kubectl get cluster,machines', kind: 'cmd' },
+  { t: 4.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m12s\n                     |  team-a-md-0-9t7q5-6drmh        Deleting   5m1s' },
+  { t: 8.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m33s' },
+  { t: 11.5, kind: 'frame', text: 'No resources found in default namespace.' },
+  { t: 13.5, text: '（七個底層物件、所有機器容器 —— 一個指令、零孤兒）', kind: 'ok' },
+];
+const A2S7Cmd: Page = () => (
+  <StepCmd act="第二幕" step={7} total={7} title="拆掉 —— 一個指令、零孤兒"
+    cmd={`kubectl delete workloadcluster team-a
+watch kubectl get cluster,machines`}
+    expect="底層物件與容器全部回收，使用者不需要知道拆的順序" />
+);
+const A2S7Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第二幕 · 步驟 7 —— 實際執行過程" lines={a2s7Lines} />
+  </div>
 );
 
 /* ── 15 第二幕回收 ───────────────────────────────────── */
@@ -627,8 +882,8 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step3Cmd, Step3Replay, Act1Recap,
-  Act2Intro, FourLayers, Act2Guide, Act2Recap,
+  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step7Cmd, Step7Replay, Act1Recap,
+  Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
   Mine1, Mine2, Mine3,
   FrontierTax, Roadmap, Resources, Thanks,
