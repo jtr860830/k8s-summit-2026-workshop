@@ -151,13 +151,13 @@ const Thesis: Page = () => (
 
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="為什麼是現在" title="Hyperscaler 的玩法，積木已經到齊">
+  <Light eyebrow="為什麼是現在" title="Hyperscaler 的做法，每一層都有開源實作了">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>全世界的超大規模業者早就用「<Red>白牌伺服器 + 自建軟體層</Red>」跳過這筆稅</Li>
-      <Li>那些白牌伺服器 —— 本來就是台灣做的</Li>
-      <Li>過去玩不起：自建軟體層需要 Google 級的工程實力</Li>
-      <Li>現在：那個軟體層的每一塊都成了<Red>開源積木</Red>（本場主角們）</Li>
-      <Li>Kubernetes 本身，就是那套軟體層思想的開源後代</Li>
+      <Li>Google、Meta、AWS 的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
+      <Li>那些白牌伺服器，大多是台灣代工的 —— 廣達、緯穎、英業達</Li>
+      <Li>以前的門檻：管理系統要自己寫，只有他們寫得起</Li>
+      <Li>現在：裸機供裝、叢集管理、VM、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
+      <Li>Kubernetes 自己就是例子：從 Google 內部的 Borg 演化出來</Li>
     </ul>
   </Light>
 );
