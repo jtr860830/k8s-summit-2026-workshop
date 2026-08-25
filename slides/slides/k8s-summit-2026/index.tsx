@@ -115,6 +115,29 @@ const Housekeeping: Page = () => (
   </Light>
 );
 
+
+/* ── 02b Agenda ──────────────────────────────────────── */
+const AgendaRow = ({ time, name, note }: { time: string; name: string; note: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '17px 30px' }}>
+    <div style={{ width: 190, fontFamily: mono, fontSize: 29, fontWeight: 700, color: 'var(--osd-accent)' }}>{time}</div>
+    <div style={{ width: 430, fontSize: 31, fontWeight: 800 }}>{name}</div>
+    <div style={{ fontSize: 27, color: '#5a5148' }}>{note}</div>
+  </div>
+);
+
+const Agenda: Page = () => (
+  <Light eyebrow="AGENDA" title="90 分鐘怎麼走">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
+      <AgendaRow time="00–15" name="為什麼這樣做" note="白牌硬體、K8s 原生、一條思想的系譜" />
+      <AgendaRow time="15–20" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
+      <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
+      <AgendaRow time="40–65" name="動手：kro 服務目錄" note="同一個叢集，6 行就好" />
+      <AgendaRow time="65–75" name="示範②③：重灌與升級" note="資料不丟、機器不重開" />
+      <AgendaRow time="75–90" name="排雷故事與問答" note="三個實際踩過的坑，加上下一步" />
+    </div>
+  </Light>
+);
+
 /* ── 03 Thesis ───────────────────────────────────────── */
 const Thesis: Page = () => (
   <Dark eyebrow="THESIS" title={<>白牌硬體 + Kubernetes 原生<br />= 不交保護費的私有雲</>}>
@@ -474,7 +497,7 @@ export const meta: SlideMeta = {
 };
 
 export default [
-  Cover, Housekeeping, Thesis, WhiteBox, Lineage, Architecture, Principles,
+  Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
   Demo1, HowPxe, Act1Guide, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, Act2Recap,
   Demo2, Demo3,
