@@ -8,6 +8,13 @@
     }
   },
   "storage": {
+    "directories": [
+      {
+        "filesystem": "root",
+        "path": "/opt/hook",
+        "mode": 493
+      }
+    ],
     "files": [
       {
         "filesystem": "root",
