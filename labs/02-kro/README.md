@@ -101,8 +101,8 @@ EOF
 kubectl get kubeadmcontrolplane team-a-control-plane -o jsonpath='{.spec.kubeadmConfigSpec.initConfiguration.nodeRegistration.kubeletExtraArgs}'; echo
 ```
 
-**預期**：`{"v":"2"}` 原樣到達底層 —— 進階使用者仍有細部調整的窗口，
-但只在平台指定的錨點。
+**預期**：`[{"name":"v","value":"2"}]` 原樣到達底層（新版 API 以 name/value 陣列表示）。
+另外你會看到控制平面開始滾動換機 —— 改了 kubeadm 設定，Cluster API 就會照換機哲學行動。
 
 ## 8. 拆掉 —— 一個指令、零孤兒（約 2 分鐘）
 

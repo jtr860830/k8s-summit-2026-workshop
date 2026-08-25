@@ -84,12 +84,13 @@ watch kubectl get machines
 
 ## 6. 觸發換機（rolling update，約 4 分鐘）
 
-Cluster API 的世界觀：機器不修，**換**。改 MachineDeployment 模板的任何欄位
-都會觸發逐台汰換。我們加個無害的標籤：
+Cluster API 的世界觀：機器不修，**換**。改 MachineDeployment 模板的 **spec**
+任何欄位都會觸發逐台汰換（注意：改 metadata 的標籤不算，實測不會動）。
+我們改一個無實質影響的 spec 欄位：
 
 ```bash
 kubectl patch machinedeployment demo-md-0 --type merge \
-  -p '{"spec":{"template":{"metadata":{"labels":{"generation":"v2"}}}}}'
+  -p '{"spec":{"template":{"spec":{"nodeDrainTimeout":"10s"}}}}'
 watch kubectl get machines
 ```
 
