@@ -1,0 +1,26 @@
+# day-0 第 4 步：新機器的最小 Ignition 設定（Butane 格式，人類可讀）
+# 用 butane 轉成 Ignition JSON 後嵌進安裝範本
+# @@SSH_PUBKEY@@ 換成你自己的公鑰
+variant: flatcar
+version: 1.1.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - "@@SSH_PUBKEY@@"
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: pool-node
+    # kubelet sysext：先放進資源池備著，之後轉正成 K8s 節點會用到
+    - path: /opt/extensions/kubernetes-v1.34.6-x86-64.raw
+      mode: 0644
+      contents:
+        source: http://172.16.91.4:7173/kubernetes-v1.34.6-x86-64.raw
+  links:
+    - path: /etc/extensions/kubernetes.raw
+      target: /opt/extensions/kubernetes-v1.34.6-x86-64.raw
+      hard: false
