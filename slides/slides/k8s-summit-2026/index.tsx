@@ -499,6 +499,30 @@ const Step7Replay: Page = () => (
   </div>
 );
 
+const step6Lines: RLine[] = [
+  { t: 0.5, text: 'kubectl delete machine demo-md-0-7jc8c-kwm9t &', kind: 'cmd' },
+  { t: 1.5, text: 'machine.cluster.x-k8s.io "demo-md-0-7jc8c-kwm9t" deleted' },
+  { t: 3.0, text: 'watch kubectl get machines', kind: 'cmd' },
+  { t: 4.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-6dwhv   Running        3m53s\ndemo-md-0-7jc8c-kwm9t      Running        3m42s' },
+  { t: 7.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-6dwhv   Running        4m8s\ndemo-md-0-7jc8c-6t82d      （新機出現）    2s' },
+  { t: 10.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-6dwhv   Running        4m28s\ndemo-md-0-7jc8c-6t82d      Provisioning   22s' },
+  { t: 13.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-6dwhv   Running        4m43s\ndemo-md-0-7jc8c-6t82d      Provisioned    37s' },
+  { t: 16.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-6dwhv   Running        4m59s\ndemo-md-0-7jc8c-6t82d      Running        53s' },
+  { t: 18.0, text: '（刪掉 2 秒後就有新機補位，53 秒回到 Running —— 機器是 cattle）', kind: 'ok' },
+];
+const Step6Cmd: Page = () => (
+  <StepCmd act="第一幕" step={6} total={7} title="砍一台機器，看它自動補"
+    cmd={`kubectl delete machine \\
+  $(kubectl get machines -o name | grep md-0 | head -1 | cut -d/ -f2) &
+watch kubectl get machines`}
+    expect="被刪的 worker 進入 Deleting，新 worker 同步補位 —— Pod 的哲學延伸到機器層" />
+);
+const Step6Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="第一幕 · 步驟 6 —— 實際執行過程" lines={step6Lines} />
+  </div>
+);
+
 /* ── 11 第一幕回收 ───────────────────────────────────── */
 const Act1Recap: Page = () => (
   <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
@@ -882,7 +906,7 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Housekeeping, Agenda, Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step7Cmd, Step7Replay, Act1Recap,
+  Demo1, HowPxe, Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
   Mine1, Mine2, Mine3,
