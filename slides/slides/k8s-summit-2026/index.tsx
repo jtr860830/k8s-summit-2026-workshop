@@ -134,7 +134,7 @@ const Agenda: Page = () => (
       <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="40–65" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
       <AgendaRow time="65–75" name="示範②③：重灌與升級" note="資料不丟、機器不重開" />
-      <AgendaRow time="75–90" name="排雷故事與問答" note="三個實際踩過的坑，加上下一步" />
+      <AgendaRow time="75–90" name="總結與問答" note="前沿稅、下一步，剩下時間都留給你問" />
     </div>
   </Light>
 );
@@ -214,7 +214,7 @@ const Principles: Page = () => (
       <Li>100% 開源授權、CNCF 或社群治理 —— <Red>沒有授權費這個變數</Red></Li>
       <Li>每一塊都有明確退路：換掉任何一塊，不動其他層</Li>
       <Li>商用 HCI 套裝、Source-available 授權的方案 —— 好用，但與這個原則不相容</Li>
-      <Li>代價也說清楚：這條路<Red>可行但前沿</Red>，結尾的排雷段就是價目表</Li>
+      <Li>代價也說清楚：這條路<Red>可行但前沿</Red>，路上的坑講到時逐一帶你看</Li>
     </ul>
   </Light>
 );
@@ -1132,48 +1132,12 @@ const Demo3: Page = () => (
   </Dark>
 );
 
-/* ── 18 排雷一 ───────────────────────────────────────── */
-const Mine1: Page = () => (
-  <Light eyebrow="排雷 · 一" title="不報錯的失敗，最難查">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>一台 VM 開機完全正常：有 IP、有主機名、sshd 在跑 —— 但誰都連不進去</Li>
-      <Li>兇手：映像檔缺一行 <span style={{ fontFamily: mono }}>oem_id</span>，開機設定系統<Red>安靜地忽略</Red>了所有設定</Li>
-      <Li>同一顆雷我們踩了兩次 —— 自建映像一次、原廠映像一次</Li>
-      <Li>教訓：<Red>映像檔出廠檢查</Red>是供應鏈紀律，不能靠下游記得</Li>
-    </ul>
-  </Light>
-);
-
-/* ── 19 排雷二 ───────────────────────────────────────── */
-const Mine2: Page = () => (
-  <Light eyebrow="排雷 · 二" title="保護機制預設沒開，等於沒有">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>例行維運：排空一台節點 —— 結果儲存叢集的仲裁成員被<Red>一起趕走</Red></Li>
-      <Li>連鎖：失去仲裁 → 儲存全面凍結 → 連自我修復的元件也癱了</Li>
-      <Li>根因：Rook 的保護機制（PodDisruptionBudget）<Red>預設是關的</Red></Li>
-      <Li>教訓：文件寫「有保護」與「保護開著」是兩件事 —— 上線前手動演練一次故障</Li>
-    </ul>
-  </Light>
-);
-
-/* ── 20 排雷三 ───────────────────────────────────────── */
-const Mine3: Page = () => (
-  <Light eyebrow="排雷 · 三" title="雲的預設值，到了機房會咬人">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>Cluster API 升級預設「先開新機、再關舊機」（maxSurge=1）</Li>
-      <Li>雲上合理 —— 機器隨叫隨到；機房裡<Red>沒有那台多的機器</Red></Li>
-      <Li>結果：升級永遠卡在「等一台不存在的機器」</Li>
-      <Li>教訓：跑在裸機上，<span style={{ fontFamily: mono }}>maxSurge: 0</span> 是紀律；每個雲時代的預設值都要重新質疑</Li>
-    </ul>
-  </Light>
-);
-
 /* ── 21 前沿稅 ───────────────────────────────────────── */
 const FrontierTax: Page = () => (
   <Dark eyebrow="誠實的總結" title="這條路：可行，但前沿">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>七個驗證專案、六十多項實測發現 —— <Red>沒有一條退路被迫啟用</Red></Li>
-      <Li gap={30}>剛才三則故事是「前沿稅」的價目表：無聲、無文件、只有實測炸得出來</Li>
+      <Li gap={30}>一路踩過的坑是「前沿稅」的價目表：無聲、無文件、只有實測炸得出來</Li>
       <Li gap={30}>付得起這筆稅，換到的是<Red>單一控制平面的複利</Red>：一套 RBAC、一套 GitOps、一種除錯路徑</Li>
     </ul>
   </Dark>
@@ -1239,6 +1203,5 @@ export default [
   Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
-  Mine1, Mine2, Mine3,
   FrontierTax, Roadmap, Resources, Thanks,
 ] satisfies Page[];
