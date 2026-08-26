@@ -112,6 +112,7 @@ const Housekeeping: Page = () => (
       <Li>完成會前準備的人：等一下聽到口令直接開跑</Li>
       <Li>沒完成的人：舉手，助教送上 USB 備援；或看鄰座的就好</Li>
       <Li>卡住不用怕：每一段都有「追趕腳本」，一鍵回到隊伍</Li>
+      <Li>提問不佔課程時間：<Red>會後有獨立的交流場地</Red>，深聊都在那裡</Li>
     </ul>
   </Light>
 );
@@ -130,11 +131,11 @@ const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼走">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
       <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
-      <AgendaRow time="10–20" name="怎麼做到、為什麼這樣做" note="上架系統的組成、白牌硬體與 K8s 原生" />
-      <AgendaRow time="20–40" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
-      <AgendaRow time="40–65" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
-      <AgendaRow time="65–75" name="示範②③：重灌與升級" note="資料不丟、機器不重開" />
-      <AgendaRow time="75–90" name="總結與問答" note="前沿稅、下一步，剩下時間都留給你問" />
+      <AgendaRow time="10–30" name="怎麼做到 ＋ Day-0 建置（前六步）" note="剛才那幕，從零建出來的完整過程" />
+      <AgendaRow time="33–53" name="動手：裸 Cluster API" note="200 行 YAML 開出一個叢集" />
+      <AgendaRow time="53–62" name="Day-0 後三步" note="你手上的 CAPI 開出裸機叢集、pivot 自管" />
+      <AgendaRow time="62–82" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
+      <AgendaRow time="82–90" name="示範②③與總結" note="重灌保資料、免重開升級；問答移師會後場地" />
     </div>
   </Light>
 );
@@ -237,7 +238,7 @@ const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] })
 const D0Intro: Page = () => (
   <Light eyebrow="DAY-0 · 從零建起" title="九步，從一台 Linux 到自我承載的平台">
     <p style={{ fontSize: 31, margin: '0 0 28px', lineHeight: 1.5 }}>
-      接下來每一步都是<b>指令一頁、真實輸出一頁</b> —— 從全新環境連續重演驗證過，回家照做就能重現。
+      接下來每一步都是<b>指令一頁、真實輸出一頁</b> —— 從全新環境連續重演驗證過，回家照做就能重現。前六步現在講；後三步等你親手玩過 Cluster API 再回來收。
     </p>
     <div style={{ display: 'flex', gap: 24 }}>
       <D0Phase title="打地基（起始機）" steps={[['1', '裝 k3s —— 一台 Linux 就夠'], ['2', '裝 Tinkerbell（helm 一次）'], ['3', '備妥 OS 映像']]} />
@@ -1198,9 +1199,9 @@ export default [
   D0Intro,
   D0S1Cmd, D0S1Replay, D0S2Cmd, D0S2Replay, D0S3Cmd, D0S3Replay,
   D0S4Cmd, D0S4Replay, D0S5Cmd, D0S5Replay, D0S6Cmd, D0S6Replay,
-  D0S7Cmd, D0S7Replay, D0S8Cmd, D0S8Replay, D0S9Cmd, D0S9Replay,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
+  D0S7Cmd, D0S7Replay, D0S8Cmd, D0S8Replay, D0S9Cmd, D0S9Replay,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
   Demo2, Demo3,
   FrontierTax, Roadmap, Resources, Thanks,
