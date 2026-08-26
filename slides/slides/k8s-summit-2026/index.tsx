@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
 import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
+import { RAW } from './rawlogs';
 
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
@@ -645,6 +646,43 @@ const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: st
   );
 };
 
+/* ── 完整錄製檔頁（存證用，簡報時快速帶過）───────────── */
+const RawLog = ({ k, title }: { k: string; title: string }) => (
+  <div style={{ ...fill, background: darkBg, padding: '56px 80px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 20 }}>
+      <span style={{ fontSize: 24, fontWeight: 800, letterSpacing: '0.12em', color: '#e05545' }}>完整錄製檔</span>
+      <span style={{ fontSize: 26, color: mutedDark }}>{title} · 原始輸出未剪裁（可捲動、可複製）</span>
+    </div>
+    <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: codeBg, border: `1px solid ${codeBorder}`, borderRadius: 'var(--osd-radius)', padding: '28px 34px' }}>
+      <pre style={{ margin: 0, fontFamily: mono, fontSize: 19, lineHeight: 1.5, color: '#d8d8dc', whiteSpace: 'pre-wrap', wordBreak: 'break-all', userSelect: 'text' }}>{RAW[k]}</pre>
+    </div>
+    <Footer dark />
+  </div>
+);
+const RawS1: Page = () => <RawLog k="s1" title="第一幕 · 步驟 1" />;
+const RawS3: Page = () => <RawLog k="s3" title="第一幕 · 步驟 3" />;
+const RawS4: Page = () => <RawLog k="s4" title="第一幕 · 步驟 4" />;
+const RawS5: Page = () => <RawLog k="s5" title="第一幕 · 步驟 5" />;
+const RawS6: Page = () => <RawLog k="s6" title="第一幕 · 步驟 6" />;
+const RawS7: Page = () => <RawLog k="s7" title="第一幕 · 步驟 7" />;
+const RawA2S1: Page = () => <RawLog k="a2s1" title="第二幕 · 步驟 1" />;
+const RawA2S2: Page = () => <RawLog k="a2s2" title="第二幕 · 步驟 2" />;
+const RawA2S3: Page = () => <RawLog k="a2s3" title="第二幕 · 步驟 3" />;
+const RawA2S4: Page = () => <RawLog k="a2s4" title="第二幕 · 步驟 4" />;
+const RawA2S5: Page = () => <RawLog k="a2s5" title="第二幕 · 步驟 5" />;
+const RawA2S6: Page = () => <RawLog k="a2s6" title="第二幕 · 步驟 6" />;
+const RawA2S7: Page = () => <RawLog k="a2s7" title="第二幕 · 步驟 7" />;
+const RawD0S1: Page = () => <RawLog k="d0s1" title="DAY-0 · 第 1 步" />;
+const RawD0S2: Page = () => <RawLog k="d0s2" title="DAY-0 · 第 2 步" />;
+const RawD0S3: Page = () => <RawLog k="d0s3" title="DAY-0 · 第 3 步" />;
+const RawD0S4: Page = () => <RawLog k="d0s4" title="DAY-0 · 第 4 步" />;
+const RawD0S5: Page = () => <RawLog k="d0s5" title="DAY-0 · 第 5 步" />;
+const RawD0S6: Page = () => <RawLog k="d0s6" title="DAY-0 · 第 6 步（插電時刻）" />;
+const RawD0S7: Page = () => <RawLog k="d0s7" title="DAY-0 · 第 7 步" />;
+const RawD0S8: Page = () => <RawLog k="d0s8" title="DAY-0 · 第 8 步（開出管理叢集）" />;
+const RawD0S9: Page = () => <RawLog k="d0s9" title="DAY-0 · 第 9 步（pivot）" />;
+const RawD3: Page = () => <RawLog k="d3" title="DEMO ③ · 免重開升級" />;
+
 const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: number; total: number; title: string; cmd: string; expect: string }) => (
   <div style={{ ...fill, background: 'var(--osd-bg)', color: 'var(--osd-text)', padding: 120, position: 'relative' }}>
     <Eyebrow>{`${act} · 步驟 ${step}/${total}`}</Eyebrow>
@@ -1133,6 +1171,54 @@ const Demo3: Page = () => (
   </Dark>
 );
 
+/* ── 17b demo③ 指令與錄製 ────────────────────────────── */
+const D3Cmd: Page = () => (
+  <StepCmd act="DEMO ③ · 免重開升級" step={1} total={1} title="升級 Kubernetes，只改一個欄位"
+    cmd={`kubectl patch kubeadmcontrolplane mgmt-cp \\
+  --type=merge \\
+  -p '{"spec":{"version":"v1.34.8"}}'
+# 之後 —— 什麼都不用做。
+# KCP 逐台編排，升級外掛原地執行`}
+    expect="判決證據三件套：Machine uid 不變、uptime 不歸零、kubelet 換新版。裸機前提：maxSurge=0（機房沒有多的機器可以先開）" />
+);
+
+const d3mHdr = 'MACHINE         NODE          READY   PHASE      VERSION   |  NODE          VERSION';
+const d3Lines: RLine[] = [
+  { t: 0.5, text: "kubectl patch kubeadmcontrolplane mgmt-cp --type=merge -p '{\"spec\":{\"version\":\"v1.34.7\"}}'", kind: 'cmd' },
+  { t: 1.5, text: 'kubeadmcontrolplane.controlplane.cluster.x-k8s.io/mgmt-cp patched' },
+  { t: 3.0, text: `${d3mHdr}\nmgmt-cp-65blj   poc3-mgmt-3   True    Running    v1.34.6   |  poc3-mgmt-3   v1.34.6\nmgmt-cp-6qd5x   poc3-mgmt-2   True    Running    v1.34.6   |  poc3-mgmt-2   v1.34.1\nmgmt-cp-mmdqb   poc3-mgmt-1   True    Running    v1.34.6   |  poc3-mgmt-1   v1.34.6`, kind: 'frame' },
+  { t: 6.5, text: `${d3mHdr}\nmgmt-cp-65blj   poc3-mgmt-3   True    Running    v1.34.6   |  poc3-mgmt-3   v1.34.6\nmgmt-cp-6qd5x   poc3-mgmt-2   False   Updating   v1.34.7   |  poc3-mgmt-2   v1.34.1  ←落後最多的先動\nmgmt-cp-mmdqb   poc3-mgmt-1   True    Running    v1.34.6   |  poc3-mgmt-1   v1.34.6`, kind: 'frame' },
+  { t: 10.0, text: `${d3mHdr}\nmgmt-cp-65blj   poc3-mgmt-3   True    Running    v1.34.6   |  poc3-mgmt-3   v1.34.6\nmgmt-cp-6qd5x   poc3-mgmt-2   True    Running    v1.34.7   |  poc3-mgmt-2   v1.34.7  （+440 秒）\nmgmt-cp-mmdqb   poc3-mgmt-1   True    Running    v1.34.6   |  poc3-mgmt-1   v1.34.6`, kind: 'frame' },
+  { t: 13.0, text: `${d3mHdr}\nmgmt-cp-65blj   poc3-mgmt-3   False   Updating   v1.34.7   |  poc3-mgmt-3   v1.34.6\nmgmt-cp-6qd5x   poc3-mgmt-2   True    Running    v1.34.7   |  poc3-mgmt-2   v1.34.7\nmgmt-cp-mmdqb   poc3-mgmt-1   True    Running    v1.34.6   |  poc3-mgmt-1   v1.34.6`, kind: 'frame' },
+  { t: 16.5, text: `${d3mHdr}\nmgmt-cp-65blj   poc3-mgmt-3   True    Running    v1.34.7   |  poc3-mgmt-3   v1.34.7\nmgmt-cp-6qd5x   poc3-mgmt-2   True    Running    v1.34.7   |  poc3-mgmt-2   v1.34.7\nmgmt-cp-mmdqb   poc3-mgmt-1   False   Updating   v1.34.7   |  poc3-mgmt-1   v1.34.7  （最後一台）`, kind: 'frame' },
+  { t: 20.0, text: 'kubectl get machines -o custom-columns=NAME:.metadata.name,UID:.metadata.uid', kind: 'cmd' },
+  { t: 21.2, text: 'mgmt-cp-65blj   3a804c6d-14d5-459d-9749-bc368d1140ea   ← 與升級前逐字相同\nmgmt-cp-6qd5x   55c32675-0b8b-4203-8203-0d8268ebe393\nmgmt-cp-mmdqb   86110dfb-1cdb-4b42-adc1-a88273cc6138' },
+  { t: 23.0, text: 'ssh mgmt-2 "uptime -s; kubelet --version"', kind: 'cmd' },
+  { t: 24.2, text: '2026-08-18 06:40:36   ← 開機時間不變，全程沒重開機\nKubernetes v1.34.7' },
+  { t: 26.0, text: '三台原地升級完成（實測 30 分鐘）—— uid 不變、uptime 不歸零', kind: 'ok' },
+];
+const D3Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DEMO ③ · 控制面視角 —— 一個欄位，三台逐台原地升級" lines={d3Lines} />
+  </div>
+);
+
+const d3jLines: RLine[] = [
+  { t: 0.5, text: '# 升級外掛在節點上建的 Job（nsenter 進主機執行）—— mgmt-2 實錄', kind: 'cmd' },
+  { t: 2.0, text: '+ curl -fL -o /opt/extensions/kubernetes-v1.34.7-x86-64.raw http://172.16.90.4:7173/...\n100  107M  100  107M   33.8M/s  0:00:03' },
+  { t: 4.5, text: "+ ln -sf /opt/extensions/kubernetes-v1.34.7-x86-64.raw /etc/extensions/kubernetes.raw\n+ systemd-sysext refresh\nUsing extensions 'containerd-flatcar.raw', 'docker-flatcar.raw', 'kubernetes.raw'.\nMerged extensions into '/usr'." },
+  { t: 7.5, text: '+ kubeadm version -o short\nv1.34.7   ← 新版工具鏈已「疊」上，一次重開機都沒有' },
+  { t: 10.0, text: '+ kubeadm upgrade node\n[upgrade/staticpods] Preparing for "etcd" upgrade\n[upgrade/staticpods] Renewing etcd-server certificate\n[upgrade/staticpods] Component "etcd" upgraded successfully!' },
+  { t: 13.5, text: '[upgrade/staticpods] Preparing for "kube-apiserver" upgrade\n[upgrade/control-plane] The control plane instance for this node was successfully upgraded!\n[upgrade/kubelet-config] The kubelet configuration for this node was successfully upgraded!' },
+  { t: 16.5, text: '+ systemctl restart kubelet\nupgrade-script-done' },
+  { t: 18.5, text: '換的是 /usr 上的「疊加層」—— 主機、磁碟、記憶體裡的一切原地不動', kind: 'ok' },
+];
+const D3NodeReplay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DEMO ③ · 節點內部視角 —— sysext 換版 + kubeadm 升級實錄" lines={d3jLines} />
+  </div>
+);
+
 /* ── 21 前沿稅 ───────────────────────────────────────── */
 const FrontierTax: Page = () => (
   <Dark eyebrow="誠實的總結" title="這條路：可行，但前沿">
@@ -1197,12 +1283,12 @@ export default [
   Cover, Housekeeping, Agenda,
   Step0Cmd, Step0Replay, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   D0Intro,
-  D0S1Cmd, D0S1Replay, D0S2Cmd, D0S2Replay, D0S3Cmd, D0S3Replay,
-  D0S4Cmd, D0S4Replay, D0S5Cmd, D0S5Replay, D0S6Cmd, D0S6Replay,
+  D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
+  D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Act1Guide, Step1Cmd, Step1Replay, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, Step4Cmd, Step4Replay, Step5Cmd, Step5Replay, Step6Cmd, Step6Replay, Step7Cmd, Step7Replay, Act1Recap,
-  D0S7Cmd, D0S7Replay, D0S8Cmd, D0S8Replay, D0S9Cmd, D0S9Replay,
-  Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, A2S2Cmd, A2S2Replay, A2S3Cmd, A2S3Replay, A2S4Cmd, A2S4Replay, A2S5Cmd, A2S5Replay, A2S6Cmd, A2S6Replay, A2S7Cmd, A2S7Replay, Act2Recap,
-  Demo2, Demo3,
+  Act1Guide, Step1Cmd, Step1Replay, RawS1, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
+  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9,
+  Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
+  Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
   FrontierTax, Roadmap, Resources, Thanks,
 ] satisfies Page[];
