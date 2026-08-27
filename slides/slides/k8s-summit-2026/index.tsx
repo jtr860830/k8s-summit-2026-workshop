@@ -1358,7 +1358,7 @@ const Thanks: Page = () => (
       github.com/jtr860830/k8s-summit-2026-workshop
     </p>
     <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
-      會後在交流區或寬橋攤位，都找得到我 —— 歡迎來交流。
+      會後在 Q&A 區或寬橋攤位，都找得到我 —— 歡迎來交流。
     </p>
   </div>
 );
