@@ -243,7 +243,7 @@ const D0Intro: Page = () => (
 const D0Prereq: Page = () => (
   <Light eyebrow="DAY-0 · 開工前" title="機房最低配備 —— 就這四樣">
     <div style={{ display: 'flex', gap: 24 }}>
-      <div style={{ flex: 1.2, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
         <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
           <li>一個 L2 網段當裝機網段</li>
