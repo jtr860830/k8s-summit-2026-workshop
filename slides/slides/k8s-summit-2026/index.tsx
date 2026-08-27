@@ -1293,24 +1293,6 @@ const Roadmap: Page = () => (
   </Light>
 );
 
-/* ── 23 資源頁 ───────────────────────────────────────── */
-const Resources: Page = () => (
-  <Light eyebrow="帶回家" title="所有教材，回家可以重跑">
-    <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
-      <div style={{ flex: 1, fontSize: 36, lineHeight: 1.7 }}>
-        <p style={{ margin: 0 }}>教材 repo（含完整 labs 與追趕腳本）：</p>
-        <p style={{ fontFamily: mono, fontSize: 32, color: 'var(--osd-accent)', fontWeight: 700, margin: '12px 0 36px' }}>
-          github.com/jtr860830/k8s-summit-2026-workshop
-        </p>
-        <p style={{ margin: 0 }}>附錄：Tinkerbell playground —— 在自己的 Linux 機器上重現「插電上架」</p>
-      </div>
-      <div style={{ width: 420, height: 420, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, color: muted }}>
-        QR Code（W3 放入）
-      </div>
-    </div>
-  </Light>
-);
-
 /* ── 23b 開源致謝 ────────────────────────────────────── */
 const CreditCol = ({ title, items }: { title: string; items: string[] }) => (
   <div style={{ flex: 1 }}>
@@ -1380,5 +1362,5 @@ export default [
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
-  FrontierTax, PoolPolicy, Roadmap, Resources, OpenSourceCredits, Thanks,
+  FrontierTax, PoolPolicy, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
