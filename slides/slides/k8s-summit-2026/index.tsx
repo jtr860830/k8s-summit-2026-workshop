@@ -1219,7 +1219,69 @@ const D3NodeReplay: Page = () => (
   </div>
 );
 
+/* ── day-0 章節收束：自舉與角色 ──────────────────────── */
+const BootstrapFull: Page = () => (
+  <Dark eyebrow="DAY-0 · 收束" title="自舉，說完整">
+    <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={28}>seed 從頭到尾沒有「建」過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
+      <Li gap={28}>真實場景：一台筆電接上機房網段就能當 seed —— pivot 之後闔蓋走人，<Red>零依賴</Red></Li>
+      <Li gap={28}>move 搬的是「管理帳本」，不是叢集 —— apiserver、etcd、workload 全程沒動</Li>
+      <Li gap={28}>而且是<Red>雙向的</Red>：撤離、整修、災難演練走同一條路 —— 那台筆電既是產房、也是急診室</Li>
+    </ul>
+  </Dark>
+);
+
+const RoleKnob = ({ q, a, detail }: { q: string; a: string; detail: string }) => (
+  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '28px 32px' }}>
+    <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 12 }}>{q}</div>
+    <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>{a}</div>
+    <div style={{ fontSize: 26, color: '#5a5148', lineHeight: 1.45 }}>{detail}</div>
+  </div>
+);
+
+const RoleDecision: Page = () => (
+  <Light eyebrow="DAY-0 · 收束" title="一台機器的角色，是怎麼決定的">
+    <div style={{ display: 'flex', gap: 24, marginBottom: 30 }}>
+      <RoleKnob q="哪一台？" a="標籤" detail="Hardware 貼體質標籤，template 用 hardwareAffinity 認領 —— 第 8 步的 day0/role: mgmt" />
+      <RoleKnob q="什麼角色？" a="擁有者" detail="KubeadmControlPlane 生的是控制平面；MachineDeployment 生的是 worker —— 第一幕的 demo-md-0 就是它" />
+      <RoleKnob q="幾台？" a="replicas" detail="一個數字。擴容、縮容、HA 全是改這裡 —— kro 的 profile: ha 展開的就是它" />
+    </div>
+    <ul style={{ fontSize: 31, paddingLeft: 44, margin: 0 }}>
+      <Li gap={18}>進門是另一層：RuleSet 管「誰能進池、裝哪個 OS」—— 角色到認領那一刻才存在</Li>
+      <Li gap={18}>我們的管理叢集刻意 <Red>CP-only + 拔 taint</Red>（HCI）：平台元件跑在控制平面上，worker 屬於 workload 叢集</Li>
+    </ul>
+  </Light>
+);
+
+/* ── 池策略（Roadmap 前橋接頁）─────────────────────────── */
+const PoolPolicy: Page = () => (
+  <Light eyebrow="設計取捨" title="資源池的兩種待命姿勢">
+    <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
+        <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>HookOS 待命（上游預設）</div>
+        <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
+          <li>認領那一刻才裝，<b>一次到位</b>（裝的就是最終身份）</li>
+          <li>不需要裝後收尾狀態機</li>
+          <li>代價：待命機在記憶體小系統裡 —— 不可 SSH、斷電後依賴供裝面重新拉起</li>
+        </ul>
+      </div>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
+        <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>先裝基礎 OS（今天的示範）</div>
+        <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
+          <li>池裡是「活的機器」：可 SSH、可燒機、可更新韌體</li>
+          <li>加入現有叢集只要 join，幾十秒</li>
+          <li>代價：被認領去開新叢集時要<b>再重灌一次</b></li>
+        </ul>
+      </div>
+    </div>
+    <p style={{ fontSize: 33, fontWeight: 700, margin: 0 }}>
+      沒有標準答案 —— 這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，甚至該按機型混合。而政策需要一個宣告的地方 ——
+    </p>
+  </Light>
+);
+
 /* ── 21 前沿稅 ───────────────────────────────────────── */
+
 const FrontierTax: Page = () => (
   <Dark eyebrow="誠實的總結" title="這條路：可行，但前沿">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -1287,8 +1349,8 @@ export default [
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step1Cmd, Step1Replay, RawS1, Step2Cmd, Step2Replay, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
-  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9,
+  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
-  FrontierTax, Roadmap, Resources, Thanks,
+  FrontierTax, PoolPolicy, Roadmap, Resources, Thanks,
 ] satisfies Page[];
