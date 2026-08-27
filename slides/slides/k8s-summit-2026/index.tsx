@@ -1354,6 +1354,12 @@ const Thanks: Page = () => (
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh） · 寬橋 · KubeSummit 2026
     </p>
+    <p style={{ fontFamily: mono, fontSize: 30, color: '#7ee787', marginTop: 48 }}>
+      github.com/jtr860830/k8s-summit-2026-workshop
+    </p>
+    <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
+      想深聊的 —— 會後交流場地見。
+    </p>
   </div>
 );
 
