@@ -97,7 +97,7 @@ const Cover: Page = () => (
       用 Kubernetes 打造<br />自動化私有雲基礎設施
     </h1>
     <p style={{ fontSize: 36, color: mutedDark, marginTop: 48 }}>
-      插電上架 · 宣告式叢集 · 自助服務 —— 90 分鐘，親手體驗
+      插電上架 · 宣告式基礎設施 · 自助服務 —— 90 分鐘，親手體驗
     </p>
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh）<span style={{ color: '#f0b5a1', margin: '0 16px' }}>|</span>Platform Engineer, 寬橋
