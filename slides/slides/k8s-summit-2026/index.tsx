@@ -1350,7 +1350,7 @@ const OpenSourceCredits: Page = () => (
         'Butane / Ignition', 'systemd-sysext', 'Docker',
       ]} />
       <CreditCol title="簡報本身" items={[
-        'open-slide', 'LINE Seed TW（LY Corp.）', 'Noto Sans TC（Google）',
+        'open-slide（1weiho）', 'LINE Seed TW（LY Corp.）', 'Noto Sans TC（Google）',
         'Maple Mono（subframe7536）', '—— 字體皆 SIL OFL',
       ]} />
     </div>
