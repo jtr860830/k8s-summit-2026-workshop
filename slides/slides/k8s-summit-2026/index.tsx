@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
 import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 import { RAW } from './rawlogs';
+import './fonts.css';
 
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
   fonts: {
-    display: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif',
-    body: '"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif',
+    display: '"Noto Sans TC", system-ui, sans-serif',
+    body: '"Noto Sans TC", system-ui, sans-serif',
   },
   typeScale: { hero: 150, body: 38 },
   radius: 14,
@@ -16,7 +17,7 @@ export const design: DesignSystem = {
 const muted = '#8f8f8f';
 const mutedDark = '#d9d9d9';
 const darkBg = 'linear-gradient(160deg, #17171c 0%, #1d1d24 70%, #26181a 100%)';
-const mono = '"Maple Mono NF CN", "Maple Mono", Consolas, Menlo, monospace';
+const mono = '"Maple Mono NF CN", "Maple Mono", "Noto Sans TC", monospace';
 const codeBg = '#1b1b20';
 const codeBorder = '#2c2c34';
 
