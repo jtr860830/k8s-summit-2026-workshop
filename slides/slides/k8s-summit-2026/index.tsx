@@ -249,7 +249,7 @@ const D0Prereq: Page = () => (
           <li>一個 L2 網段當裝機網段</li>
           <li>機房既有的 DHCP</li>
           <li>一台 Linux 當起始機（seed），接外網與裝機網段</li>
-          <li>要納管的伺服器支援 UEFI 網路開機（開機順序網路優先）</li>
+          <li>要納管的伺服器支援網路開機（開機順序網路優先）</li>
         </ul>
       </div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
