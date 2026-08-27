@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # day-0 第 3 步：備妥作業系統映像與 kubelet sysext，放進映像檔伺服器
 # 放進 /tmp = Tinkerbell chart 的 hookos artifacts 目錄（nginx root），
-# 之後由 http://172.16.91.4:7173/ 供裝機使用
+# 之後由 http://172.16.91.4:7173/ 提供給裝機流程使用
 set -euo pipefail
 : "${K8S_SYSEXT_VERSION:=v1.34.6}"
 FLATCAR_BASE="https://stable.release.flatcar-linux.net/amd64-usr/current"

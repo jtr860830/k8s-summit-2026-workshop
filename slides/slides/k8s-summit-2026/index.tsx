@@ -147,7 +147,7 @@ const WhiteBox: Page = () => (
       <Li>雲端巨頭（hyperscaler）的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
       <Li>那些白牌伺服器，大多是台灣代工的</Li>
       <Li>以前的門檻：管理系統要自己寫，只有這種規模的公司寫得起</Li>
-      <Li>現在：裸機供裝、叢集管理、VM、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
+      <Li>現在：裸機佈建、叢集管理、VM、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
       <Li>Kubernetes 自己就是例子：前身正是某家雲端巨頭的內部叢集系統</Li>
     </ul>
   </Light>
@@ -192,7 +192,7 @@ const Architecture: Page = () => (
       <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
       <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的容器 OS" />
-      <LayerRow name="裸機供裝" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
+      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
     </div>
   </Light>
 );
@@ -246,9 +246,9 @@ const D0Prereq: Page = () => (
       <div style={{ flex: 1.2, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
         <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
-          <li>一個 L2 網段當供裝網路</li>
+          <li>一個 L2 網段當裝機網段</li>
           <li>機房既有的 DHCP（沒有的話 dnsmasq 十行設定）</li>
-          <li>一台現成的 Linux 當 seed（通網際網路與供裝網段）</li>
+          <li>一台現成的 Linux 當 seed（通網際網路與裝機網段）</li>
           <li>機器支援 UEFI 網路開機（開機順序網路優先）</li>
         </ul>
       </div>
@@ -1279,7 +1279,7 @@ const PoolPolicy: Page = () => (
         <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
           <li>認領那一刻才裝，<b>一次到位</b>（裝的就是最終身份）</li>
           <li>不需要裝後收尾狀態機</li>
-          <li>代價：待命機在記憶體小系統裡 —— 不可 SSH、斷電後依賴供裝面重新拉起</li>
+          <li>代價：待命機在記憶體小系統裡 —— 不可 SSH、斷電後要靠裝機服務重新拉起</li>
         </ul>
       </div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>

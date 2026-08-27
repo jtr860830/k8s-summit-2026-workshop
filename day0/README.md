@@ -11,8 +11,8 @@
 
 | 項目 | 說明 |
 |---|---|
-| 起始機（seed） | 一台 Linux 機器（示範用 Ubuntu 24.04，4 核 8GB），兩張網卡：一張出網、一張接供裝網段 |
-| 供裝網段 | 一個隔離的 L2 網段（示範用 172.16.91.0/24，seed 在 .2） |
+| 起始機（seed） | 一台 Linux 機器（示範用 Ubuntu 24.04，4 核 8GB），兩張網卡：一張出網、一張接裝機網段 |
+| 裝機網段 | 一個隔離的 L2 網段（示範用 172.16.91.0/24，seed 在 .2） |
 | 空白機器 | 可 PXE 開機的機器（VM 或實體皆可）：UEFI、開機順序網路優先；VM 要加 VirtIO RNG（沒有它 HookOS 開機會卡熵池） |
 | 機房 DHCP | 網段上要有 DHCP（示範用 seed 上的 dnsmasq）。Tinkerbell 用 auto-proxy 模式只補開機資訊，不搶 IP 主權 |
 | 工具 | helm、butane（v0.29.0）、python3 + PyYAML |
@@ -40,7 +40,7 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb
 ```
 
 `--disable servicelb` 不能省：k3s 內建的負載平衡器會跟 Tinkerbell 自帶的
-kube-vip 搶 LoadBalancer IP，供裝中的映像傳輸會被中途掐斷（實測會斷在半路
+kube-vip 搶 LoadBalancer IP，裝機中的映像傳輸會被中途掐斷（實測會斷在半路
 還不報錯）。
 
 ### 2. 裝 Tinkerbell
