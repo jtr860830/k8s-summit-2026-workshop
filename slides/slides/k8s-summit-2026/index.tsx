@@ -1358,7 +1358,7 @@ const Thanks: Page = () => (
       github.com/jtr860830/k8s-summit-2026-workshop
     </p>
     <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
-      想深聊的 —— 會後交流場地見。
+      想繼續聊的 —— 會後交流場地見。
     </p>
   </div>
 );
