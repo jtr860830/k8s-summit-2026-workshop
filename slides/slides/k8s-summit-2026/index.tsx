@@ -1272,11 +1272,11 @@ const PoolPolicy: Page = () => (
 /* ── 21 前沿稅 ───────────────────────────────────────── */
 
 const FrontierTax: Page = () => (
-  <Dark eyebrow="誠實的總結" title="這條路：可行，但前沿">
+  <Dark eyebrow="誠實的總結" title="這條路可行 —— 但要有心理準備">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={30}>七個驗證專案、六十多項實測發現 —— <Red>沒有一條退路被迫啟用</Red></Li>
-      <Li gap={30}>一路踩過的坑是「前沿稅」的價目表：無聲、無文件、只有實測炸得出來</Li>
-      <Li gap={30}>付得起這筆稅，換到的是<Red>單一控制平面的複利</Red>：一套 RBAC、一套 GitOps、一種除錯路徑</Li>
+      <Li gap={30}><Red>可行的證據</Red>：七個驗證專案全數通過，事先準備的備案一個都沒用上</Li>
+      <Li gap={30}><Red>要準備的心理</Red>：坑大多無聲、沒有文件，只能實測踩出來 —— 今天每一句「實測」背後都是一輪排錯</Li>
+      <Li gap={30}><Red>值得的理由</Red>：整個基礎設施只剩一套權限、一套 GitOps、一種除錯思路 —— 維運複雜度不再隨工具數量成長</Li>
     </ul>
   </Dark>
 );
