@@ -248,7 +248,7 @@ const D0Prereq: Page = () => (
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
           <li>一個 L2 網段當供裝網路（PXE 廣播傳得到就行）</li>
           <li>機房既有的 DHCP —— 沒有的話，dnsmasq 十行設定</li>
-          <li>一台 Linux 起始機（雙網卡：出網 + 供裝網段）</li>
+          <li>一台現成的 Linux 當起始機（seed）—— 要同時摸得到網際網路與供裝網段；人只裝這一台，之後每台都是平台裝的</li>
           <li>機器能網路開機（UEFI PXE、開機順序網路優先）</li>
         </ul>
       </div>
