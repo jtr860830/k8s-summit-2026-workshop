@@ -247,7 +247,7 @@ const D0Prereq: Page = () => (
         <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
           <li>一個 L2 網段當裝機網段</li>
-          <li>機房既有的 DHCP（沒有的話 dnsmasq 十行設定）</li>
+          <li>機房既有的 DHCP</li>
           <li>一台現成的 Linux 當 seed（通網際網路與裝機網段）</li>
           <li>機器支援 UEFI 網路開機（開機順序網路優先）</li>
         </ul>
