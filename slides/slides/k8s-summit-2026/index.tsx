@@ -17,7 +17,7 @@ export const design: DesignSystem = {
 const muted = '#8f8f8f';
 const mutedDark = '#d9d9d9';
 const darkBg = 'linear-gradient(160deg, #17171c 0%, #1d1d24 70%, #26181a 100%)';
-const mono = '"Maple Mono NF CN", "Maple Mono", "Noto Sans TC", monospace';
+const mono = '"Maple Mono NF CN", monospace';
 const codeBg = '#1b1b20';
 const codeBorder = '#2c2c34';
 
