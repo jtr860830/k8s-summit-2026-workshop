@@ -246,10 +246,10 @@ const D0Prereq: Page = () => (
       <div style={{ flex: 1.2, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
         <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
-          <li>一個 L2 網段當供裝網路（PXE 廣播傳得到就行）</li>
-          <li>機房既有的 DHCP —— 沒有的話，dnsmasq 十行設定</li>
-          <li>一台現成的 Linux 當起始機（seed）—— 要同時摸得到網際網路與供裝網段；人只裝這一台，之後每台都是平台裝的</li>
-          <li>機器能網路開機（UEFI PXE、開機順序網路優先）</li>
+          <li>一個 L2 網段當供裝網路</li>
+          <li>機房既有的 DHCP（沒有的話 dnsmasq 十行設定）</li>
+          <li>一台現成的 Linux 當 seed（通網際網路與供裝網段）</li>
+          <li>機器支援 UEFI 網路開機（開機順序網路優先）</li>
         </ul>
       </div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
@@ -263,7 +263,7 @@ const D0Prereq: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      IP 主權照舊在機房 DHCP 手上 —— Tinkerbell 只「補答」開機資訊，對現有網路零侵入。
+      人只裝 seed 這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 對現有網路零侵入。
     </p>
   </Light>
 );
