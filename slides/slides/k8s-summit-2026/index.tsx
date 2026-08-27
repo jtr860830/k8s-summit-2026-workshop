@@ -657,7 +657,6 @@ const RawLog = ({ k, title }: { k: string; title: string }) => (
     <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: codeBg, border: `1px solid ${codeBorder}`, borderRadius: 'var(--osd-radius)', padding: '28px 34px' }}>
       <pre style={{ margin: 0, fontFamily: mono, fontSize: 19, lineHeight: 1.5, color: '#d8d8dc', whiteSpace: 'pre-wrap', wordBreak: 'break-all', userSelect: 'text' }}>{RAW[k]}</pre>
     </div>
-    <Footer dark />
   </div>
 );
 const RawS0: Page = () => <RawLog k="s0" title="開始動手前 · 環境驗證" />;
