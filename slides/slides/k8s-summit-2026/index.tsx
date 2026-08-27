@@ -1324,6 +1324,42 @@ const Resources: Page = () => (
   </Light>
 );
 
+/* ── 23b 開源致謝 ────────────────────────────────────── */
+const CreditCol = ({ title, items }: { title: string; items: string[] }) => (
+  <div style={{ flex: 1 }}>
+    <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>{title}</div>
+    <div style={{ fontFamily: mono, fontSize: 24, lineHeight: 1.75, color: '#3a3a3a' }}>
+      {items.map((i) => <div key={i}>{i}</div>)}
+    </div>
+  </div>
+);
+
+const OpenSourceCredits: Page = () => (
+  <Light eyebrow="站在巨人的肩膀上" title="這場工作坊，全部由開源軟體組成">
+    <div style={{ display: 'flex', gap: 40, marginTop: 4 }}>
+      <CreditCol title="平台核心" items={[
+        'Kubernetes / kubeadm', 'Cluster API（CAPD/CAPT/CAPK）', 'Tinkerbell + HookOS',
+        'Flatcar Container Linux', 'kro', 'kube-vip',
+      ]} />
+      <CreditCol title="儲存・網路・虛擬化" items={[
+        'Rook + Ceph', 'Cilium / kindnet', 'KubeVirt + CDI',
+        'containerd', 'etcd / CoreDNS', 'dnsmasq',
+      ]} />
+      <CreditCol title="工具鏈" items={[
+        'kind / k3s', 'clusterctl / kubectl', 'Helm',
+        'Butane / Ignition', 'systemd-sysext', 'Docker',
+      ]} />
+      <CreditCol title="簡報本身" items={[
+        'React / Vite', 'LINE Seed TW（LY Corp.）', 'Noto Sans TC（Google）',
+        'Maple Mono（subframe7536）', '—— 字體皆 SIL OFL',
+      ]} />
+    </div>
+    <p style={{ fontSize: 30, marginTop: 40, fontWeight: 700 }}>
+      謝謝每一位維護者 —— 我們今天展示的不是自己的魔法，是<span style={{ color: 'var(--osd-accent)' }}>開源社群二十年的累積</span>。
+    </p>
+  </Light>
+);
+
 /* ── 24 封底 ─────────────────────────────────────────── */
 const Thanks: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
@@ -1354,5 +1390,5 @@ export default [
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
-  FrontierTax, PoolPolicy, Roadmap, Resources, Thanks,
+  FrontierTax, PoolPolicy, Roadmap, Resources, OpenSourceCredits, Thanks,
 ] satisfies Page[];
