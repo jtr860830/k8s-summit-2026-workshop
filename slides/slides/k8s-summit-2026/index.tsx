@@ -1351,9 +1351,6 @@ const OpenSourceCredits: Page = () => (
 const Thanks: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 800, margin: 0 }}>謝謝</h1>
-    <p style={{ fontSize: 40, color: mutedDark, marginTop: 44 }}>
-      機器插電，剩下的交給 YAML。
-    </p>
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh） · 寬橋 · KubeSummit 2026
     </p>
