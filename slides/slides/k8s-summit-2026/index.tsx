@@ -1350,8 +1350,8 @@ const OpenSourceCredits: Page = () => (
         'Butane / Ignition', 'systemd-sysext', 'Docker',
       ]} />
       <CreditCol title="簡報本身" items={[
-        'React / Vite', 'LINE Seed TW（LY Corp.）', 'Noto Sans TC（Google）',
-        'Maple Mono（subframe7536）', '—— 字體皆 SIL OFL',
+        'open-slide', 'React / Vite', 'LINE Seed TW（LY Corp.）',
+        'Noto Sans TC（Google）', 'Maple Mono（subframe7536）', '—— 字體皆 SIL OFL',
       ]} />
     </div>
     <p style={{ fontSize: 30, marginTop: 40, fontWeight: 700 }}>
