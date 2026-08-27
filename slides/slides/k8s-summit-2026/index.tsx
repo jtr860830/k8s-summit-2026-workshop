@@ -240,6 +240,34 @@ const D0Intro: Page = () => (
   </Light>
 );
 
+const D0Prereq: Page = () => (
+  <Light eyebrow="DAY-0 · 開工前" title="機房最低配備 —— 就這四樣">
+    <div style={{ display: 'flex', gap: 24 }}>
+      <div style={{ flex: 1.2, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
+        <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
+        <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
+          <li>一個 L2 網段當供裝網路（PXE 廣播傳得到就行）</li>
+          <li>機房既有的 DHCP —— 沒有的話，dnsmasq 十行設定</li>
+          <li>一台 Linux 起始機（雙網卡：出網 + 供裝網段）</li>
+          <li>機器能網路開機（UEFI PXE、開機順序網路優先）</li>
+        </ul>
+      </div>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
+        <div style={{ fontSize: 29, fontWeight: 800, marginBottom: 16 }}>不需要</div>
+        <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65, color: '#5a5148' }}>
+          <li>BMC（是升級選配，不是門票）</li>
+          <li>既有的 Kubernetes</li>
+          <li>共享儲存、特殊交換器功能</li>
+          <li>任何商業授權</li>
+        </ul>
+      </div>
+    </div>
+    <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
+      IP 主權照舊在機房 DHCP 手上 —— Tinkerbell 只「補答」開機資訊，對現有網路零侵入。
+    </p>
+  </Light>
+);
+
 /* ── DAY-0 九組：指令頁 + 真實錄製重播頁 ─────────────── */
 const d0s1Lines: RLine[] = [
   { t: 0.5, text: 'curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb', kind: 'cmd' },
@@ -1358,7 +1386,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
-  D0Intro,
+  D0Intro, D0Prereq,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
