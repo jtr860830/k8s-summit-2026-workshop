@@ -248,7 +248,7 @@ const D0Prereq: Page = () => (
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
           <li>一個 L2 網段當裝機網段</li>
           <li>機房既有的 DHCP</li>
-          <li>一台現成的 Linux 當 seed（通網際網路與裝機網段）</li>
+          <li>一台現成的 Linux 當起始機（seed），要通網際網路與裝機網段</li>
           <li>機器支援 UEFI 網路開機（開機順序網路優先）</li>
         </ul>
       </div>
@@ -263,7 +263,7 @@ const D0Prereq: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      人只裝 seed 這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 對現有網路零侵入。
+      人只裝起始機這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 對現有網路零侵入。
     </p>
   </Light>
 );
@@ -1240,8 +1240,8 @@ const D3NodeReplay: Page = () => (
 const BootstrapFull: Page = () => (
   <Dark eyebrow="DAY-0 · 收束" title="自舉，說完整">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={28}>seed 從頭到尾沒有「建」過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
-      <Li gap={28}>真實場景：一台筆電接上機房網段就能當 seed —— pivot 之後闔蓋走人，<Red>零依賴</Red></Li>
+      <Li gap={28}>起始機從頭到尾沒有「建」過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
+      <Li gap={28}>真實場景：一台筆電接上機房網段就能當起始機 —— pivot 之後闔蓋走人，<Red>零依賴</Red></Li>
       <Li gap={28}>move 搬的是「管理帳本」，不是叢集 —— apiserver、etcd、workload 全程沒動</Li>
       <Li gap={28}>而且是<Red>雙向的</Red>：撤離、整修、災難演練走同一條路 —— 那台筆電既是產房、也是急診室</Li>
     </ul>
