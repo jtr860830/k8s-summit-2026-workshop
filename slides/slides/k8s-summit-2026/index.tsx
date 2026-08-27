@@ -7,8 +7,8 @@ import './fonts.css';
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
   fonts: {
-    display: '"Noto Sans TC", system-ui, sans-serif',
-    body: '"Noto Sans TC", system-ui, sans-serif',
+    display: '"LINE Seed TW", "Noto Sans TC", system-ui, sans-serif',
+    body: '"LINE Seed TW", "Noto Sans TC", system-ui, sans-serif',
   },
   typeScale: { hero: 150, body: 38 },
   radius: 14,
@@ -46,7 +46,7 @@ const Eyebrow = ({ children, dark = false }: { children: string; dark?: boolean 
 );
 
 const H = ({ children, size = 76 }: { children: React.ReactNode; size?: number }) => (
-  <h2 style={{ fontFamily: 'var(--osd-font-display)', fontSize: size, fontWeight: 900, margin: '20px 0 0', lineHeight: 1.15 }}>
+  <h2 style={{ fontFamily: 'var(--osd-font-display)', fontSize: size, fontWeight: 800, margin: '20px 0 0', lineHeight: 1.15 }}>
     {children}
   </h2>
 );
@@ -93,7 +93,7 @@ const Red = ({ children }: { children: React.ReactNode }) => (
 const Cover: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
     <Eyebrow dark>KUBESUMMIT 2026 · 體驗工作坊</Eyebrow>
-    <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 108, fontWeight: 900, margin: '36px 0 0', lineHeight: 1.2 }}>
+    <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 108, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.2 }}>
       用 Kubernetes 打造<br />自動化私有雲基礎設施
     </h1>
     <p style={{ fontSize: 36, color: mutedDark, marginTop: 48 }}>
@@ -171,17 +171,17 @@ const Lineage: Page = () => (
   <Light eyebrow="從 Pod 到裸機" title="Reconcile by Replacement">
     <div style={{ display: 'flex', gap: 40, fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
-        <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>Pod</div>
+        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>Pod</div>
         <p style={{ lineHeight: 1.5, marginTop: 18 }}>壞了不修，<b>換一個</b>。<br />替換成本趨近於零</p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
-        <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>Machine</div>
+        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>Machine</div>
         <p style={{ lineHeight: 1.5, marginTop: 18 }}>Cluster API 逐字翻譯：<br />升級機器 = <b>換一台機器</b></p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 36 }}>
-        <div style={{ fontWeight: 900, fontSize: 40, color: 'var(--osd-accent)' }}>裸機？</div>
+        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>裸機？</div>
         <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌 + 資料 + 小時級<br /><b>這個落差，就是今天要解的問題</b></p>
       </div>
     </div>
@@ -894,7 +894,7 @@ const Act1Recap: Page = () => (
   <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
     <div style={{ display: 'flex', gap: 48 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
-        <div style={{ fontSize: 34, fontWeight: 900, color: '#3d7a3d' }}>得到的</div>
+        <div style={{ fontSize: 34, fontWeight: 800, color: '#3d7a3d' }}>得到的</div>
         <ul style={{ fontSize: 33, paddingLeft: 40, marginTop: 20, lineHeight: 1.55 }}>
           <li>叢集 = 一份宣告，apply 即得</li>
           <li>擴縮、汰換全是改欄位</li>
@@ -902,7 +902,7 @@ const Act1Recap: Page = () => (
         </ul>
       </div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
-        <div style={{ fontSize: 34, fontWeight: 900, color: 'var(--osd-accent)' }}>付出的</div>
+        <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)' }}>付出的</div>
         <ul style={{ fontSize: 33, paddingLeft: 40, marginTop: 20, lineHeight: 1.55 }}>
           <li>七個物件、200 行 YAML</li>
           <li>名稱互相引用，錯一個字全垮</li>
@@ -1328,7 +1328,7 @@ const Resources: Page = () => (
 /* ── 24 封底 ─────────────────────────────────────────── */
 const Thanks: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-    <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 900, margin: 0 }}>謝謝</h1>
+    <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 800, margin: 0 }}>謝謝</h1>
     <p style={{ fontSize: 40, color: mutedDark, marginTop: 44 }}>
       機器插電，剩下的交給 YAML。
     </p>
