@@ -255,7 +255,7 @@ const D0Prereq: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
         <div style={{ fontSize: 29, fontWeight: 800, marginBottom: 16 }}>不需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65, color: '#5a5148' }}>
-          <li>BMC（是升級選配，不是門票）</li>
+          <li>BMC</li>
           <li>既有的 Kubernetes</li>
           <li>共享儲存、特殊交換器功能</li>
           <li>任何商業授權</li>
