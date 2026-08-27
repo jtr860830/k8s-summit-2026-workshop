@@ -106,19 +106,6 @@ const Cover: Page = () => (
 );
 
 /* ── 02 開場約定 ─────────────────────────────────────── */
-const Housekeeping: Page = () => (
-  <Light eyebrow="開始之前" title="今天怎麼進行">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li><Red>一半時間你動手</Red>：筆電開 Docker，跟著教材開出自己的叢集</Li>
-      <Li><Red>一半時間看真的</Red>：真實裸機測試床的三段現場示範</Li>
-      <Li>完成會前準備的人：等一下聽到口令直接開跑</Li>
-      <Li>沒完成的人：舉手，助教送上 USB 備援；或看鄰座的就好</Li>
-      <Li>卡住不用怕：每一段都有「追趕腳本」，一鍵回到隊伍</Li>
-      <Li>提問不佔課程時間：<Red>會後有獨立的交流場地</Red>，深聊都在那裡</Li>
-    </ul>
-  </Light>
-);
-
 
 /* ── 02b Agenda ──────────────────────────────────────── */
 const AgendaRow = ({ time, name, note }: { time: string; name: string; note: string }) => (
@@ -1380,7 +1367,7 @@ export const meta: SlideMeta = {
 };
 
 export default [
-  Cover, Housekeeping, Agenda,
+  Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
