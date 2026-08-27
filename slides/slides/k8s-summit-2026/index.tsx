@@ -24,7 +24,7 @@ const codeBorder = '#2c2c34';
 const fill = { width: '100%', height: '100%', fontFamily: 'var(--osd-font-body)' } as const;
 
 const Footer = ({ dark = false }: { dark?: boolean }) => {
-  const { current, total } = useSlidePageNumber();
+  const { current } = useSlidePageNumber();
   return (
     <div
       style={{
@@ -34,7 +34,7 @@ const Footer = ({ dark = false }: { dark?: boolean }) => {
       }}
     >
       <span>用 Kubernetes 打造自動化私有雲基礎設施 · KubeSummit 2026</span>
-      <span>{String(current).padStart(2, '0')} / {total}</span>
+      <span>{String(current).padStart(2, '0')}</span>
     </div>
   );
 };
