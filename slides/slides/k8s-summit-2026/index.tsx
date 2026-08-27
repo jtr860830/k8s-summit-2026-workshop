@@ -1271,13 +1271,17 @@ const PoolPolicy: Page = () => (
 
 /* ── 21 前沿稅 ───────────────────────────────────────── */
 
-const FrontierTax: Page = () => (
-  <Dark eyebrow="誠實的總結" title="這條路可行 —— 但要有心理準備">
-    <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={30}><Red>可行的證據</Red>：七個驗證專案全數通過，事先準備的備案一個都沒用上</Li>
-      <Li gap={30}><Red>要準備的心理</Red>：坑大多無聲、沒有文件，只能實測踩出來 —— 今天每一句「實測」背後都是一輪排錯</Li>
-      <Li gap={30}><Red>值得的理由</Red>：整個基礎設施只剩一套權限、一套 GitOps、一種除錯思路 —— 維運複雜度不再隨工具數量成長</Li>
+const Ecosystem: Page = () => (
+  <Dark eyebrow="這條路換到什麼" title="一切都是 K8s 物件之後，整個生態都是你的">
+    <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={26}><Red>GitOps</Red>：機房狀態全進 Git —— 叢集、機器、上架規則可版控、可稽核、可重建</Li>
+      <Li gap={26}><Red>RBAC</Red>：「誰能開機器、誰能刪叢集」—— 用管 Pod 的同一套權限模型管到裸機</Li>
+      <Li gap={26}><Red>Policy</Red>：「沒貼標籤的機器不准進池」—— 一條 admission 規則的事</Li>
+      <Li gap={26}><Red>觀測</Red>：機器的生命週期就是 events 與 metrics —— 現有監控告警直接沿用</Li>
     </ul>
+    <p style={{ fontSize: 34, marginTop: 38, fontWeight: 700, color: '#f0f0f0' }}>
+      這就是單一控制平面的意義 —— 之後每多會一個雲原生工具，基礎設施就自動多一分能力。
+    </p>
   </Dark>
 );
 
@@ -1362,5 +1366,5 @@ export default [
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
-  FrontierTax, PoolPolicy, Roadmap, OpenSourceCredits, Thanks,
+  Ecosystem, PoolPolicy, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
