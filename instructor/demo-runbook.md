@@ -1,20 +1,27 @@
 # 講師示範 runbook（學員不需閱讀）
 
-三段真實測試床示範，全部採「料理節目式」：現場按扳機看即時反應，切到預熟環境看完成態。
-每段設硬時限決策點 —— 超時就切預錄影片（切換台詞在講稿內），不戀戰。
+三段真實示範，全部採「料理節目式」：現場按扳機看即時反應，切到預熟環境看完成態。
+每段設硬時限決策點 —— 超時就切預錄備援（重播頁已內建於簡報），不戀戰。
 
-連線：雙線路（會場網路 + 手機熱點），Tailscale 經 node-01 跳板；指令環境為 capstone repo
-（`ssh -F poc/01-flatcar-tinkerbell/ssh_config poc1-seed`，`KUBECONFIG=~/mgmt.kubeconfig`）。
+連線：雙線路（會場網路 + 手機熱點），Tailscale 經 node-01 跳板。
+兩個舞台：
+- **day0 環境**（node-05）：demo① 用。`ssh -F poc/01-flatcar-tinkerbell/ssh_config day0-seed`
+- **測試床**（node-02）：demo②③ 用。`ssh -F poc/01-flatcar-tinkerbell/ssh_config poc1-seed`，
+  `KUBECONFIG=~/mgmt.kubeconfig`
 
-## demo① 插電上架（時限：discovery 2 分鐘內要出現）
+## demo① 插電上架 —— 舞台：day0 環境（時限：discovery 2 分鐘內要出現）
 
-- **live**：`qm start <目標機>` → 投影 `watch kubectl -n tinkerbell get hardware` ——
-  Hardware 物件無中生有、CPU/RAM/磁碟屬性回報進來（全程真直播，這段本來就快）
-- **預熟**：切到會前已裝完的另一台 → `kubectl get nodes` 它已是叢集成員
-- 決策點：120 秒沒看到 Hardware → 切影片
-- W2 排練時填入：目標機 VMID、重置指令、預熟機名稱
+- **演前準備**（會前一天 + 場間重置）：capstone repo 內
+  `workshop/day0-env/reset-env.sh && for s in 1 2 3 4 5; do ./run-steps.sh $s; done`
+  （快取在時約 10 分鐘）—— 環境停在「規則就位、舞台空著」= 簡報 day-0 第 5 步結尾
+- **live**：`ssh pve-node05 'qm start 9211'` → 投影
+  `watch kubectl -n tinkerbell get hardware,workflow` ——
+  Hardware 無中生有、workflow 自動出現逐步執行（實測 +45 秒現身、5.5 分鐘裝完）
+- **預熟**：不需要 —— 45 秒內就有畫面；解說期間 workflow 跑完更好
+- 決策點：120 秒沒看到 Hardware → 切簡報 day-0 第 6 步重播頁（同一個環境的錄製）
+- 優勢：與簡報 day-0 章節同景 —— 「剛才頁面上的錄製，就是這個環境」
 
-## demo② OSD 保留式重灌（時限：drain 開始 3 分鐘內可見）
+## demo② OSD 保留式重灌 —— 舞台：測試床（時限：drain 開始 3 分鐘內可見）
 
 - **live**：先秀 `verify` 基線（sha256）→ `kubectl delete machine <一台 mgmt>` →
   投影 drain 事件與 workflow 建立
@@ -22,16 +29,23 @@
   現場比對 fsid 與 sha256 —— 「重灌了，資料一個位元都沒少」
 - 決策點：180 秒沒看到 drain/workflow → 切影片
 - 注意：確認 rook PDB 存在、Ceph HEALTH_OK 才開始（pre-flight 見 POC 6 README）
+- 前置（已完成 2026-08-27）：node-02 儲存分家 —— 測試床 VM 磁碟移至 sas-lvm
+  （兩顆專用 10K SAS），重灌的映像寫入不再與 thin pool 搶 IO
 
-## demo③ 原地零停機升級（時限：extension 接手 2 分鐘內可見）
+## demo③ 原地零停機升級 —— 舞台：測試床（時限：extension 接手 2 分鐘內可見）
 
-- **live**：投影 `kubectl get machines -w`（記下 machine 的 uid）→ 改 KCP `spec.version`
-  → extension 日誌接手畫面
-- **預熟**：切到已升級節點 → machine uid 不變、`uptime` 未中斷、kubelet 新版本
-- 決策點：120 秒沒看到 in-place 決策日誌 → 切影片
-- 排練時順便把 mgmt-2 從 v1.34.1 拉平到 v1.34.6（一石二鳥）
+- **live**：投影 `kubectl get machines.cluster.x-k8s.io -w`（記下 machine 的 uid）→
+  `kubectl patch kubeadmcontrolplane mgmt-cp --type=merge -p '{"spec":{"version":"v1.34.8"}}'`
+  → 升級 Job 出現（`kubectl -n inplace-system get pods -w`）
+- **預熟**：切到已升級節點 → machine uid 不變、`uptime -s` 未變、kubelet 新版本
+- 決策點：120 秒沒看到升級 Job → 切簡報 demo③ 重播頁（2026-08-26 實錄 v1.34.7）
+- 彈藥已備：v1.34.8 sysext 已在 artifacts（Ceph RBD）；v1.34.9 為備用版
+- 注意：`kubectl get machines` 短名會解析到 Rufio 的 BMC CRD —— 一律用全名
+- 注意：rollout 進行中絕不重部署 extension（fallback = 換機重灌）
 
 ## 場間重置（9/10 場後執行）
 
-`reset-testbed.sh`（W2 填實）：目標機清空回待發現狀態、預熟環境重新預熟、
-Ceph/extension 健康檢查、錄影備援檔案就位確認。
+- day0 環境：`reset-env.sh` + 重跑步驟 1–5（見 demo① 演前準備）
+- 測試床：`reset-testbed.sh`（W2 填實）：重灌節點回歸驗證、Ceph HEALTH_OK、
+  extension 健康、artifacts 檔案就位（flatcar gz、v1.34.8/9 sysext）
+- 簡報重播頁即錄影備援 —— 不需另備影片檔
