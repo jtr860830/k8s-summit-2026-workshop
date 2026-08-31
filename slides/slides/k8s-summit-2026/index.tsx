@@ -1176,6 +1176,42 @@ const Demo2: Page = () => (
   </Dark>
 );
 
+/* ── 16b demo② 指令與錄製 ────────────────────────────── */
+const D2Cmd: Page = () => (
+  <StepCmd act="DEMO ② · 重灌保資料" step={1} total={1} title="刪掉一台正在承載 Ceph 的節點"
+    cmd={`# 先記下資料指紋與 Ceph 身份
+sha256sum /data/evidence.bin
+ceph fsid
+
+kubectl delete machines.cluster.x-k8s.io \\
+  <一台 mgmt 的 Machine>
+# 之後：等 workflow 出現，按一下電源
+#（沒有 BMC 沒人幫它重開 —— Rufio 自動化的正是這步）`}
+    expect="drain 受 Ceph PDB 節制 → 重灌只寫 OS 碟（by-path 鎖定，資料碟不動）→ Rook 原碟認領。判決：fsid 與 sha256 前後一致" />
+);
+
+const d2wHdr = 'MACHINE         PHASE          |  WORKFLOW 動作     |  ceph';
+const d2Lines: RLine[] = [
+  { t: 0.5, text: 'sha256sum /data/evidence.bin ; ceph fsid', kind: 'cmd' },
+  { t: 1.6, text: 'c1043a6162484b93396dbf2e01a2591b94bf34ef50a28c87c0a58b2b5b7ee084  /data/evidence.bin\n2e0e652d-3c57-48f8-98cc-23a958b9a66e' },
+  { t: 3.4, text: 'kubectl delete machines.cluster.x-k8s.io mgmt-cp-65blj   # 它跑著 osd.1', kind: 'cmd' },
+  { t: 4.5, text: 'machine.cluster.x-k8s.io "mgmt-cp-65blj" deleted' },
+  { t: 6.5, text: `${d2wHdr}\nmgmt-cp-65blj   Deleting       |  drain 中          |  HEALTH_WARN · osd: 2 up, 3 in（noout —— PDB 看守，等它回來、不搬資料）`, kind: 'frame' },
+  { t: 10.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  PENDING           |  HEALTH_WARN\n（新 Machine 已生成 —— 這裡按一下電源，機器 PXE 進 HookOS 接單）`, kind: 'frame' },
+  { t: 13.5, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  write-image       |  HEALTH_WARN · osd: 2 up\n（只重寫 OS 碟 —— 資料碟 by-path 鎖定，一個位元都不碰）`, kind: 'frame' },
+  { t: 17.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioned    |  SUCCESS · reboot  |  HEALTH_WARN · osd: 2 up`, kind: 'frame' },
+  { t: 20.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Running        |  SUCCESS           |  HEALTH_OK · osd: 3 up, 3 in（原碟認領 —— 實測 +13 分鐘）`, kind: 'frame' },
+  { t: 22.5, text: './verify-after.sh', kind: 'cmd' },
+  { t: 23.6, text: 'fsid-MATCH: 2e0e652d-3c57-48f8-98cc-23a958b9a66e\nsha256-MATCH: c1043a6162484b93396dbf2e01a2591b94bf34ef50a28c87c0a58b2b5b7ee084' },
+  { t: 25.5, text: '重灌了一台 Ceph 節點 —— 資料一個位元都沒少', kind: 'ok' },
+];
+const D2Replay: Page = () => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <TerminalReplay title="DEMO ② —— 換機哲學碰上分散式儲存（實錄）" lines={d2Lines} />
+  </div>
+);
+const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
+
 /* ── 17 demo③ 過場 ───────────────────────────────────── */
 const Demo3: Page = () => (
   <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器連重開機都沒有">
@@ -1393,6 +1429,6 @@ export default [
   Act1Guide, Step1Cmd, Step1Replay, RawS1, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
-  Demo2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
+  Demo2, D2Cmd, D2Replay, RawD2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
   Ecosystem, PoolPolicy, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
