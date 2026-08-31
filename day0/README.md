@@ -117,7 +117,7 @@ Ignition 格式的開機設定要在 init 前開 feature gate。
 ### 8. 開出管理叢集
 
 ```bash
-python3 gen-mgmt-hardware.py 1 <管理節點的MAC> | kubectl apply -f -
+python3 gen-mgmt-hardware.py 1 <管理節點的 MAC> | kubectl apply -f -
 python3 gen-mgmt-cluster.py mgmt 1 oem-stub.json "$(cat ~/.ssh/id_ed25519.pub)" | kubectl apply -f -
 ```
 
