@@ -563,21 +563,12 @@ const Step0Replay: Page = () => (
 
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
-  <Dark eyebrow="DEMO ①（同時：請開始跑第一幕步驟 1）" title="插電，然後看著它自己上架">
-    <div style={{ display: 'flex', gap: 56 }}>
-      <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0', flex: 1 }}>
-        <Li gap={28}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
-        <Li gap={28}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
-        <Li gap={28}>切到已完成的機器：它已是叢集成員</Li>
-      </ul>
-      <div style={{ width: 560, background: 'rgba(255,255,255,0.06)', border: '1px solid #2c2c34', borderRadius: 'var(--osd-radius)', padding: 32, fontSize: 30, lineHeight: 1.6, color: mutedDark }}>
-        你的筆電此刻應該在跑：
-        <div style={{ fontFamily: mono, fontSize: 26, marginTop: 16, color: '#7ee787' }}>
-          kind create cluster ...<br />kind load image-archive ...
-        </div>
-        <div style={{ marginTop: 16 }}>約 6 分鐘 —— 正好看完這段示範</div>
-      </div>
-    </div>
+  <Dark eyebrow="DEMO ①（同時：請開始跑第一幕步驟 1，約 6 分鐘）" title="插電，然後看著它自己上架">
+    <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
+      <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
+      <Li gap={34}>切到已完成的機器：它已是叢集成員</Li>
+    </ul>
   </Dark>
 );
 
