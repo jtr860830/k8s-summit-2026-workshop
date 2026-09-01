@@ -747,7 +747,7 @@ const step3Lines: RLine[] = [
 ];
 
 const Step1Cmd: Page = () => (
-  <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 先跑著，聽台上示範"
+  <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 為第一幕動手做準備"
     cmd={`kind create cluster \\
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
 kind load image-archive \\
