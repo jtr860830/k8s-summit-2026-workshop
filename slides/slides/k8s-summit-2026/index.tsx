@@ -752,7 +752,7 @@ const Step1Cmd: Page = () => (
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
 kind load image-archive \\
   ~/.summit-workshop/images.tar --name mgmt`}
-    expect="兩個指令共約 7 分鐘 —— 跑著就好，先聽台上的示範" />
+    expect="兩個指令共約 7 分鐘" />
 );
 
 const Step1Replay: Page = () => (
