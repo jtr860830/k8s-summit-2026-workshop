@@ -117,7 +117,7 @@ const AgendaRow = ({ time, name, note }: { time: string; name: string; note: str
 );
 
 const Agenda: Page = () => (
-  <Light eyebrow="AGENDA" title="90 分鐘怎麼走">
+  <Light eyebrow="AGENDA" title="90 分鐘怎麼進行">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
       <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
       <AgendaRow time="10–30" name="怎麼做到 ＋ Day-0 建置（前六步）" note="剛才那幕，從零建出來的完整過程" />
