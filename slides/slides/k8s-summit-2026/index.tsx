@@ -191,7 +191,7 @@ const Architecture: Page = () => (
       <LayerRow name="叢集生命週期" tool="Cluster API" note="宣告式開叢集 —— 今天第一幕" />
       <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
-      <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的容器 OS" />
+      <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的 container OS" />
       <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
     </div>
   </Light>
@@ -508,7 +508,7 @@ const TinkerbellStack: Page = () => (
       <TinkRow name="smee" role="監聽 PXE 廣播、補答開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
       <TinkRow name="hegel" role="中繼資料服務 —— 機器開機時來拿自己的設定" />
-      <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」，每步是一個容器" />
+      <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」，每步是一個 container" />
       <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有它連斷電的機器都能遠端拉起來" />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
@@ -601,7 +601,7 @@ less labs/01-capi/README.md   # 跟著走
       </div>
       <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, color: '#f0f0f0', width: 620 }}>
         <Li gap={24}>apply 七個物件 → 叢集長出來</Li>
-        <Li gap={24}>每個 Machine 就是一個容器</Li>
+        <Li gap={24}>每個 Machine 就是一個 container</Li>
         <Li gap={24}>擴容 = 改一個數字</Li>
         <Li gap={24}>升級 = <Red>換機器</Red>，不是修機器</Li>
       </ul>
@@ -743,7 +743,7 @@ const step3Lines: RLine[] = [
   { t: 18.0, kind: 'frame', text: machinesHeader + '\n' +
     'demo-control-plane-grlj9   demo   demo-control-plane-grlj9      Running        2m57s   v1.34.0\n' +
     'demo-md-0-rw9sc-r44fv      demo                                 Provisioning   2m35s   v1.34.0' },
-  { t: 20.0, text: '（另一個終端機同時 watch docker ps —— 每台 Machine 就是一個容器）', kind: 'ok' },
+  { t: 20.0, text: '（另一個終端機同時 watch docker ps —— 每台 Machine 就是一個 container）', kind: 'ok' },
 ];
 
 const Step1Cmd: Page = () => (
@@ -766,7 +766,7 @@ const Step3Cmd: Page = () => (
     cmd={`less labs/01-capi/cluster-raw.yaml   # 先看看 200 行長什麼樣
 kubectl apply -f labs/01-capi/cluster-raw.yaml
 watch kubectl get machines`}
-    expect="七個物件建立後，Machine 約 3 分鐘轉為 Running；docker ps 會多出三個容器" />
+    expect="七個物件建立後，Machine 約 3 分鐘轉為 Running；docker ps 會多出三個 container" />
 );
 
 const Step3Replay: Page = () => (
@@ -833,7 +833,7 @@ const step5Lines: RLine[] = [
   { t: 6.5, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        4m11s\ndemo-md-0-dllkk-8qfxp      Provisioning   17s\ndemo-md-0-dllkk-qclx2      Running        3m59s' },
   { t: 10.0, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        4m54s\ndemo-md-0-dllkk-8qfxp      Provisioned    60s\ndemo-md-0-dllkk-qclx2      Running        4m42s' },
   { t: 13.5, kind: 'frame', text: mHdr + '\ndemo-control-plane-945t7   Running        5m15s\ndemo-md-0-dllkk-8qfxp      Running        81s\ndemo-md-0-dllkk-qclx2      Running        5m3s' },
-  { t: 15.5, text: '（docker ps 同步多出一個容器）', kind: 'ok' },
+  { t: 15.5, text: '（docker ps 同步多出一個 container）', kind: 'ok' },
 ];
 const Step5Cmd: Page = () => (
   <StepCmd act="第一幕" step={5} total={7} title="擴容"
@@ -862,7 +862,7 @@ const Step7Cmd: Page = () => (
   <StepCmd act="第一幕" step={7} total={7} title="拆掉"
     cmd={`kubectl delete cluster demo
 watch docker ps`}
-    expect="機器容器依序消失；mgmt 管理叢集保留給第二幕" />
+    expect="機器 container 依序消失；mgmt 管理叢集保留給第二幕" />
 );
 const Step7Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1126,13 +1126,13 @@ const a2s7Lines: RLine[] = [
   { t: 4.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m12s\n                     |  team-a-md-0-9t7q5-6drmh        Deleting   5m1s' },
   { t: 8.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m33s' },
   { t: 11.5, kind: 'frame', text: 'No resources found in default namespace.' },
-  { t: 13.5, text: '（七個底層物件、所有機器容器 —— 一個指令、零孤兒）', kind: 'ok' },
+  { t: 13.5, text: '（七個底層物件、所有機器 container —— 一個指令、零孤兒）', kind: 'ok' },
 ];
 const A2S7Cmd: Page = () => (
   <StepCmd act="第二幕" step={7} total={7} title="拆掉 —— 一個指令、零孤兒"
     cmd={`kubectl delete workloadcluster team-a
 watch kubectl get cluster,machines`}
-    expect="底層物件與容器全部回收，使用者不需要知道拆的順序" />
+    expect="底層物件與 container 全部回收，使用者不需要知道拆的順序" />
 );
 const A2S7Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1147,7 +1147,7 @@ const Act2Recap: Page = () => (
       <Li>200 行 → 6 行的差距不是魔法，是<Red>封裝過的專家知識</Red></Li>
       <Li>status 匯總、更新傳導、cascade 刪除 —— 生命週期語義全部穿透</Li>
       <Li>我們的真實私有雲用<Red>一字不差的 schema</Red> —— 底層只是換了 provider</Li>
-      <Li>今天：Docker 容器當機器；真平台：裸機（Tinkerbell）與虛擬機（KubeVirt）</Li>
+      <Li>今天：Docker container 當機器；真平台：裸機（Tinkerbell）與虛擬機（KubeVirt）</Li>
     </ul>
     <p style={{ fontSize: 38, marginTop: 40, fontWeight: 700 }}>
       接下來的兩段示範，就是同一套 API 在真實硬體上的樣子。
