@@ -119,7 +119,7 @@ const AgendaRow = ({ time, name, note }: { time: string; name: string; note: str
 const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼進行">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電先跑第一幕步驟 1" />
+      <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電跑著準備步驟" />
       <AgendaRow time="10–30" name="怎麼做到 ＋ Day-0 建置（前六步）" note="剛才那幕，從零建出來的完整過程" />
       <AgendaRow time="33–53" name="動手：純 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="53–62" name="Day-0 後三步" note="你手上的 CAPI 開出裸機叢集、pivot 自管" />
@@ -563,7 +563,7 @@ const Step0Replay: Page = () => (
 
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
-  <Dark eyebrow="DEMO ①（同時：請開始跑第一幕步驟 1，約 6 分鐘）" title="插電，然後看著它自己上架">
+  <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
       <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
@@ -667,7 +667,7 @@ const RawLog = ({ k, title }: { k: string; title: string }) => (
 );
 const RawS0: Page = () => <RawLog k="s0" title="開始動手前 · 環境驗證" />;
 const RawS2: Page = () => <RawLog k="s2" title="第一幕 · 步驟 2" />;
-const RawS1: Page = () => <RawLog k="s1" title="第一幕 · 步驟 1" />;
+const RawS1: Page = () => <RawLog k="s1" title="開始動手前 · 步驟 1" />;
 const RawS3: Page = () => <RawLog k="s3" title="第一幕 · 步驟 3" />;
 const RawS4: Page = () => <RawLog k="s4" title="第一幕 · 步驟 4" />;
 const RawS5: Page = () => <RawLog k="s5" title="第一幕 · 步驟 5" />;
@@ -747,7 +747,7 @@ const step3Lines: RLine[] = [
 ];
 
 const Step1Cmd: Page = () => (
-  <StepCmd act="第一幕" step={1} total={7} title="建立管理叢集"
+  <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 先跑著，聽台上示範"
     cmd={`kind create cluster \\
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
 kind load image-archive \\
@@ -757,7 +757,7 @@ kind load image-archive \\
 
 const Step1Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 1 —— 實際執行過程" lines={step1Lines} />
+    <TerminalReplay title="開始動手前 · 步驟 1 —— 實際執行過程" lines={step1Lines} />
   </div>
 );
 
@@ -1412,12 +1412,12 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Agenda,
-  Step0Cmd, Step0Replay, RawS0, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   D0Intro, D0Prereq,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
-  Act1Guide, Step1Cmd, Step1Replay, RawS1, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
+  Act1Guide, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Demo2, D2Cmd, D2Replay, RawD2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
