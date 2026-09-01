@@ -124,7 +124,7 @@ const Agenda: Page = () => (
       <AgendaRow time="33–53" name="動手：純 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="53–62" name="Day-0 後三步" note="你手上的 CAPI 開出裸機叢集、pivot 自管" />
       <AgendaRow time="62–82" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
-      <AgendaRow time="82–90" name="示範②③與總結" note="重灌保資料、免重開升級；問答移師會後場地" />
+      <AgendaRow time="82–90" name="示範②③與總結" note="重灌保資料、免重開升級" />
     </div>
   </Light>
 );
