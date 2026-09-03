@@ -1413,7 +1413,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
-  D0Intro, D0Prereq,
+  D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Thesis, WhiteBox, Lineage, Architecture, Principles,
