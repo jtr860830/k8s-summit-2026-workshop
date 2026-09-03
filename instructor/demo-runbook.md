@@ -25,9 +25,12 @@
 
 - **live**：先秀 `verify` 基線（sha256）→ `kubectl delete machines.cluster.x-k8s.io <一台 mgmt>`
   （必用全名 —— 短名被 BMC CRD 搶走）→ 投影 drain 事件與 workflow 建立
-- **關鍵一步：等新 workflow 出現後手動電源循環該機**（`qm reset <vmid>`）——
-  沒有 BMC 沒人幫它重開機，舊 OS 會一直跑、workflow 卡 PENDING（2026-08-31 排練實測 43 分鐘）。
-  口播順勢帶：「現實世界這是按電源鍵 —— Rufio/BMC 自動化的正是這一步」
+- **關鍵一步：等新 workflow 出現（PENDING）後重開該機** —— 沒有 BMC 沒人幫它重開機，
+  舊 OS 會一直跑（2026-08-31 排練實測卡 43 分鐘）。
+  主路線：`ssh debug@<節點 IP> sudo reboot`（同終端機一行帶過，時序：看到 PENDING 再按）；
+  備援：PVE 上 `qm reset <vmid>`（節點 ssh 不通時）。
+  口播：「計畫性重灌一行 ssh 就走；機器爛到 ssh 不通的那天，你只剩電源鍵 ——
+  Rufio/BMC 自動化的正是這根手指」
 - 時效注意：OSD 離線約 10 分鐘會被標 out 開始搬資料 —— 電源循環不要拖
 - **預熟**：切到會前已重灌完成的節點 → 跑 `poc/06-osd-reinstall/checks/verify-after.sh`
   現場比對 fsid 與 sha256 —— 「重灌了，資料一個位元都沒少」
