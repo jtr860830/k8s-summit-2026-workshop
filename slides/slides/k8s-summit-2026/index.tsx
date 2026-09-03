@@ -512,7 +512,7 @@ const TinkerbellStack: Page = () => (
       <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有它連斷電的機器都能遠端拉起來" />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
-      機器、範本、workflow 全部是 CRD —— 對 K8s 團隊來說，就是幾個 <span style={{ fontFamily: mono }}>kubectl apply</span>。
+      機器、範本、workflow 全部是 K8s CRD
     </p>
   </Light>
 );
