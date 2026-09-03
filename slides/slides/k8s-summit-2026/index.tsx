@@ -1176,8 +1176,8 @@ ceph fsid
 
 kubectl delete machines.cluster.x-k8s.io \\
   <一台 mgmt 的 Machine>
-# 之後：等 workflow 出現，按一下電源
-#（沒有 BMC 沒人幫它重開 —— Rufio 自動化的正是這步）`}
+# 之後：等 workflow 出現（PENDING），
+# ssh 進去 reboot —— 沒有 BMC 沒人幫它重開`}
     expect="drain 受 Ceph PDB 節制 → 重灌只寫 OS 碟（by-path 鎖定，資料碟不動）→ Rook 原碟認領。判決：fsid 與 sha256 前後一致" />
 );
 
@@ -1188,7 +1188,7 @@ const d2Lines: RLine[] = [
   { t: 3.4, text: 'kubectl delete machines.cluster.x-k8s.io mgmt-cp-65blj   # 它跑著 osd.1', kind: 'cmd' },
   { t: 4.5, text: 'machine.cluster.x-k8s.io "mgmt-cp-65blj" deleted' },
   { t: 6.5, text: `${d2wHdr}\nmgmt-cp-65blj   Deleting       |  drain 中          |  HEALTH_WARN · osd: 2 up, 3 in（noout —— PDB 看守，等它回來、不搬資料）`, kind: 'frame' },
-  { t: 10.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  PENDING           |  HEALTH_WARN\n（新 Machine 已生成 —— 這裡按一下電源，機器 PXE 進 HookOS 接單）`, kind: 'frame' },
+  { t: 10.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  PENDING           |  HEALTH_WARN\n（新 Machine 已生成 —— 這裡 ssh 進去 reboot，機器 PXE 進 HookOS 接單）`, kind: 'frame' },
   { t: 13.5, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  write-image       |  HEALTH_WARN · osd: 2 up\n（只重寫 OS 碟 —— 資料碟 by-path 鎖定，一個位元都不碰）`, kind: 'frame' },
   { t: 17.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioned    |  SUCCESS · reboot  |  HEALTH_WARN · osd: 2 up`, kind: 'frame' },
   { t: 20.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Running        |  SUCCESS           |  HEALTH_OK · osd: 3 up, 3 in（原碟認領 —— 實測 +13 分鐘）`, kind: 'frame' },
