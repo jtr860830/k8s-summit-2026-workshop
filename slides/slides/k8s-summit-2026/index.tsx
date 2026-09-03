@@ -574,7 +574,7 @@ const Demo1: Page = () => (
 
 /* ── 09 Tinkerbell 原理 ──────────────────────────────── */
 const HowPxe: Page = () => (
-  <Light eyebrow="它是怎麼辦到的" title="PXE：機器出廠就內建的問路機制">
+  <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，<Red>有人要告訴我該做什麼嗎？</Red>」（PXE）</Li>
       <Li>Tinkerbell 只「補答」開機欄位 —— IP 照舊由機房 DHCP 發，零侵入</Li>
