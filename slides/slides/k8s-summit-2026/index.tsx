@@ -508,7 +508,7 @@ const TinkerbellStack: Page = () => (
       <TinkRow name="smee" role="監聽 PXE 廣播、補答開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
       <TinkRow name="hegel" role="中繼資料服務 —— 機器開機時來拿自己的設定" />
-      <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」，每步是一個 container" />
+      <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」" />
       <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有它連斷電的機器都能遠端拉起來" />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
