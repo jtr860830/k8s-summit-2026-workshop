@@ -263,7 +263,7 @@ const D0Prereq: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      人只裝起始機這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 對現有網路零侵入。
+      人只裝起始機這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 現有網路不用動任何設定。
     </p>
   </Light>
 );
@@ -577,7 +577,7 @@ const HowPxe: Page = () => (
   <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，<Red>有人要告訴我該做什麼嗎？</Red>」（PXE）</Li>
-      <Li>Tinkerbell 只「補充」開機欄位 —— IP 照舊由機房 DHCP 發，零侵入</Li>
+      <Li>Tinkerbell 只「補充」開機欄位 —— IP 照舊由機房 DHCP 發，機房設定一行都不用改</Li>
       <Li>機器載入一個只活在記憶體的小系統，回報規格、執行安裝</Li>
       <Li>不是我們推指令給機器，是<Red>機器每次開機來問</Red>，答案由我們決定</Li>
       <Li>BMC 是選配而非必要 —— 連沒有 BMC 的消費級機器都能全自動</Li>
