@@ -505,7 +505,7 @@ const TinkRow = ({ name, role }: { name: string; role: string }) => (
 const TinkerbellStack: Page = () => (
   <Light eyebrow="上架系統怎麼搭" title="Tinkerbell：五個元件，全部跑在 K8s 上">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <TinkRow name="smee" role="監聽 PXE 廣播、補答開機資訊 —— 不搶機房 DHCP 的位置" />
+      <TinkRow name="smee" role="監聽 PXE 廣播、補充開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
       <TinkRow name="tootles" role="中繼資料服務 —— 機器開機時來拿自己的設定" />
       <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」" />
@@ -529,7 +529,7 @@ const EnrollFlow: Page = () => (
   <Light eyebrow="上架系統怎麼搭" title="從插電到入列，機器經歷了什麼">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 6 }}>
       <FlowStep n="1" text="插電開機 —— 網卡韌體廣播「我是 MAC xx:xx，該做什麼？」（PXE）" />
-      <FlowStep n="2" text="smee 補答開機資訊 → 機器載入 HookOS（記憶體內，硬碟不動）" />
+      <FlowStep n="2" text="smee 補充開機資訊 → 機器載入 HookOS（記憶體內，硬碟不動）" />
       <FlowStep n="3" text="HookOS 回報硬體規格 → 叢集裡自動出現一個 Hardware 物件" />
       <FlowStep n="4" text="符合規則就觸發 Workflow：把作業系統映像寫進指定硬碟" />
       <FlowStep n="5" text="重開機進正式系統 → 自動加入叢集 —— 全程沒有人碰鍵盤" />
@@ -577,7 +577,7 @@ const HowPxe: Page = () => (
   <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，<Red>有人要告訴我該做什麼嗎？</Red>」（PXE）</Li>
-      <Li>Tinkerbell 只「補答」開機欄位 —— IP 照舊由機房 DHCP 發，零侵入</Li>
+      <Li>Tinkerbell 只「補充」開機欄位 —— IP 照舊由機房 DHCP 發，零侵入</Li>
       <Li>機器載入一個只活在記憶體的小系統，回報規格、執行安裝</Li>
       <Li>不是我們推指令給機器，是<Red>機器每次開機來問</Red>，答案由我們決定</Li>
       <Li>BMC 是選配而非必要 —— 連沒有 BMC 的消費級機器都能全自動</Li>
