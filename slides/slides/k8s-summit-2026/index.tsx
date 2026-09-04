@@ -234,9 +234,6 @@ const D0Intro: Page = () => (
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
       九步之後起始機關機 —— 之後每台新機器，只剩插電、開機。
     </p>
-    <p style={{ fontSize: 26, color: muted, marginTop: 14 }}>
-      每一步：指令一頁、真實錄製的輸出一頁。前六步現在講，後三步等你親手玩過 Cluster API 再回來。
-    </p>
   </Light>
 );
 
