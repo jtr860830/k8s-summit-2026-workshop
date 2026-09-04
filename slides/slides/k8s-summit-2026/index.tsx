@@ -279,7 +279,7 @@ const D0S1Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={1} total={9} title="起始機裝上 K8s（k3s）"
     cmd={`curl -sfL https://get.k3s.io | sh -s - \\
   --disable traefik --disable servicelb`}
-    expect="get nodes 看到 Ready。servicelb 必關 —— 它會跟 Tinkerbell 的 kube-vip 搶 IP，映像傳輸會斷在半路（實測）" />
+    expect="get nodes 看到 Ready" />
 );
 const D0S1Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
