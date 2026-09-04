@@ -235,7 +235,7 @@ const D0Intro: Page = () => (
       <D0Phase title="平台自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集（裸機）'], ['9', 'pivot —— 平台管理自己']]} />
     </div>
     <p style={{ fontSize: 32, marginTop: 30, fontWeight: 700 }}>
-      九步之後，起始機關機下台 —— 之後每台新機器，只剩「插電」這一個動作。
+      九步之後，起始機關機下台 —— 之後每台新機器，只剩插電這一個動作。
     </p>
   </Light>
 );
@@ -416,7 +416,7 @@ const d0s7Lines: RLine[] = [
   { t: 5.2, text: 'Installing provider="cluster-api" version="v1.12.5"\nInstalling provider="bootstrap-kubeadm" version="v1.12.5"\nInstalling provider="control-plane-kubeadm" version="v1.12.5"\nInstalling provider="infrastructure-tinkerbell" version="v0.7.0"' },
   { t: 7.5, text: 'Your management cluster has been initialized successfully!' },
   { t: 9.0, text: 'deployment.apps/capt-controller-manager env updated\ncapi-system    capi-controller-manager-...    1/1   Running\ncapt-system    capt-controller-manager-...    1/1   Running' },
-  { t: 10.8, text: '「開叢集」從此也是宣告式 —— 下一步就開在裸機上', kind: 'ok' },
+  { t: 10.8, text: '開叢集從此也是宣告式 —— 下一步就開在裸機上', kind: 'ok' },
 ];
 const D0S7Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={7} total={9} title="裝 Cluster API（含裸機 provider）"
@@ -486,7 +486,7 @@ const D0S9Cmd: Page = () => (
 clusterctl move \\
   --to-kubeconfig mgmt.kubeconfig
 sudo systemctl stop k3s   # seed 停役`}
-    expect="move 之後，管理叢集裡看得到「自己」的 Machine；把起始機關掉，它依然好好的" />
+    expect="move 之後，管理叢集裡看得到自己的 Machine；把起始機關掉，它依然好好的" />
 );
 const D0S9Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -576,8 +576,8 @@ const Demo1: Page = () => (
 const HowPxe: Page = () => (
   <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，<Red>有人要告訴我該做什麼嗎？</Red>」（PXE）</Li>
-      <Li>Tinkerbell 只「補充」開機欄位 —— IP 照舊由機房 DHCP 發，不需要動現有網路設定</Li>
+      <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，有人要告訴我該做什麼嗎？」（PXE）</Li>
+      <Li>Tinkerbell 只補充開機欄位 —— IP 照舊由機房 DHCP 發，不需要動現有網路設定</Li>
       <Li>機器載入一個只活在記憶體的小系統，回報規格、執行安裝</Li>
       <Li>不是我們推指令給機器，是<Red>機器每次開機來問</Red>，答案由我們決定</Li>
       <Li>BMC 是選配而非必要 —— 連沒有 BMC 的消費級機器都能全自動</Li>
@@ -1251,7 +1251,7 @@ const d3jLines: RLine[] = [
   { t: 0.5, text: '# 升級外掛在節點上建的 Job（nsenter 進主機執行）—— mgmt-2 實錄', kind: 'cmd' },
   { t: 2.0, text: '+ curl -fL -o /opt/extensions/kubernetes-v1.34.7-x86-64.raw http://172.16.90.4:7173/...\n100  107M  100  107M   33.8M/s  0:00:03' },
   { t: 4.5, text: "+ ln -sf /opt/extensions/kubernetes-v1.34.7-x86-64.raw /etc/extensions/kubernetes.raw\n+ systemd-sysext refresh\nUsing extensions 'containerd-flatcar.raw', 'docker-flatcar.raw', 'kubernetes.raw'.\nMerged extensions into '/usr'." },
-  { t: 7.5, text: '+ kubeadm version -o short\nv1.34.7   ← 新版工具鏈已「疊」上，一次重開機都沒有' },
+  { t: 7.5, text: '+ kubeadm version -o short\nv1.34.7   ← 新版工具鏈已疊上，一次重開機都沒有' },
   { t: 10.0, text: '+ kubeadm upgrade node\n[upgrade/staticpods] Preparing for "etcd" upgrade\n[upgrade/staticpods] Renewing etcd-server certificate\n[upgrade/staticpods] Component "etcd" upgraded successfully!' },
   { t: 13.5, text: '[upgrade/staticpods] Preparing for "kube-apiserver" upgrade\n[upgrade/control-plane] The control plane instance for this node was successfully upgraded!\n[upgrade/kubelet-config] The kubelet configuration for this node was successfully upgraded!' },
   { t: 16.5, text: '+ systemctl restart kubelet\nupgrade-script-done' },
@@ -1267,7 +1267,7 @@ const D3NodeReplay: Page = () => (
 const BootstrapFull: Page = () => (
   <Dark eyebrow="DAY-0 · 收束" title="自舉，說完整">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={28}>起始機從頭到尾沒有「建」過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
+      <Li gap={28}>起始機從頭到尾沒有建過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
       <Li gap={28}>真實場景：一台筆電接上機房網段就能當起始機 —— pivot 之後闔蓋走人，<Red>零依賴</Red></Li>
       <Li gap={28}>move 搬的是「管理帳本」，不是叢集 —— apiserver、etcd、workload 全程沒動</Li>
       <Li gap={28}>而且是<Red>雙向的</Red>：撤離、整修、災難演練走同一條路 —— 那台筆電既是產房、也是急診室</Li>
@@ -1312,7 +1312,7 @@ const PoolPolicy: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
         <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>先裝基礎 OS（今天的示範）</div>
         <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
-          <li>池裡是「活的機器」：可 SSH、可燒機、可更新韌體</li>
+          <li>池裡是活的機器：可 SSH、可燒機、可更新韌體</li>
           <li>加入現有叢集只要 join，幾十秒</li>
           <li>代價：被認領去開新叢集時要<b>再重灌一次</b></li>
         </ul>
