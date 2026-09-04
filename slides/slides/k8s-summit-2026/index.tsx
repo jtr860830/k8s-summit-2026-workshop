@@ -232,7 +232,7 @@ const D0Intro: Page = () => (
       <D0Phase title="7–9 自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集'], ['9', 'pivot，平台管理自己']]} />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
-      九步之後起始機關機 —— 之後每台新機器，只剩插電這一個動作。
+      九步之後起始機關機 —— 之後每台新機器，只剩插電、開機兩個動作。
     </p>
     <p style={{ fontSize: 26, color: muted, marginTop: 14 }}>
       每一步：指令一頁、真實錄製的輸出一頁。前六步現在講，後三步等你親手玩過 Cluster API 再回來。
