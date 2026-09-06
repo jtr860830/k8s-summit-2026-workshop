@@ -185,7 +185,7 @@ const Lineage: Page = () => (
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>裸機</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌、搬資料、好幾個小時<br /><b>這個落差，就是今天要解的問題</b></p>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌、搬資料、好幾個小時<br /><b>這個落差，就是接下來兩個示範要解的</b></p>
       </div>
     </div>
   </Light>
