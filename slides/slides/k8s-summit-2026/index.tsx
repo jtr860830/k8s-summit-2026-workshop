@@ -152,7 +152,7 @@ const Claim: Page = () => (
 
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="為什麼是現在" title="雲端巨頭的做法，每一層都有開源實作了">
+  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，每一層都有開源實作了">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>雲端巨頭（hyperscaler）的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
       <Li>那些白牌伺服器，大多是台灣代工的</Li>
