@@ -220,8 +220,10 @@ const Principles: Page = () => (
       <Li>只用開源授權的專案（CNCF 或社群治理）—— <Red>不用付授權費</Red>，也不會有人突然改授權條款</Li>
       <Li>每個元件都能單獨換掉，不用動到其他層</Li>
       <Li>商用 HCI 套裝、Source-available 的方案不在選項裡 —— 好用，但<Red>容易被綁住</Red></Li>
-      <Li>缺點也要講：這些專案都還年輕，文件少、坑要自己踩</Li>
     </ul>
+    <p style={{ fontSize: 30, color: muted, marginTop: 40 }}>
+      缺點也要講：這些專案都還年輕，文件少、坑要自己踩。
+    </p>
   </Light>
 );
 
