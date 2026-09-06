@@ -119,8 +119,8 @@ const AgendaRow = ({ time, name, note }: { time: string; name: string; note: str
 const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼進行">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <AgendaRow time="03–10" name="示範①：插電上架" note="同時：你的筆電跑著準備步驟" />
-      <AgendaRow time="10–30" name="怎麼做到 ＋ Day-0 建置（前六步）" note="剛才那幕，從零建出來的完整過程" />
+      <AgendaRow time="03–10" name="主張：為什麼用 K8s 管基礎設施" note="同時：你的筆電跑著準備步驟" />
+      <AgendaRow time="10–30" name="示範①：插電上架 ＋ Day-0 建置（前六步）" note="先看它自己上架，再看從零怎麼建出來" />
       <AgendaRow time="33–53" name="動手：純 Cluster API" note="200 行 YAML 開出一個叢集" />
       <AgendaRow time="53–62" name="Day-0 後三步" note="你手上的 CAPI 開出裸機叢集、pivot 自管" />
       <AgendaRow time="62–82" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
@@ -208,7 +208,7 @@ const Architecture: Page = () => (
       <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
       <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的 container OS" />
-      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 剛才的示範" />
+      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
     </div>
   </Light>
 );
@@ -1425,9 +1425,9 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Agenda,
-  Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1,
+  Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
   Thesis, Claim, WhiteBox, Lineage, Architecture, Principles,
-  TinkerbellStack, EnrollFlow, HowPxe,
+  Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
