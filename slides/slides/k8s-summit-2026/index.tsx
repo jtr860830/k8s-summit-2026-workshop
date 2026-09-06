@@ -149,7 +149,7 @@ const Thesis: Page = () => (
 const Claim: Page = () => (
   <Dark eyebrow="THESIS" title="用 K8s 管理整個基礎設施">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={36}>從<Red>自助服務一路到裸機</Red>：使用者的 API、叢集、VM、儲存、機器開機 —— 同一套 kubectl、YAML、controller、RBAC、GitOps 管到底</Li>
+      <Li gap={36}>從<Red>自助服務一路到裸機</Red>：使用者的 API、叢集、虛擬機器、儲存、機器開機 —— 同一套 kubectl、YAML、controller、RBAC、GitOps 管到底</Li>
       <Li gap={36}>每一層都是 K8s 物件：機器是物件、叢集是物件、上架規則是物件 —— <Red>學一套心智模型</Red>，管所有層</Li>
       <Li gap={36}>不用再為虛擬化、儲存、K8s 各養一批人 —— K8s 團隊的<Red>既有能力直接延伸</Red>到基礎設施</Li>
     </ul>
@@ -163,7 +163,7 @@ const WhiteBox: Page = () => (
       <Li>雲端巨頭（hyperscaler）的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
       <Li>那些白牌伺服器，大多是台灣代工的</Li>
       <Li>以前的門檻：管理系統要自己寫，只有這種規模的公司寫得起</Li>
-      <Li>現在：裸機佈建、叢集管理、VM、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
+      <Li>現在：裸機佈建、叢集管理、虛擬機器、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
       <Li>Kubernetes 自己就是例子：前身正是某家雲端巨頭的內部叢集系統</Li>
     </ul>
   </Light>
@@ -205,7 +205,7 @@ const Architecture: Page = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 4 }}>
       <LayerRow name="自助服務" tool="kro" note="使用者看到的高階 API（service catalog）—— 今天第二幕" />
       <LayerRow name="叢集生命週期" tool="Cluster API" note="宣告式開叢集 —— 今天第一幕" />
-      <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
+      <LayerRow name="虛擬機器" tool="KubeVirt" note="虛擬機器也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
       <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的 container OS" />
       <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
@@ -1160,7 +1160,7 @@ const Act2Recap: Page = () => (
       <Li>200 行 → 6 行的差距不是魔法，是<Red>封裝過的專家知識</Red></Li>
       <Li>status 匯總、更新傳導、cascade 刪除 —— 生命週期語義全部穿透</Li>
       <Li>我們的真實私有雲用<Red>一字不差的 schema</Red> —— 底層只是換了 provider</Li>
-      <Li>今天：Docker container 當機器；真平台：裸機（Tinkerbell）與虛擬機（KubeVirt）</Li>
+      <Li>今天：Docker container 當機器；真平台：裸機（Tinkerbell）與虛擬機器（KubeVirt）</Li>
     </ul>
     <p style={{ fontSize: 38, marginTop: 40, fontWeight: 700 }}>
       接下來的兩段示範，就是同一套 API 在真實硬體上的樣子。
