@@ -135,7 +135,18 @@ const Thesis: Page = () => (
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>商用虛擬化的雙重成本：<Red>授權費年年漲</Red>，還要養一批只熟該平台的技能</Li>
       <Li gap={30}>被鎖住的不只是錢 —— 是<Red>團隊的技術路徑</Red></Li>
-      <Li gap={30}>主張：K8s 團隊用<Red>單一技術堆疊</Red>管理整個基礎設施，從自助服務一路到裸機</Li>
+    </ul>
+  </Dark>
+);
+
+/* ── 03a 主張 ────────────────────────────────────────── */
+const Claim: Page = () => (
+  <Dark eyebrow="主張" title={<>K8s 團隊用單一技術堆疊<br />管理整個基礎設施</>}>
+    <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={28}>從<Red>自助服務一路到裸機</Red>：使用者的 API、叢集、VM、儲存、機器開機 —— 同一套 kubectl、YAML、controller、RBAC、GitOps 管到底</Li>
+      <Li gap={28}>每一層都是 K8s 物件：機器是物件、叢集是物件、上架規則是物件 —— <Red>學一套心智模型</Red>，管所有層</Li>
+      <Li gap={28}>不用再為虛擬化、儲存、K8s 各養一批人 —— K8s 團隊的<Red>既有能力直接延伸</Red>到基礎設施</Li>
+      <Li gap={28}>今天 90 分鐘就是在驗證這句話：一半你親手做，一半看真機跑</Li>
     </ul>
   </Dark>
 );
@@ -1410,7 +1421,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1,
-  Thesis, WhiteBox, Lineage, Architecture, Principles,
+  Thesis, Claim, WhiteBox, Lineage, Architecture, Principles,
   TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
