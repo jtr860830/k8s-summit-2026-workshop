@@ -171,21 +171,21 @@ const WhiteBox: Page = () => (
 
 /* ── 05 Pod 哲學系譜 ─────────────────────────────────── */
 const Lineage: Page = () => (
-  <Light eyebrow="從 Pod 到裸機" title="Reconcile by Replacement">
+  <Light eyebrow="RECONCILE BY REPLACEMENT" title="壞了不修，直接換 —— 從 Pod 到裸機">
     <div style={{ display: 'flex', gap: 40, fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>Pod</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>壞了不修，<b>換一個</b>。<br />替換成本趨近於零</p>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>壞了不修，<b>換一個</b><br />換掉的成本趨近於零，所以敢這樣做</p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 36 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>Machine</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>Cluster API 逐字翻譯：<br />升級機器 = <b>換一台機器</b></p>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>Cluster API 把同一句話搬到機器層<br />升級、修復 = <b>換一台新機器</b></p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 48, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 36 }}>
-        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>裸機？</div>
-        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌 + 資料 + 小時級<br /><b>這個落差，就是今天要解的問題</b></p>
+        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>裸機</div>
+        <p style={{ lineHeight: 1.5, marginTop: 18 }}>換一台 = 重灌、搬資料、好幾個小時<br /><b>這個落差，就是今天要解的問題</b></p>
       </div>
     </div>
   </Light>
