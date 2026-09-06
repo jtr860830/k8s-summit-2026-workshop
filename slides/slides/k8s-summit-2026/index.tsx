@@ -192,7 +192,7 @@ const Architecture: Page = () => (
       <LayerRow name="虛擬機" tool="KubeVirt" note="VM 也是一種 K8s 資源" />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
       <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的 container OS" />
-      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
+      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 剛才的示範" />
     </div>
   </Light>
 );
