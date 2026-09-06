@@ -131,12 +131,18 @@ const Agenda: Page = () => (
 
 /* ── 03 Thesis ───────────────────────────────────────── */
 const Thesis: Page = () => (
-  <Dark eyebrow="THESIS" title={<>白牌硬體 + Kubernetes 原生<br />= 不交保護費的私有雲</>}>
-    <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={30}>商用虛擬化的雙重成本：<Red>授權費年年漲</Red>，還要養一批只熟該平台的技能</Li>
-      <Li gap={30}>被鎖住的不只是錢 —— 是<Red>團隊的技術路徑</Red></Li>
-    </ul>
-  </Dark>
+  <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
+    <Eyebrow dark>THESIS</Eyebrow>
+    <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 100, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.25 }}>
+      白牌硬體 + Kubernetes 原生<br />
+      <span style={{ color: '#e05545' }}>= 不交保護費的私有雲</span>
+    </h1>
+    <p style={{ fontSize: 34, color: mutedDark, marginTop: 56, lineHeight: 1.6, maxWidth: 1400 }}>
+      商用虛擬化的代價是雙重的：授權費年年漲，還要養一批只熟該平台的技能。
+      被鎖住的不只是錢 —— 是團隊的技術路徑。
+    </p>
+    <Footer dark />
+  </div>
 );
 
 /* ── 03a 主張 ────────────────────────────────────────── */
