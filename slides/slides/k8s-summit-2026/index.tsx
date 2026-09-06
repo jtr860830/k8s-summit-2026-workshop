@@ -541,7 +541,7 @@ const FlowStep = ({ n, text }: { n: string; text: string }) => (
 );
 
 const EnrollFlow: Page = () => (
-  <Light eyebrow="上架系統怎麼搭" title="從插電到入列，機器經歷了什麼">
+  <Light eyebrow="上架系統怎麼搭" title="從插電到加入叢集，機器經歷了什麼">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 6 }}>
       <FlowStep n="1" text="插電開機 —— 網卡韌體廣播「我是 MAC xx:xx，該做什麼？」（PXE）" />
       <FlowStep n="2" text="smee 補充開機資訊 → 機器載入 HookOS（記憶體內，硬碟不動）" />
