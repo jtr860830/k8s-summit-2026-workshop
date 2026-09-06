@@ -141,7 +141,7 @@ const Thesis: Page = () => (
 
 /* ── 03a 主張 ────────────────────────────────────────── */
 const Claim: Page = () => (
-  <Dark eyebrow="主張" title={<>K8s 團隊用單一技術堆疊<br />管理整個基礎設施</>}>
+  <Dark eyebrow="THESIS" title="用 K8s 管理整個基礎設施">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={28}>從<Red>自助服務一路到裸機</Red>：使用者的 API、叢集、VM、儲存、機器開機 —— 同一套 kubectl、YAML、controller、RBAC、GitOps 管到底</Li>
       <Li gap={28}>每一層都是 K8s 物件：機器是物件、叢集是物件、上架規則是物件 —— <Red>學一套心智模型</Red>，管所有層</Li>
