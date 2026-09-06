@@ -1409,11 +1409,12 @@ export const meta: SlideMeta = {
 
 export default [
   Cover, Agenda,
-  Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1, Demo1,
+  Thesis, WhiteBox, Lineage, Architecture, Principles,
+  TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
-  Thesis, WhiteBox, Lineage, Architecture, Principles,
   Act1Guide, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
   D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
