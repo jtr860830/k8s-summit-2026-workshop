@@ -217,10 +217,10 @@ const Architecture: Page = () => (
 const Principles: Page = () => (
   <Light eyebrow="選型原則" title="不被任何元件綁死">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>100% 開源授權、CNCF 或社群治理 —— <Red>沒有授權費這個變數</Red></Li>
-      <Li>每個元件都有明確退路：換掉任何一個，不動其他層</Li>
-      <Li>商用 HCI 套裝、Source-available 授權的方案 —— 好用，但與這個原則不相容</Li>
-      <Li>代價也說清楚：這條路<Red>可行但前沿</Red> —— 今天示範的每一段，都是完整驗證後的成品</Li>
+      <Li>只用開源授權的專案（CNCF 或社群治理）—— <Red>不用付授權費</Red>，也不會有人突然改授權條款</Li>
+      <Li>每個元件都能單獨換掉，不用動到其他層</Li>
+      <Li>商用 HCI 套裝、Source-available 的方案不在選項裡 —— 好用，但<Red>換不掉</Red></Li>
+      <Li>缺點也要講：這些專案都還年輕，文件少、坑要自己踩 —— 今天示範的每一段都已經踩過、跑得通</Li>
     </ul>
   </Light>
 );
