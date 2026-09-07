@@ -1327,7 +1327,7 @@ const RoleDecision: Page = () => (
 
 /* ── 池策略（Roadmap 前橋接頁）─────────────────────────── */
 const PoolPolicy: Page = () => (
-  <Light eyebrow="設計取捨" title="資源池的兩種待命方式">
+  <Light eyebrow="DAY-0 · 收束" title="資源池的兩種待命方式">
     <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
         <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>HookOS 待命（上游預設）</div>
@@ -1347,7 +1347,7 @@ const PoolPolicy: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 33, fontWeight: 700, margin: 0 }}>
-      沒有標準答案，這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，可以按機型混用。政策需要一個宣告的地方，這是下一頁的事。
+      沒有標準答案，這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，可以按機型混用。今天是人在決定；讓它變成可宣告的設定，是最後 Roadmap 的一項。
     </p>
   </Light>
 );
@@ -1373,7 +1373,7 @@ const Roadmap: Page = () => (
   <Light eyebrow="下一步" title="把「人肉控制器」寫成真的控制器">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>今天示範裡人手做的事：關 allowPXE、貼標籤、判斷開機時機，都該由同一個元件接手</Li>
-      <Li>Enrollment Controller：機器從<Red>插電到退役</Red>的完整生命週期自動化</Li>
+      <Li>Enrollment Controller：機器從<Red>插電到退役</Red>的生命週期自動化；待命方式、貼標籤政策都在這裡宣告</Li>
       <Li>六十多項排雷發現，就是它的需求規格書</Li>
       <Li>預計以開源方式進行 —— 歡迎關注、更歡迎一起來踩雷</Li>
     </ul>
@@ -1447,9 +1447,9 @@ export default [
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Act1Guide, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
-  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision,
+  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision, PoolPolicy,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Lineage,
   Demo2, D2Cmd, D2Replay, RawD2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
-  Ecosystem, PoolPolicy, Roadmap, OpenSourceCredits, Thanks,
+  Ecosystem, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
