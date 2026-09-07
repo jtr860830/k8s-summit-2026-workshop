@@ -1232,7 +1232,7 @@ const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
 
 /* ── 17 demo③ 過場 ───────────────────────────────────── */
 const Demo3: Page = () => (
-  <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器連重開機都沒有">
+  <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器不用重開機">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>裸機的痛：照 Pod 哲學「換機升級」，每台要重灌 + 資料重建</Li>
       <Li gap={30}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
