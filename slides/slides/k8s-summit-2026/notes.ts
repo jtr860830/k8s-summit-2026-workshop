@@ -212,7 +212,8 @@ export const nD3NodeReplay = `節點內部：sysext 換 /usr 疊加層、kubeadm
 export const nEcosystem = `GitOps、RBAC、Policy、觀測，四條各一句。
 團隊每多會一個 K8s 工具，基礎設施就多一個能用的工具。`;
 
-export const nRoadmap = `三件人手做的事各對應前面一頁：關 allowPXE 是 day-0 第 6 步、貼標籤是角色頁、開機時機是 demo②。
+export const nRoadmap = `三件人手做的事都在 day-0：關 allowPXE 是第 6 步；補欄位是第 8 步的預先登記，auto-discovery 產的 Hardware 缺 metadata.instance.id，CAPT 會 panic；貼標籤是第 8 步和角色頁。
+demo② 的 ssh reboot 不算在內，那是沒有 BMC 的問題，該由 Rufio 接手。
 enrollment controller 一個元件接手，池的待命方式和貼標籤規則用 CRD 宣告。
 六十多個坑就是需求清單。會開源，歡迎一起做。`;
 

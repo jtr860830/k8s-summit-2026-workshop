@@ -1373,7 +1373,7 @@ const Ecosystem: Page = () => (
 const Roadmap: Page = () => (
   <Light eyebrow="下一步" title="還缺一個 controller">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>今天有三件事還是人手做：裝完關 allowPXE、給 Hardware 貼標籤、判斷機器什麼時候該重開</Li>
+      <Li>今天有三件事還是人手做：裝完關 allowPXE、補齊 Hardware 欄位讓 CAPT 能認領、決定角色貼標籤</Li>
       <Li>要寫一個 <Red>enrollment controller</Red> 接手，管機器從插電到退役；待命方式、貼標籤規則用 CRD 宣告</Li>
       <Li>這幾個月踩到的六十多個坑，整理成它的需求清單</Li>
       <Li>會開源，歡迎一起做</Li>
