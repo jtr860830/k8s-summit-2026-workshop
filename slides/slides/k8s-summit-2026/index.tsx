@@ -167,7 +167,7 @@ const WhiteBox: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>現在</div>
         <p style={{ lineHeight: 1.6, marginTop: 22 }}>白牌伺服器 + <b style={{ color: 'var(--osd-accent)' }}>開源</b>管理系統</p>
-        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>Tinkerbell、Cluster API、KubeVirt、Rook —— 各管一層</p>
+        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>裸機、叢集、虛擬機器、儲存、網路 —— 各有各的專案</p>
       </div>
     </div>
   </Light>
