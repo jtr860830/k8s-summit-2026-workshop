@@ -391,7 +391,7 @@ const D0S5Cmd: Page = () => (
 # match-all：任何新機器回報屬性
 # 就觸發安裝；正式環境可收斂成
 # 精準條件（例：特定機箱廠商）`}
-    expect="此刻叢集裡沒有任何 Hardware、任何 Workflow —— 記住這個空景" />
+    expect="看到規則建立；Hardware 與 Workflow 都還是空的 —— 等第一台機器插電" />
 );
 const D0S5Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
