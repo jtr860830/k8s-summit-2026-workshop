@@ -134,11 +134,11 @@ const Thesis: Page = () => (
     <Eyebrow dark>THESIS</Eyebrow>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 100, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.25 }}>
       白牌硬體 + Kubernetes 原生<br />
-      <span style={{ color: '#e05545' }}>= 不交保護費的私有雲</span>
+      <span style={{ color: '#e05545' }}>= 不被授權綁住的私有雲</span>
     </h1>
     <p style={{ fontSize: 34, color: mutedDark, marginTop: 56, lineHeight: 1.6, maxWidth: 1400 }}>
-      商用虛擬化的代價是雙重的：授權費年年漲，還要養一批只熟該平台的技能。
-      被鎖住的不只是錢 —— 是團隊的技術路徑。
+      商用虛擬化的代價有兩個：授權費年年漲，還要養一批只會這個平台的人。
+      被綁住的不只是錢，還有團隊的技術路線。
     </p>
     <Footer dark />
   </div>
@@ -282,7 +282,7 @@ const D0Prereq: Page = () => (
       </div>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      人只裝起始機這一台，其餘每台都是平台裝的；IP 主權照舊在機房 DHCP 手上 —— 不需要動現有網路設定。
+      人只裝起始機這一台，其餘每台都是平台裝的。IP 還是機房 DHCP 發的，不需要動現有網路設定。
     </p>
   </Light>
 );
@@ -295,7 +295,7 @@ const d0s1Lines: RLine[] = [
   { t: 5.0, text: '[INFO]  Creating /usr/local/bin/kubectl symlink to k3s\n[INFO]  systemd: Enabling k3s unit\n[INFO]  systemd: Starting k3s' },
   { t: 7.0, text: 'sudo k3s kubectl get nodes', kind: 'cmd' },
   { t: 8.2, text: 'NAME        STATUS   ROLES           AGE   VERSION\nday0-seed   Ready    control-plane   20s   v1.36.3+k3s1' },
-  { t: 9.4, text: '一台機器的 K8s —— 平台的第一塊地基', kind: 'ok' },
+  { t: 9.4, text: '起始機就位：一台機器的 K8s', kind: 'ok' },
 ];
 const D0S1Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={1} total={9} title="起始機裝上 K8s（k3s）"
@@ -340,7 +340,7 @@ const d0s3Lines: RLine[] = [
   { t: 2.5, text: 'Flatcar image SHA512 OK' },
   { t: 4.5, text: '-rw-rw-r-- 1 ubuntu ubuntu 479M Aug 25 14:09 flatcar_production_image.bin.gz\n-rw-rw-r-- 1 ubuntu ubuntu 108M Aug 25 14:15 kubernetes-v1.34.6-x86-64.raw' },
   { t: 6.5, text: '驗證檔案可經映像伺服器取得：\nHTTP/1.1 200 OK' },
-  { t: 8.0, text: '原廠映像 + 官方雜湊驗證 —— 供應鏈基本功', kind: 'ok' },
+  { t: 8.0, text: '原廠映像，官方雜湊驗證通過', kind: 'ok' },
 ];
 const D0S3Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={3} total={9} title="備妥作業系統映像"
@@ -366,7 +366,7 @@ const d0s4Lines: RLine[] = [
   { t: 7.0, text: '安裝流程三個動作：寫映像 → 寫設定 → 重開機', kind: 'ok' },
 ];
 const D0S4Cmd: Page = () => (
-  <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 機器進來「怎麼裝」"
+  <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 進來的機器怎麼裝"
     cmd={`butane base.bu > config.ign
 python3 gen-template.py config.ign \\
   | kubectl apply -f -
@@ -387,10 +387,10 @@ const d0s5Lines: RLine[] = [
   { t: 4.6, text: 'workflowruleset.tinkerbell.org/enroll-flatcar-all created' },
   { t: 6.0, text: 'kubectl -n tinkerbell get workflowruleset', kind: 'cmd' },
   { t: 7.2, text: 'NAME                 AGE\nenroll-flatcar-all   1s' },
-  { t: 8.6, text: '舞台空著、規則就位 —— 就等第一台機器插電', kind: 'ok' },
+  { t: 8.6, text: '池裡還沒有機器，規則已就位，等第一台機器插電', kind: 'ok' },
 ];
 const D0S5Cmd: Page = () => (
-  <StepCmd act="DAY-0 建置" step={5} total={9} title="上架規則 —— 「誰進來」自動裝"
+  <StepCmd act="DAY-0 建置" step={5} total={9} title="上架規則 —— 哪些機器要裝"
     cmd={`kubectl apply -f ruleset.yaml
 # match-all：任何新機器回報屬性
 # 就觸發安裝；正式環境可收斂成
@@ -512,7 +512,7 @@ const D0S9Cmd: Page = () => (
 clusterctl move \\
   --to-kubeconfig mgmt.kubeconfig
 sudo systemctl stop k3s   # seed 停役`}
-    expect="move 之後，管理叢集裡看得到自己的 Machine；把起始機關掉，它依然好好的" />
+    expect="move 之後，管理叢集裡看得到自己的 Machine；起始機停掉 k3s 後，Machine 仍是 Running" />
 );
 const D0S9Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -534,8 +534,8 @@ const TinkerbellStack: Page = () => (
       <TinkRow name="smee" role="監聽 PXE 廣播、補充開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
       <TinkRow name="tootles" role="中繼資料服務 —— 機器開機時來拿自己的設定" />
-      <TinkRow name="tink" role="workflow 引擎 —— 定義「裝機要做哪幾步」" />
-      <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有它連斷電的機器都能遠端拉起來" />
+      <TinkRow name="tink" role="workflow 引擎 —— 定義裝機要做哪幾步" />
+      <TinkRow name="Rufio（選配）" role="BMC 電源控制 —— 有 BMC 的機器可以遠端開關機" />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
       機器、範本、workflow 全部是 K8s CRD
@@ -613,7 +613,7 @@ const HowPxe: Page = () => (
 
 /* ── 10 第一幕指引 ───────────────────────────────────── */
 const Act1Guide: Page = () => (
-  <Dark eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：感受 200 行的份量">
+  <Dark eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣">
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`cd k8s-summit-2026-workshop
@@ -843,7 +843,7 @@ const Step4Cmd: Page = () => (
     cmd={`clusterctl get kubeconfig demo > /tmp/demo.kubeconfig
 kubectl --kubeconfig /tmp/demo.kubeconfig \\
   apply -f labs/01-capi/kindnet.yaml`}
-    expect="剛出爐的叢集是裸的（NotReady）；裝上 CNI 後約 1 分鐘轉 Ready" />
+    expect="新叢集的節點先是 NotReady（還沒有 CNI）；裝上 CNI 後約 1 分鐘轉 Ready" />
 );
 const Step4Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -950,7 +950,7 @@ const Act1Recap: Page = () => (
 
 /* ── 12 第二幕過場 ───────────────────────────────────── */
 const Act2Intro: Page = () => (
-  <Dark eyebrow="第二幕的賭注" title={<>把 200 行，變成 6 行</>}>
+  <Dark eyebrow="第二幕" title={<>把 200 行，變成 6 行</>}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'center' }}>
       <Code size={30}>{`apiVersion: kro.run/v1alpha1
 kind: WorkloadCluster
@@ -958,8 +958,8 @@ metadata:
   name: team-a
 spec: {}`}</Code>
       <ul style={{ fontSize: 38, paddingLeft: 40, margin: 0, color: '#f0f0f0', flex: 1 }}>
-        <Li gap={28}>平台工程 = 把專家知識<Red>封裝成預設值</Red></Li>
-        <Li gap={28}>把選擇權留在高階 API 上</Li>
+        <Li gap={28}>平台工程 = 把第一幕那些決定<Red>寫成預設值</Red></Li>
+        <Li gap={28}>只開放需要選的欄位</Li>
         <Li gap={28}>用 kro 在 K8s 裡定義你自己的 API</Li>
       </ul>
     </div>
@@ -980,8 +980,8 @@ const FourLayers: Page = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 4 }}>
       <FourLayer n="1" name="頂層精簡" desc="version / nodes / profile —— 全部有合理預設，spec: {} 就能開" />
       <FourLayer n="2" name="advanced 選填" desc="網段、kubelet 參數 —— 要調的人才需要知道它存在" />
-      <FourLayer n="3" name="object 逃生門" desc="進階設定原樣透傳到底層 —— 但只在平台指定的錨點" />
-      <FourLayer n="4" name="紀律鎖死" desc="schema 沒宣告的欄位直接被拒 —— 哪些不可調，本身就是設計" />
+      <FourLayer n="3" name="進階設定入口" desc="進階設定原樣傳到底層 —— 但只在平台指定的位置" />
+      <FourLayer n="4" name="其餘鎖死" desc="schema 沒宣告的欄位直接被拒 —— 哪些不可調，本身就是設計" />
     </div>
   </Light>
 );
@@ -995,12 +995,12 @@ const Act2Guide: Page = () => (
 # 卡住了：
 ./labs/checkpoints/reset-to-02-end.sh`}</Code>
         <p style={{ fontSize: 32, color: mutedDark, marginTop: 28, lineHeight: 1.55 }}>
-          先確認第一幕的 demo 叢集拆掉了 ——<br />8 GB 的機器同時養兩個叢集會餓死
+          先確認第一幕的 demo 叢集拆掉了 ——<br />8 GB 記憶體同時跑兩個叢集會不夠
         </p>
       </div>
       <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, color: '#f0f0f0', width: 640 }}>
         <Li gap={24}><Red>使用者</Red>：6 行開叢集、改 profile 變 HA</Li>
-        <Li gap={24}><Red>破壞者</Red>：塞禁止欄位，看平台說不</Li>
+        <Li gap={24}><Red>破壞者</Red>：塞不該開放的欄位，看 apply 被拒</Li>
         <Li gap={24}><Red>平台工程師</Red>：改 RGD，演進你的 API</Li>
       </ul>
     </div>
@@ -1015,7 +1015,7 @@ const a2s1Lines: RLine[] = [
   { t: 6.0, text: 'kubectl get rgd', kind: 'cmd' },
   { t: 7.0, text: 'NAME              APIVERSION   KIND              STATE    READY\nworkloadcluster   v1alpha1     WorkloadCluster   Active   True' },
   { t: 9.0, text: 'kubectl get crd workloadclusters.kro.run', kind: 'cmd' },
-  { t: 10.2, text: 'workloadclusters.kro.run（你剛在 Kubernetes 裡創造了一個新的 API）', kind: 'ok' },
+  { t: 10.2, text: 'workloadclusters.kro.run（Kubernetes 裡多了一個新的 API）', kind: 'ok' },
 ];
 const A2S1Cmd: Page = () => (
   <StepCmd act="第二幕" step={1} total={7} title="安裝 kro、定義平台 API"
@@ -1091,7 +1091,7 @@ const a2s4Lines: RLine[] = [
   { t: 9.0, text: 'workloadcluster.kro.run "team-ha" deleted' },
 ];
 const A2S4Cmd: Page = () => (
-  <StepCmd act="第二幕" step={4} total={7} title="高可用？改一個字"
+  <StepCmd act="第二幕" step={4} total={7} title="高可用 —— 加一行"
     cmd={`# spec 加一行：profile: ha
 kubectl get kubeadmcontrolplane team-ha-control-plane`}
     expect="kubeadmcontrolplane 的 DESIRED 顯示 3；使用者只寫了 profile: ha" />
@@ -1111,10 +1111,10 @@ const a2s5Lines: RLine[] = [
   { t: 6.0, text: '（schema 沒開放的欄位碰不到 —— 哪些鎖死，本身就是平台設計）', kind: 'ok' },
 ];
 const A2S5Cmd: Page = () => (
-  <StepCmd act="第二幕" step={5} total={7} title="想搞破壞？平台說不"
+  <StepCmd act="第二幕" step={5} total={7} title="改不該碰的欄位，會怎樣"
     cmd={`# 試著直接改憑證設定
 spec: {certSANs: [evil.example]}`}
-    expect="apply 直接被拒：unknown field —— 危險欄位根本不存在於這個 API" />
+    expect="apply 被拒，錯誤是 unknown field；這個欄位不在 API 裡" />
 );
 const A2S5Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1132,12 +1132,12 @@ const a2s6Lines: RLine[] = [
   { t: 9.5, text: '  改了 kubeadm 設定，Cluster API 就照換機哲學行動）', kind: 'ok' },
 ];
 const A2S6Cmd: Page = () => (
-  <StepCmd act="第二幕" step={6} total={7} title="但留了逃生門"
+  <StepCmd act="第二幕" step={6} total={7} title="但保留進階設定的入口"
     cmd={`spec:
   nodes: 2
   advanced:
     kubeletExtraArgs: {v: "2"}`}
-    expect="設定原樣透傳到底層 kubeadm；控制平面隨之滾動換機（spec 變更的正確行為）" />
+    expect="kubeadmcontrolplane 的 kubeletExtraArgs 出現 v=2；控制平面接著滾動換機，這是改 kubeadm 設定的正常行為" />
 );
 const A2S6Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1189,7 +1189,7 @@ const Demo2: Page = () => (
       <Li gap={30}>HCI 節點上有分散式儲存（Ceph）—— 「換機哲學」最怕的就是它</Li>
       <Li gap={30}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
       <Li gap={30}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
-      <Li gap={30}>判決證據：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid <Red>完全一致</Red></Li>
+      <Li gap={30}>驗證：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid <Red>完全一致</Red></Li>
     </ul>
   </Dark>
 );
@@ -1197,7 +1197,7 @@ const Demo2: Page = () => (
 /* ── 16b demo② 指令與錄製 ────────────────────────────── */
 const D2Cmd: Page = () => (
   <StepCmd act="DEMO ② · 重灌保資料" step={1} total={1} title="刪掉一台正在承載 Ceph 的節點"
-    cmd={`# 先記下資料指紋與 Ceph 身份
+    cmd={`# 先記下資料檔的 sha256 與 Ceph fsid
 sha256sum /data/evidence.bin
 ceph fsid
 
@@ -1205,7 +1205,7 @@ kubectl delete machines.cluster.x-k8s.io \\
   <一台 mgmt 的 Machine>
 # 之後：等 workflow 出現（PENDING），
 # ssh 進去 reboot —— 沒有 BMC 沒人幫它重開`}
-    expect="drain 受 Ceph PDB 節制 → 重灌只寫 OS 碟（by-path 鎖定，資料碟不動）→ Rook 原碟認領。判決：fsid 與 sha256 前後一致" />
+    expect="Machine 轉 Deleting，drain 受 Ceph PDB 限制；新 Machine 重灌只寫 OS 碟；Ceph 回到 HEALTH_OK、osd 3 up；fsid 與 sha256 前後一致" />
 );
 
 const d2wHdr = 'MACHINE         PHASE          |  WORKFLOW 動作     |  ceph';
@@ -1235,9 +1235,9 @@ const Demo3: Page = () => (
   <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器連重開機都沒有">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>裸機的痛：照 Pod 哲學「換機升級」，每台要重灌 + 資料重建</Li>
-      <Li gap={30}>Cluster API 新世代的 in-place updates：升級<Red>委派給外掛</Red>原地執行</Li>
+      <Li gap={30}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
       <Li gap={30}>現場改一個版本欄位 → kubelet 原地換版</Li>
-      <Li gap={30}>判決證據：machine uid 不變、<span style={{ fontFamily: mono }}>uptime</span> 不歸零</Li>
+      <Li gap={30}>驗證：Machine uid 不變、<span style={{ fontFamily: mono }}>uptime</span> 不歸零</Li>
     </ul>
   </Dark>
 );
@@ -1327,12 +1327,12 @@ const RoleDecision: Page = () => (
 
 /* ── 池策略（Roadmap 前橋接頁）─────────────────────────── */
 const PoolPolicy: Page = () => (
-  <Light eyebrow="設計取捨" title="資源池的兩種待命姿勢">
+  <Light eyebrow="設計取捨" title="資源池的兩種待命方式">
     <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
         <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>HookOS 待命（上游預設）</div>
         <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
-          <li>認領那一刻才裝，<b>一次到位</b>（裝的就是最終身份）</li>
+          <li>認領那一刻才裝，<b>一次到位</b>（裝的就是最後要跑的系統）</li>
           <li>不需要裝後收尾狀態機</li>
           <li>代價：待命機在記憶體小系統裡 —— 不可 SSH、斷電後要靠裝機服務重新拉起</li>
         </ul>
@@ -1341,13 +1341,13 @@ const PoolPolicy: Page = () => (
         <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>先裝基礎 OS（今天的示範）</div>
         <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
           <li>池裡是活的機器：可 SSH、可燒機、可更新韌體</li>
-          <li>加入現有叢集只要 join，幾十秒</li>
+          <li>理論上可以直接 join 進現有叢集（今天沒示範）</li>
           <li>代價：被認領去開新叢集時要<b>再重灌一次</b></li>
         </ul>
       </div>
     </div>
     <p style={{ fontSize: 33, fontWeight: 700, margin: 0 }}>
-      沒有標準答案 —— 這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，甚至該按機型混合。而政策需要一個宣告的地方 ——
+      沒有標準答案，這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，可以按機型混用。政策需要一個宣告的地方，這是下一頁的事。
     </p>
   </Light>
 );
@@ -1355,7 +1355,7 @@ const PoolPolicy: Page = () => (
 /* ── 21 前沿稅 ───────────────────────────────────────── */
 
 const Ecosystem: Page = () => (
-  <Dark eyebrow="這條路換到什麼" title="一切都是 K8s 物件之後，整個生態都是你的">
+  <Dark eyebrow="這條路換到什麼" title="都是 K8s 物件之後，現有工具直接能用">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={26}><Red>GitOps</Red>：機房狀態全進 Git —— 叢集、機器、上架規則可版控、可稽核、可重建</Li>
       <Li gap={26}><Red>RBAC</Red>：「誰能開機器、誰能刪叢集」—— 用管 Pod 的同一套權限模型管到裸機</Li>
@@ -1363,7 +1363,7 @@ const Ecosystem: Page = () => (
       <Li gap={26}><Red>觀測</Red>：機器的生命週期就是 events 與 metrics —— 現有監控告警直接沿用</Li>
     </ul>
     <p style={{ fontSize: 34, marginTop: 38, fontWeight: 700, color: '#f0f0f0' }}>
-      這就是單一控制平面的意義 —— 之後每多會一個雲原生工具，基礎設施就自動多一分能力。
+      之後團隊每多會一個 K8s 工具，基礎設施就多一個能用的工具。
     </p>
   </Dark>
 );
@@ -1372,7 +1372,7 @@ const Ecosystem: Page = () => (
 const Roadmap: Page = () => (
   <Light eyebrow="下一步" title="把「人肉控制器」寫成真的控制器">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>今天所有示範裡的人工膠水 —— 開機時機、健康閘門、模板渲染 —— 全指向同一個元件</Li>
+      <Li>今天示範裡人手做的事：關 allowPXE、貼標籤、判斷開機時機，都該由同一個元件接手</Li>
       <Li>Enrollment Controller：機器從<Red>插電到退役</Red>的完整生命週期自動化</Li>
       <Li>六十多項排雷發現，就是它的需求規格書</Li>
       <Li>預計以開源方式進行 —— 歡迎關注、更歡迎一起來踩雷</Li>
@@ -1391,7 +1391,7 @@ const CreditCol = ({ title, items }: { title: string; items: string[] }) => (
 );
 
 const OpenSourceCredits: Page = () => (
-  <Light eyebrow="站在巨人的肩膀上" title="這場工作坊，全部由開源軟體組成">
+  <Light eyebrow="致謝" title="這場工作坊，全部由開源軟體組成">
     <div style={{ display: 'flex', gap: 40, marginTop: 4 }}>
       <CreditCol title="平台核心" items={[
         'Kubernetes / kubeadm', 'Cluster API（CAPD/CAPT/CAPK）', 'Tinkerbell + HookOS',
@@ -1411,7 +1411,7 @@ const OpenSourceCredits: Page = () => (
       ]} />
     </div>
     <p style={{ fontSize: 30, marginTop: 40, fontWeight: 700 }}>
-      謝謝每一位維護者 —— 我們今天展示的不是自己的魔法，是<span style={{ color: 'var(--osd-accent)' }}>開源社群二十年的累積</span>。
+      謝謝每一位維護者。今天示範的每一層都是<span style={{ color: 'var(--osd-accent)' }}>開源社群的成果</span>，我們只是把它們接起來。
     </p>
   </Light>
 );
