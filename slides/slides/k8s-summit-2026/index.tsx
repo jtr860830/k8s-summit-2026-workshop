@@ -596,7 +596,7 @@ const HowPxe: Page = () => (
   <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>網卡韌體天生會廣播：「我是 MAC xx:xx，有人要告訴我該做什麼嗎？」（PXE）</Li>
-      <Li>Tinkerbell 只補充開機欄位 —— IP 照舊由機房 DHCP 發，不需要動現有網路設定</Li>
+      <Li>Tinkerbell 只補充開機欄位 —— IP 照舊由機房 DHCP 發，<Red>不需要動現有網路設定</Red></Li>
       <Li>機器載入一個只活在記憶體的小系統，回報規格、執行安裝</Li>
       <Li>不是我們推指令給機器，是<Red>機器每次開機來問</Red>，我們只負責回答</Li>
       <Li>BMC 是選配而非必要 —— 連沒有 BMC 的消費級機器都能全自動</Li>
