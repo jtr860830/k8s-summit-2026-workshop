@@ -1293,12 +1293,12 @@ const D3NodeReplay: Page = () => (
 
 /* ── day-0 章節收束：自舉與角色 ──────────────────────── */
 const BootstrapFull: Page = () => (
-  <Dark eyebrow="DAY-0 · 收束" title="自舉，說完整">
+  <Dark eyebrow="DAY-0 · 收束" title="起始機做了什麼、沒做什麼">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={28}>起始機從頭到尾沒有建過叢集 —— 它只是放了一組宣告，<Red>機器自己把自己變成叢集</Red></Li>
-      <Li gap={28}>真實場景：一台筆電接上機房網段就能當起始機 —— pivot 之後闔蓋走人，<Red>零依賴</Red></Li>
-      <Li gap={28}>move 搬的是「管理帳本」，不是叢集 —— apiserver、etcd、workload 全程沒動</Li>
-      <Li gap={28}>而且是<Red>雙向的</Red>：撤離、整修、災難演練走同一條路 —— 那台筆電既是產房、也是急診室</Li>
+      <Li gap={28}>起始機沒有建叢集，它只放了宣告；<Red>裝機、kubeadm、加入叢集都是機器自己跑完的</Red></Li>
+      <Li gap={28}>起始機可以是一台筆電：接上機房網段、跑完九步、pivot、關機。管理叢集不依賴它</Li>
+      <Li gap={28}>move 搬的是 Cluster API 的物件（Cluster、Machine、Hardware），不是叢集本身；apiserver、etcd、workload 全程沒動</Li>
+      <Li gap={28}>move 是雙向的：要撤離、整修或演練災難復原，<Red>用同一個指令搬回筆電就行</Red></Li>
     </ul>
   </Dark>
 );
