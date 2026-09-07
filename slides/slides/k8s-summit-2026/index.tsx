@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
 import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 import { RAW } from './rawlogs';
+import * as N from './notes';
 import './fonts.css';
 
 export const design: DesignSystem = {
@@ -1453,3 +1454,21 @@ export default [
   Demo2, D2Cmd, D2Replay, RawD2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
   Ecosystem, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
+
+// 講者備忘：與上方頁面陣列同索引（簡報者模式按 P）
+const R = N.RAW_NOTE;
+export const notes: string[] = [
+  N.nCover, N.nAgenda,
+  N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
+  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nPrinciples,
+  N.nDemo1, N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
+  N.nD0Prereq, N.nD0Intro,
+  N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
+  N.nD0S4, N.nD0S4, R, N.nD0S5, N.nD0S5, R, N.nD0S6, N.nD0S6, R,
+  N.nAct1Guide, N.nStep2, N.nStep2, R, N.nStep3, N.nStep3, R, N.nStep4, N.nStep4, R, N.nStep5, N.nStep5, R, N.nStep6, N.nStep6, R, N.nStep7, N.nStep7, R, N.nAct1Recap,
+  N.nD0S7, N.nD0S7, R, N.nD0S8, N.nD0S8, R, N.nD0S9, N.nD0S9, R, N.nBootstrapFull, N.nRoleDecision, N.nPoolPolicy,
+  N.nAct2Intro, N.nFourLayers, N.nAct2Guide, N.nA2S1, N.nA2S1, R, N.nA2S2, N.nA2S2, R, N.nA2S3, N.nA2S3, R, N.nA2S4, N.nA2S4, R, N.nA2S5, N.nA2S5, R, N.nA2S6, N.nA2S6, R, N.nA2S7, N.nA2S7, R, N.nAct2Recap,
+  N.nLineage,
+  N.nDemo2, N.nD2Cmd, N.nD2Replay, R, N.nDemo3, N.nD3Cmd, N.nD3Replay, N.nD3NodeReplay, R,
+  N.nEcosystem, N.nRoadmap, N.nCredits, N.nThanks,
+];
