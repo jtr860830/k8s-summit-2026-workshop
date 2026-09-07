@@ -1,0 +1,324 @@
+# 講師備忘稿（提詞式，逐頁）
+
+對照簡報 108 頁。每頁列「提詞」，要按扳機或切畫面的地方標【動作】，聽眾常問的放【若被問】。
+指令頁 → 重播頁 → 完整錄製檔三頁一組，只寫一段；完整錄製檔頁一律帶過，不停留。
+
+## 時間表（依簡報 Agenda 頁）
+
+| 時間 | 頁 | 段落 |
+|---|---|---|
+| 00–03 | 1–8 | 開場、進行方式、**學員先跑「開始動手前」步驟 0/1**（kind create 約 7 分鐘） |
+| 03–10 | 9–13 | 主張 |
+| 10–30 | 14–37 | demo① 插電上架 + day-0 前六步 |
+| 30–33 | — | 緩衝、確認全員 kind 起來了 |
+| 33–53 | 38–57 | 第一幕：純 Cluster API |
+| 53–62 | 58–69 | day-0 後三步 + 收束三頁 |
+| 62–82 | 70–94 | 第二幕：kro |
+| 82–90 | 95–108 | 換機原則、demo②③、生態、Roadmap、致謝 |
+
+Q&A 由大會另闢場地，不佔課程時間。
+
+### demo②③ 只有 8 分鐘：扳機要提前按
+
+demo② 全程 13 分鐘、demo③ 全程 30 分鐘，都不可能在 82–90 分內跑完。做法：
+
+- **62 分**（第二幕開始，學員在動手）：切測試床，先秀 sha256 / fsid 基線，`delete machines.cluster.x-k8s.io`，看到 workflow PENDING 就 ssh reboot。之後回簡報帶學員。
+- **70 分**（第二幕步驟 3 左右）：確認 demo② 的 Machine 已 Running、Ceph HEALTH_OK。接著 patch kubeadmcontrolplane 版本，看到升級 Job 出現就回簡報。
+- **82 分**：只剩收割。demo② 跑 verify-after 比對；demo③ 秀 uid、uptime、kubelet 版本。
+- 任何一段扳機沒反應，直接用重播頁，不解釋、不等。
+
+裁減順序（時間不夠先砍）：第一幕步驟 6（砍機器看補位）→ day-0 收束三頁只講角色頁 → demo③ 只放重播。
+
+### 舞台
+
+- day0 環境（node-05）：demo①。`ssh -F poc/01-flatcar-tinkerbell/ssh_config day0-seed`
+- 測試床（node-02）：demo②③。`ssh -F poc/01-flatcar-tinkerbell/ssh_config poc1-seed`，`KUBECONFIG=~/mgmt.kubeconfig`
+- 9/11 場 demo③ 目標是 v1.34.9，指令頁寫 v1.34.8，口頭說「今天改成 9」。
+
+---
+
+## 開場（1–8）
+
+**1 封面**
+- 自我介紹一句：寬橋做平台工程，這套東西是我們自己私有雲的做法。
+- 今天三件事：看機器插電自己裝好、自己動手用 Cluster API 開叢集、再把它包成 6 行的自助 API。
+
+**2 Agenda**
+- 兩段動手各 20 分鐘，其餘是示範和解說。
+- 動手段有助教，卡住舉手；每步都有 reset 腳本可以追上。
+- Q&A 在場外，結束後我會在那裡。
+
+**3–5 開始動手前 · 步驟 0**
+- 現在就跑 `setup.sh`。會前跑過的話 10 秒結束。
+- 沒跑過或沒網路：舉手拿 USB，`load-from-usb.sh`，全程離線。
+- 看到 SETUP-OK 才往下。
+
+**6–8 開始動手前 · 步驟 1**
+- 兩個指令貼上去就好，7 分鐘。這段時間我講主張。
+- 【動作】等多數人指令跑起來再翻頁，不用等跑完。
+
+## 主張（9–13）
+
+**9 Thesis**
+- 商用虛擬化兩個成本：授權費，以及一批只會那個平台的人。
+- 我們的立場：白牌硬體加 Kubernetes 原生工具，可以組出一套不被授權綁住的私有雲。
+- 不是說商用的不好，是說有另一條路，而且已經走得通。
+
+**10 用 K8s 管理整個基礎設施**
+- 從裸機到自助服務，同一套 kubectl、YAML、RBAC、GitOps。
+- 機器、叢集、上架規則都是 K8s 物件，等一下每一步都會看到 `kubectl get`。
+- 好處在人：K8s 團隊直接接手基礎設施，不用另外養虛擬化、儲存的團隊。
+
+**11 WHY NOW**
+- 雲端業者早就是白牌伺服器加自研管理系統，只是管理系統不公開。
+- 現在每一層都有成熟的開源專案，差別只剩有沒有人把它們接起來。
+- 【彩蛋，可略】那些白牌伺服器很大一部分是台灣代工廠做的；K8s 本身也是雲端業者內部系統開源出來的。硬體和軟體我們都不是局外人。
+
+**12 架構全景**
+- 由下往上念：Tinkerbell 裝機、Flatcar 當 OS、Rook-Ceph 和 Cilium、KubeVirt 跑虛擬機器、Cluster API 管叢集、kro 做自助 API。
+- 今天動手碰 Cluster API 和 kro，示範碰 Tinkerbell 和 Flatcar，KubeVirt 只提不做。
+- 每一層都是 CRD，這句話下面會反覆驗證。
+
+**13 選型原則**
+- 三條：開源授權、每層可單獨換、商用 HCI 套裝和 source-available 不選。
+- 缺點自己講：專案年輕、文件少、我們踩了六十多個坑，最後 Roadmap 會提。
+
+## demo① 與 day-0 前六步（14–37）
+
+**14 DEMO ① 過場**
+- 【動作】切 day0-seed 終端，`watch kubectl -n tinkerbell get hardware,workflow`，畫面是空的。
+- 【動作】另一視窗 `ssh pve-node05 'qm start 9211'`。說：「一台沒有 OS 的機器，剛開機。」
+- 回簡報，接下來幾頁講原理，講完回來看它跑到哪。
+- 決策點：120 秒沒看到 Hardware，改用第 36 頁重播，不等。
+
+**15 Tinkerbell：五個元件**
+- smee 聽 PXE 廣播，不搶機房 DHCP。HookOS 是記憶體裡的小 Linux，不碰硬碟。tootles 給機器拿設定。tink 跑 workflow。Rufio 管 BMC 電源，選配。
+- 一句收：Hardware、Template、Workflow 全是 CRD，全用 kubectl 管。
+- 【若被問 tootles 是什麼】舊名 hegel，v0.25 改名，功能一樣是 metadata 服務。
+
+**16 插電之後，機器經歷了什麼**
+- 五步照念。第 5 步停一下：裝好 OS 是在池裡待命，不是加入叢集。
+- 【若被問 什麼時候算進池】Hardware 出現就是登記進池；裝好 OS 是池內可用；加入叢集要等 Cluster API 來認領。三個時間點分開。
+- 【若被問 為什麼不直接加入叢集】Tinkerbell 不知道叢集存在，Cluster API 不知道有機器插電。中間要有人決定這台去哪、當什麼角色。今天那個「人」還是人，Roadmap 要把它寫成 controller。
+
+**17 PXE**
+- 這是韌體內建的機制，1999 年的規格，每張伺服器網卡都有。
+- 【若被問 順序】網卡發 DHCP discover → 機房 DHCP 給 IP，smee 以 ProxyDHCP 身份只補開機檔位址 → TFTP 抓 iPXE → HTTP 抓 HookOS kernel 和 initrd → HookOS 起來跟 tink 拿工作。
+- 方向反過來：不是我們推指令，是機器每次開機來問。
+- BMC 不是必要。有 BMC 可以遠端開關機，沒有就得有人按電源或 ssh reboot。今天示範的機器都沒有 BMC。
+
+**18 機房最低配備**
+- 需要四樣，不需要四樣。重點在右邊：不需要既有 K8s、不需要 BMC、不需要動 DHCP。
+- 【若被問 DHCP】IP 一直是機房 DHCP 發的。smee 走 auto-proxy 模式，只回答「開機檔在哪」，不發 IP。所以不用改交換器、不用改 DHCP 設定。
+- 起始機可以是筆電，等一下第 9 步會關掉它。
+
+**19 九個步驟**
+- 三組：準備起始機、自動上架、自我承載。
+- 今天示範前六步，第一幕做完再回來講後三步。
+- 每步一頁指令、一頁真實錄製的重播、一頁完整輸出。錄製是 8/25 在同一個環境錄的，跟現在投影的是同一台。
+
+**20–22 day-0 第 1 步 k3s**
+- 一行裝 k3s。兩個 disable 是踩過的雷：servicelb 會搶 kube-vip 的 IP，映像串流會斷。
+- 重播 10 秒，看到 Ready 就翻。
+
+**23–25 第 2 步 Tinkerbell**
+- helm 一行。values 只設四件事，念註解。
+- 重播看三個 pod 和 CRD 清單。指著 CRD 說：「機器、範本、工作流都變成 K8s 物件了。」
+
+**26–28 第 3 步 映像**
+- 原廠 Flatcar 映像、官方 SHA512 驗證、kubelet 用 sysext 疊上去。
+- 為什麼 Flatcar：不可變 OS、沒有套件管理、升級是換整個 /usr。demo③ 靠這個。
+
+**29–31 第 4 步 安裝範本**
+- base.bu 是 Butane 格式，轉成 Ignition。內容只有主機名、SSH 金鑰、kubelet sysext。
+- 範本三個動作：寫映像、寫設定、重開機。它也是一個 K8s 物件。
+
+**32–34 第 5 步 上架規則**
+- 這頁很短，重點在空景：Hardware 和 Workflow 都是零。
+- match-all 是示範用，正式環境會收斂成條件，例如特定機箱型號。
+- 【動作】翻下一頁前，說「這就是剛才 demo 開始時的畫面」。
+
+**35–37 第 6 步 插電時刻**
+- 【動作】切回 day0-seed 終端。這時候應該已經有 Hardware 和 workflow，理想狀態是 SUCCESS。
+- 指著 Hardware 名字：MAC 是機器自己回報的，人沒有登記過。
+- workflow 三個動作跟第 4 步範本一致。
+- 補一句收尾動作：關 allowPXE，不然它每次開機都會回到 HookOS。這是上游沒做的事，enrollment controller 要接。
+- 若現場沒跑完，用第 36 頁重播，實錄 5.5 分鐘壓成 25 秒。
+- 結論一句：插電之後人沒碰過它。現在它在池裡待命。
+
+## 第一幕（38–57）
+
+**38 第一幕指引**
+- 兩個終端機並排，一邊 machines 一邊 docker ps。
+- 今天機器是 Docker container，因為教室沒有裸機。行為跟裸機完全一樣，只是快。
+- 卡住就跑 reset 腳本，直接跳到第一幕結尾狀態。
+- 【動作】確認全員 kind 已起來，沒起來的找助教。
+
+**39–41 步驟 2 安裝 Cluster API**
+- 版本寫死是為了離線，讀的是會前預載的本地定義。
+- 四個 provider：core、bootstrap、control-plane、infrastructure。infrastructure 今天是 docker，day-0 是 tinkerbell，其他三個一樣。
+
+**42–44 步驟 3 開一個叢集**
+- 先 `less` 看 200 行，感受一下。七個物件，名字互相引用。
+- apply 之後看 machines 的 PHASE 走：Pending、Provisioning、Provisioned、Running。
+- docker ps 多三個 container：一台 control plane、一台 worker、一個負載平衡器。
+- 【若被問 為什麼要 lb】kubeadm 控制平面前面固定要一個 endpoint，裸機上是 kube-vip 的 VIP，這裡用 haproxy container 代替。
+
+**45–47 步驟 4 進叢集裝 CNI**
+- 剛開好的叢集 NotReady 是正常的，Cluster API 不管 CNI。
+- 裝 kindnet 是因為離線包小；正式環境是 Cilium。
+
+**48–50 步驟 5 擴容**
+- replicas 從 1 改 2，90 秒多一台。
+- 第 8 步在裸機上做同一件事是 13 分鐘，因為要真的寫磁碟、真的重開機。
+
+**51–53 步驟 6 砍一台看它補**
+- MachineDeployment 跟 Deployment 同一套邏輯，少一台就補一台。
+- 刪掉 2 秒新的就出現，53 秒 Running。
+- 這是 Pod 的做法搬到機器層。記住這頁，demo② 要回來講它在裸機上的代價。
+- 時間不夠先砍這步。
+
+**54–56 步驟 7 拆掉**
+- delete cluster 一個指令，container 依序消失，沒有殘留。
+- mgmt 保留，第二幕還要用。
+
+**57 第一幕回收**
+- 左邊得到的、右邊付出的。付出的三條都是真的：200 行、名字錯一個字就垮、哪些欄位危險靠經驗。
+- 最後一句：這是基礎設施工程師的日常，不該是使用者的日常。第二幕解這個。
+
+## day-0 後三步與收束（58–69）
+
+**58–60 第 7 步 裝 Cluster API 到 k3s**
+- 跟第一幕步驟 2 是同一個指令，差別是 infrastructure 換成 tinkerbell。
+- 三個上游沒寫清楚的設定念註解。Ignition feature gate 要在 init 前開，因為 Flatcar 只吃 Ignition 不吃 cloud-init。
+
+**61–63 第 8 步 開出管理叢集**
+- 兩個 apply。第一個是預先登記 Hardware，帶固定 IP 和 `day0/role: mgmt` 標籤。第二個是 Cluster API 叢集定義。
+- CAPT 看到 Machine，用 hardwareAffinity 挑有標籤的 Hardware，建 workflow，機器 PXE 進 HookOS 重灌，Ignition 裡有 kubeadm init。
+- 重播 13 分鐘壓成 20 秒。Provisioning 停很久是正常的，機器在寫磁碟。
+- 這是 Flatcar bootstrap 鏈第一次在乾淨環境全通，中間三顆雷：kubectl 的 machines 短名被 Rufio 的 BMC CRD 搶走要用全名、單控制平面要拔 taint、local PV 掛載點要 Ignition 預建。
+
+**64–66 第 9 步 pivot**
+- 管理叢集自己也要有 Tinkerbell 和 Cluster API，先裝。
+- 搬 Hardware 和 Template，不搬 Workflow。Workflow 搬過去狀態歸零會重跑，機器會被重灌。
+- `clusterctl move` 之後停掉 seed 的 k3s，管理叢集裡的 Machine 還是 Running。
+- 一句收：起始機關了，平台管理著自己。
+
+**67 起始機做了什麼、沒做什麼**
+- 四條照念。第一條是重點：起始機只放宣告，裝機和 kubeadm 是機器自己跑的。
+- move 搬的是 Cluster API 物件，apiserver 和 etcd 沒動過。
+- 【若被問 雙向】move 沒有方向，只有來源和目標。管理叢集要重建時，先搬到臨時叢集接手，修好搬回來，Cluster API 文件就是這樣寫的。
+
+**68 一台機器的角色是怎麼決定的**
+- 三個問題三個答案：哪一台看標籤、什麼角色看誰建的 Machine、幾台看 replicas。
+- 上架是另一層，RuleSet 只管進不進池、裝什麼 OS。機器被認領前沒有角色。
+- 【若被問 沒寫 hardwareAffinity 會怎樣】CAPT 從未認領的 Hardware 任選一台。第 6 步那台也在池裡，所以標籤是把「哪一台」從隨機變成可控。
+- 【若被問 之後新機器怎麼加入】插電進池、人貼標籤、某個叢集 replicas 加一，CAPT 認領重灌加入。貼標籤那步今天是人手，這就是 Roadmap。
+
+**69 資源池的兩種待命方式**
+- 上游預設是 HookOS 待命，認領時才裝，一次到位。代價是待命機不能 SSH、斷電要靠裝機服務拉起。
+- 今天示範是先裝 Flatcar，池裡是活的機器，可以燒機、更新韌體。代價是被認領要再重灌一次。
+- 誠實講：右邊「理論上可以直接 join」今天沒示範，走 CAPT 一律重灌。
+- 沒有標準答案，是政策，可以按機型混用。這個政策要有地方宣告，Roadmap 會回來。
+
+## 第二幕（70–94）
+
+**70 把 200 行變成 6 行**
+- 右邊 6 行就是整個叢集定義。
+- 平台工程是把第一幕那些決定寫成預設值，只開放需要選的欄位。
+- kro 是在 K8s 裡定義自己 API 的工具，RGD 一份 YAML 就會長出 CRD 和 controller。
+
+**71 四層設計**
+- 頂層精簡、advanced 選填、進階設定入口、其餘鎖死。
+- 第 4 層反過來想：哪些欄位不開放，本身就是設計。等一下步驟 5 會撞到。
+
+**72 第二幕指引**
+- 三種角色輪流：使用者、破壞者、平台工程師。
+- 先確認第一幕的 demo 叢集拆了，8 GB 跑兩個叢集會不夠。
+
+**73–75 步驤 1 裝 kro、定義 API**
+- helm 裝 kro，apply RGD，等 STATE Active。
+- 最後一行 `get crd workloadclusters.kro.run`：叢集裡多了一個 API。
+
+**76–78 步驟 2 六行一個叢集**
+- `spec: {}` 就能開，所有欄位有預設。
+- 4 分鐘收斂，CONTROLPLANEREADY 轉 true。底下七個 Cluster API 物件是 kro 建的。
+
+**79–81 步驟 3 用平台使用者的方式擴容**
+- patch `nodes: 2`，底下 MachineDeployment 跟著動。
+- 使用者不知道 MachineDeployment 存在，也不需要知道。
+
+**82–84 步驟 4 高可用加一行**
+- `profile: ha`，kubeadmcontrolplane 的 DESIRED 變 3。
+- 看到 3 就刪掉 team-ha，資源留給 team-a。
+
+**85–87 步驟 5 改不該碰的欄位**
+- 塞 certSANs，apply 直接被拒，unknown field。
+- 不是 webhook 擋的，是這個欄位不在 schema 裡。
+
+**88–90 步驟 6 保留進階設定的入口**
+- `advanced.kubeletExtraArgs` 原樣到底層 kubeadm。
+- 注意控制平面開始滾動換機。改 kubeadm 設定就是換機器，這是 Cluster API 的正常行為。再一次鋪 demo②。
+
+**91–93 步驗 7 拆掉**
+- delete workloadcluster 一個指令，Cluster、Machine、container 全部回收，順序 kro 和 Cluster API 處理。
+
+**94 第二幕回收**
+- 200 行變 6 行，少掉的是第一幕那些決定寫進 RGD。
+- 我們自己的私有雲用同一份 WorkloadCluster schema，只換 infrastructure provider。
+- 最後一句是問句：container 換一台幾十秒，裸機呢？翻頁。
+
+## 收尾（95–108）
+
+**95 壞了不修，直接換**
+- Pod 換一個成本趨近零。Cluster API 把同一句話搬到 Machine：升級、修復都是換一台。
+- 裸機換一台是重灌、搬資料、好幾個小時。這個落差是接下來兩個示範要解的。
+
+**96 DEMO ② 過場**
+- 【動作】切測試床終端。這時 62 分按下的 delete 應該已經跑完，Machine Running，Ceph HEALTH_OK。
+- 講：這台節點上有 Ceph OSD。換機哲學最怕的就是有狀態的節點。
+- 【若被問 Ceph 冗餘】三副本，一顆 OSD 離線是 HEALTH_WARN degraded，資料還有兩份。Rook 的 PDB 擋住 drain 不讓第二台同時走。OSD 離線約 10 分鐘會被標 out 開始搬資料，所以重灌要在這之前完成。
+- 【若被問 HEALTH_OK 後面的 muted】Ceph 19.2.6 新增的 cephx 金鑰稽核，lab 內刻意靜音，Summit 後做金鑰輪替。
+
+**97 demo② 指令頁**
+- 念流程：記 sha256 和 fsid、delete Machine、等 PENDING、ssh reboot。
+- 沒有 BMC 沒人幫它重開，這就是 Rufio 的位置。計畫性重灌一行 ssh 就走，機器爛到 ssh 不通那天只剩電源鍵。
+- 重灌只寫 OS 碟，資料碟 by-path 鎖定，Workflow 碰不到。
+
+**98–99 demo② 重播與收割**
+- 【動作】現場跑 `verify-after.sh`，fsid-MATCH、sha256-MATCH。
+- 若現場沒跑完，98 頁重播是 8/31 排練實錄。
+- 一句收：重灌了一台 Ceph 節點，資料一個位元都沒少。
+
+**100 DEMO ③ 過場**
+- 裸機照換機哲學升級，每台重灌加資料重建。
+- Cluster API 的 in-place update 把升級交給外掛在節點上原地做。
+- 驗證方式：Machine uid 不變、uptime 不歸零。
+
+**101 demo③ 指令頁**
+- 只改 version 一個欄位。KCP 逐台編排，落後最多的先動。
+- maxSurge=0 是裸機前提：機房沒有多的機器可以先開一台。
+- 9/11 場口頭改 v1.34.9。
+
+**102–104 demo③ 重播與收割**
+- 【動作】現場 `get machines.cluster.x-k8s.io` 加 uid 欄，`ssh mgmt-2 "uptime -s; kubelet --version"`。
+- 103 頁節點內部：sysext 換 /usr 疊加層、kubeadm upgrade node、restart kubelet。全程沒重開機。
+- 【若被問 為什麼可以不重開】Flatcar 的 kubelet 是 sysext 疊加層，`systemd-sysext refresh` 換層不用重開。kubeadm upgrade 本來就是換 static pod。
+- 若現場沒到，102 頁重播是 8/26 實錄 v1.34.6→7。
+
+**105 都是 K8s 物件之後，現有工具直接能用**
+- GitOps、RBAC、Policy、觀測，四條各一句。
+- 團隊每多會一個 K8s 工具，基礎設施就多一個能用的工具。
+
+**106 Roadmap**
+- 今天人手做的事：關 allowPXE、貼標籤、判斷開機時機。全該是同一個 controller。
+- Enrollment Controller：插電到退役；待命方式、貼標籤政策都在這裡宣告。
+- 六十多項排雷是它的需求規格。
+- 開源進行，歡迎一起踩雷。
+
+**107 致謝**
+- 帶過，指一下簡報字體也是開源的。
+
+**108 謝謝**
+- repo 網址在畫面上，所有教材、day-0 的九步都在裡面，可以自己照跟。
+- Q&A 區和寬橋攤位都找得到我。
