@@ -1156,10 +1156,10 @@ const a2s7Lines: RLine[] = [
   { t: 13.5, text: '（七個底層物件、所有機器 container —— 一個指令、零孤兒）', kind: 'ok' },
 ];
 const A2S7Cmd: Page = () => (
-  <StepCmd act="第二幕" step={7} total={7} title="拆掉 —— 一個指令、零孤兒"
+  <StepCmd act="第二幕" step={7} total={7} title="拆掉"
     cmd={`kubectl delete workloadcluster team-a
 watch kubectl get cluster,machines`}
-    expect="底層物件與 container 全部回收，使用者不需要知道拆的順序" />
+    expect="Cluster、Machine 依序消失，docker ps 不再有 team-a 的 container；順序由 kro 與 Cluster API 處理" />
 );
 const A2S7Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
