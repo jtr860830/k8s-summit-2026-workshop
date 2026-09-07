@@ -1153,7 +1153,7 @@ const a2s7Lines: RLine[] = [
   { t: 4.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m12s\n                     |  team-a-md-0-9t7q5-6drmh        Deleting   5m1s' },
   { t: 8.0, kind: 'frame', text: cHdr + '\nteam-a   Provisioned   |  team-a-control-plane-zwlvk     Deleting   9m33s' },
   { t: 11.5, kind: 'frame', text: 'No resources found in default namespace.' },
-  { t: 13.5, text: '（七個底層物件、所有機器 container —— 一個指令、零孤兒）', kind: 'ok' },
+  { t: 13.5, text: '（七個 Cluster API 物件與所有 container 都已回收，沒有殘留）', kind: 'ok' },
 ];
 const A2S7Cmd: Page = () => (
   <StepCmd act="第二幕" step={7} total={7} title="拆掉"
