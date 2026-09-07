@@ -108,23 +108,22 @@ const Cover: Page = () => (
 /* ── 02 開場約定 ─────────────────────────────────────── */
 
 /* ── 02b Agenda ──────────────────────────────────────── */
-const AgendaRow = ({ time, name, note }: { time: string; name: string; note: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '17px 30px' }}>
-    <div style={{ width: 190, fontFamily: mono, fontSize: 29, fontWeight: 700, color: 'var(--osd-accent)' }}>{time}</div>
-    <div style={{ width: 430, fontSize: 31, fontWeight: 800 }}>{name}</div>
-    <div style={{ fontSize: 27, color: '#5a5148' }}>{note}</div>
+const AgendaRow = ({ time, name }: { time: string; name: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '19px 30px' }}>
+    <div style={{ width: 190, fontFamily: mono, fontSize: 30, fontWeight: 700, color: 'var(--osd-accent)' }}>{time}</div>
+    <div style={{ fontSize: 33, fontWeight: 800 }}>{name}</div>
   </div>
 );
 
 const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼進行">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
-      <AgendaRow time="03–10" name="主張：為什麼用 K8s 管基礎設施" note="同時：你的筆電跑著準備步驟" />
-      <AgendaRow time="10–30" name="示範①：插電上架 ＋ Day-0 建置（前六步）" note="先看它自己上架，再看從零怎麼建出來" />
-      <AgendaRow time="33–53" name="動手：純 Cluster API" note="200 行 YAML 開出一個叢集" />
-      <AgendaRow time="53–62" name="Day-0 後三步" note="你手上的 CAPI 開出裸機叢集、pivot 自管" />
-      <AgendaRow time="62–82" name="動手：kro 自助服務" note="同一個叢集，6 行就好" />
-      <AgendaRow time="82–90" name="示範②③與總結" note="重灌保資料、免重開升級" />
+      <AgendaRow time="03–10" name="主張：為什麼用 K8s 管基礎設施" />
+      <AgendaRow time="10–30" name="示範①：插電上架 ＋ Day-0 建置（前六步）" />
+      <AgendaRow time="33–53" name="動手：純 Cluster API" />
+      <AgendaRow time="53–62" name="Day-0 後三步" />
+      <AgendaRow time="62–82" name="動手：kro 自助服務" />
+      <AgendaRow time="82–90" name="示範②③與總結" />
     </div>
   </Light>
 );
