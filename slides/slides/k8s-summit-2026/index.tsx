@@ -158,12 +158,9 @@ const Claim: Page = () => (
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
   <Light eyebrow="WHY NOW" title="雲端巨頭的做法，每一層都有開源實作了">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>雲端巨頭的機房：<Red>白牌伺服器 + 自研管理系統</Red></Li>
-      <Li>那些白牌伺服器，大多是台灣代工</Li>
-      <Li>以前的門檻：管理系統得自己寫</Li>
-      <Li>現在：從裸機到儲存，<Red>每一層都有成熟的開源專案</Red></Li>
-      <Li>Kubernetes 本身就是例子 —— 前身是某家雲端巨頭的內部系統</Li>
+    <ul style={{ fontSize: 44, paddingLeft: 46, margin: 0 }}>
+      <Li gap={44}>雲端巨頭的機房：<Red>白牌伺服器 + 自研管理系統</Red></Li>
+      <Li gap={44}>現在：從裸機到儲存，<Red>每一層都有成熟的開源專案</Red></Li>
     </ul>
   </Light>
 );
