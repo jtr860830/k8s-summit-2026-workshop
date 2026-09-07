@@ -9,6 +9,15 @@
 - **測試床**（node-02）：demo②③ 用。`ssh -F poc/01-flatcar-tinkerbell/ssh_config poc1-seed`，
   `KUBECONFIG=~/mgmt.kubeconfig`
 
+## 演前一日清單（9/9）
+
+1. `capstone/workshop/reset-testbed.sh` —— 測試床健康、demo② 指紋、v1.34.8/9 sysext、地雷；day0 環境回到步驟 5 空景（實測 7 分鐘）
+2. **重新產生 USB 備援包**（快照跟最終 HEAD）：workshop-lab 上 `git pull && ./setup/offline-bundle.sh ~/usb-test`（1.1G），
+   燒到 USB（exFAT，Mac/Linux 都能讀）；學員端指令：`./setup/load-from-usb.sh /Volumes/<USB>`（2026-09-07 全鏈實測通過）
+3. 連線演練：會場網路 + 手機熱點雙線路，Tailscale 經 node-01 跳板到 poc1-seed / day0-seed / pve-node05 各打一次
+4. 簡報 `npm run build` 一次、離線開一次 dist 確認字體與重播頁正常
+5. Ceph HEALTH_OK（版本已釘 v19.2.6；若再有重灌節點拉到新版會回 HEALTH_WARN —— 釘版後不會）
+
 ## demo① 插電上架 —— 舞台：day0 環境（時限：discovery 2 分鐘內要出現）
 
 - **演前準備**（會前一天 + 場間重置）：capstone repo 內
