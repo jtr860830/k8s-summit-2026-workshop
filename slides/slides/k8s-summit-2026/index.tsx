@@ -324,8 +324,10 @@ const D0S2Cmd: Page = () => (
   oci://ghcr.io/tinkerbell/charts/tinkerbell \\
   --version v0.25.0 \\
   -n tinkerbell --create-namespace \\
-  -f tinkerbell-values.yaml --wait`}
-    expect="values 只設四件事：收 PXE 廣播的網卡、兩個服務 IP、auto-proxy 模式、自動發現/上架開關" />
+  -f tinkerbell-values.yaml --wait
+# values 只設四件事：收 PXE 廣播的網卡、
+# 兩個服務 IP、auto-proxy 模式、自動發現/上架開關`}
+    expect="STATUS: deployed；tinkerbell namespace 三個 pod Running；kubectl get crd 多出 tinkerbell.org 一組" />
 );
 const D0S2Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -347,7 +349,7 @@ const D0S3Cmd: Page = () => (
 #   下載 Flatcar 原廠映像（驗 SHA512）
 #   下載 kubelet sysext（疊加映像）
 #   放進映像伺服器目錄`}
-    expect="兩個檔案就緒、HTTP 200 —— 之後每台新機器都從這裡拿系統" />
+    expect="SHA512 OK；目錄下兩個檔案（Flatcar 映像、kubelet sysext）；curl 映像伺服器回 HTTP 200" />
 );
 const D0S3Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -367,8 +369,10 @@ const D0S4Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 機器進來「怎麼裝」"
     cmd={`butane base.bu > config.ign
 python3 gen-template.py config.ign \\
-  | kubectl apply -f -`}
-    expect="base.bu 是新機器的最小設定（主機名、SSH 金鑰、kubelet sysext）；範本本身也只是一個 K8s 物件" />
+  | kubectl apply -f -
+# base.bu：新機器的最小設定（主機名、SSH 金鑰、kubelet sysext）
+# 範本本身也只是一個 K8s 物件`}
+    expect="看到 template.tinkerbell.org/flatcar-install created；get template 列出一筆" />
 );
 const D0S4Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -419,8 +423,10 @@ const D0S6Cmd: Page = () => (
 # 然後 —— 什麼都不用做。
 
 watch kubectl -n tinkerbell \\
-  get hardware,workflow`}
-    expect="Hardware 無中生有 → 安裝 workflow 自動出現並逐步執行 → 機器重開進 Flatcar。裝完補一手收尾（關 allowPXE）—— 這是上游留白，正是 enrollment controller 未來的職責" />
+  get hardware,workflow
+# 裝完補一手收尾（關 allowPXE）——
+# 上游留白，enrollment controller 未來的職責`}
+    expect="Hardware 無中生有；安裝 workflow 自動出現、逐步轉 SUCCESS；機器重開進 Flatcar（實錄 5.5 分鐘）" />
 );
 const D0S6Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -475,7 +481,7 @@ python3 gen-mgmt-hardware.py 1 <MAC> \\
 python3 gen-mgmt-cluster.py mgmt 1 \\
   oem-stub.json "<你的公鑰>" \\
   | kubectl apply -f -`}
-    expect="機器開機後全自動：PXE 裝 Flatcar → 開機設定接上 kubeadm → 節點註冊；裝上 CNI 就 Ready" />
+    expect="Machine 從 Provisioning 轉 Running（實錄 13 分鐘，全程不碰機器）；裝上 CNI 後 get nodes 看到 Ready" />
 );
 const D0S8Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -772,7 +778,7 @@ const Step1Cmd: Page = () => (
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
 kind load image-archive \\
   ~/.summit-workshop/images.tar --name mgmt`}
-    expect="兩個指令共約 7 分鐘" />
+    expect="看到 Set kubectl context to kind-mgmt、Image archive loaded；兩個指令共約 7 分鐘" />
 );
 
 const Step1Replay: Page = () => (
@@ -813,8 +819,9 @@ const Step2Cmd: Page = () => (
     cmd={`clusterctl init --core cluster-api:v1.13.4 \\
   --bootstrap kubeadm:v1.13.4 \\
   --control-plane kubeadm:v1.13.4 \\
-  --infrastructure docker:v1.14.0`}
-    expect="約 2–3 分鐘。版本寫死是為了讀會前預載的本地定義檔，全程不需要網路" />
+  --infrastructure docker:v1.14.0
+# 版本寫死：讀會前預載的本地定義檔，全程不需要網路`}
+    expect="看到 initialized successfully；約 2–3 分鐘" />
 );
 const Step2Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -859,7 +866,7 @@ const Step5Cmd: Page = () => (
   <StepCmd act="第一幕" step={5} total={7} title="擴容"
     cmd={`kubectl scale machinedeployment demo-md-0 --replicas=2
 watch kubectl get machines`}
-    expect="約 90 秒多出一台 worker —— 擴一台機器，就是改一個數字" />
+    expect="約 90 秒後 get machines 多出一台 md-0 worker，Running" />
 );
 const Step5Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -906,7 +913,7 @@ const Step6Cmd: Page = () => (
     cmd={`kubectl delete machine \\
   $(kubectl get machines -o name | grep md-0 | head -1 | cut -d/ -f2) &
 watch kubectl get machines`}
-    expect="被刪的 worker 進入 Deleting，新 worker 同步補位 —— Pod 的哲學延伸到機器層" />
+    expect="被刪的 worker 進入 Deleting；同時出現一台新 worker，Provisioning 轉 Running" />
 );
 const Step6Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1044,7 +1051,7 @@ kind: WorkloadCluster
 metadata: {name: team-a}
 spec: {}
 EOF`}
-    expect="第一幕的 200 行，現在是 6 行 —— 約 4 分鐘收斂，CONTROLPLANEREADY 轉 true" />
+    expect="約 4 分鐘後 get cluster 的 CONTROLPLANEREADY 轉 true；底層 CAPI 物件由 kro 代為建立" />
 );
 const A2S2Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1066,7 +1073,7 @@ const A2S3Cmd: Page = () => (
     cmd={`kubectl patch workloadcluster team-a \\
   --type merge -p '{"spec":{"nodes":2}}'
 watch kubectl get machines`}
-    expect="約 90 秒多一台 worker —— 更新語義穿透抽象層" />
+    expect="約 90 秒後 get machines 多一台 team-a-md-0 worker，Running" />
 );
 const A2S3Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1087,7 +1094,7 @@ const A2S4Cmd: Page = () => (
   <StepCmd act="第二幕" step={4} total={7} title="高可用？改一個字"
     cmd={`# spec 加一行：profile: ha
 kubectl get kubeadmcontrolplane team-ha-control-plane`}
-    expect="DESIRED = 3 —— 控制平面從 1 台變 3 台，架構決策由平台代勞" />
+    expect="kubeadmcontrolplane 的 DESIRED 顯示 3；使用者只寫了 profile: ha" />
 );
 const A2S4Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
@@ -1242,8 +1249,9 @@ const D3Cmd: Page = () => (
   --type=merge \\
   -p '{"spec":{"version":"v1.34.8"}}'
 # 之後 —— 什麼都不用做。
-# KCP 逐台編排，升級外掛原地執行`}
-    expect="判決證據三件套：Machine uid 不變、uptime 不歸零、kubelet 換新版。裸機前提：maxSurge=0（機房沒有多的機器可以先開）" />
+# KCP 逐台編排，升級外掛原地執行
+# 裸機前提：maxSurge=0（機房沒有多的機器可以先開）`}
+    expect="三台 Machine 依序 Updating 再回 Running；升級後 Machine uid 不變、uptime 不歸零、kubelet 顯示新版" />
 );
 
 const d3mHdr = 'MACHINE         NODE          READY   PHASE      VERSION   |  NODE          VERSION';
