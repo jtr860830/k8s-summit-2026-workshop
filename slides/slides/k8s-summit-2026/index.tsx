@@ -1169,15 +1169,15 @@ const A2S7Replay: Page = () => (
 
 /* ── 15 第二幕回收 ───────────────────────────────────── */
 const Act2Recap: Page = () => (
-  <Light eyebrow="第二幕 · 你剛剛做了什麼" title="你在 K8s 裡創造了一個新的 API">
+  <Light eyebrow="第二幕 · 你剛剛做了什麼" title="你在 K8s 裡加了一個新的 API">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>200 行 → 6 行的差距不是魔法，是<Red>封裝過的專家知識</Red></Li>
-      <Li>status 匯總、更新傳導、cascade 刪除 —— 生命週期語義全部穿透</Li>
-      <Li>我們的真實私有雲用<Red>一字不差的 schema</Red> —— 底層只是換了 provider</Li>
-      <Li>今天：Docker container 當機器；真平台：裸機（Tinkerbell）與虛擬機器（KubeVirt）</Li>
+      <Li>200 行變 6 行，少掉的部分是<Red>把第一幕的決定寫進 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
+      <Li>status、更新、刪除都照 K8s 原本的方式運作，使用者不需要知道底下有 Cluster API</Li>
+      <Li>我們自己的私有雲用<Red>同一份 WorkloadCluster schema</Red>，只有 infrastructure provider 不同</Li>
+      <Li>今天底下是 Docker container；實際平台底下是裸機（Tinkerbell）和虛擬機器（KubeVirt）</Li>
     </ul>
     <p style={{ fontSize: 38, marginTop: 40, fontWeight: 700 }}>
-      接下來的兩段示範，就是同一套 API 在真實硬體上的樣子。
+      接下來兩個示範，就是這套 API 接到裸機之後的行為。
     </p>
   </Light>
 );
