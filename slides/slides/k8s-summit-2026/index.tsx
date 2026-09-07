@@ -159,11 +159,11 @@ const Claim: Page = () => (
 const WhiteBox: Page = () => (
   <Light eyebrow="WHY NOW" title="雲端巨頭的做法，每一層都有開源實作了">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>雲端巨頭（hyperscaler）的機房：<Red>白牌伺服器 + 自研管理系統</Red>，不買商用虛擬化</Li>
-      <Li>那些白牌伺服器，大多是台灣代工的</Li>
-      <Li>以前的門檻：管理系統要自己寫，只有這種規模的公司寫得起</Li>
-      <Li>現在：裸機佈建、叢集管理、虛擬機器、儲存 —— <Red>每一層都有成熟的開源專案</Red></Li>
-      <Li>Kubernetes 自己就是例子：前身正是某家雲端巨頭的內部叢集系統</Li>
+      <Li>雲端巨頭的機房：<Red>白牌伺服器 + 自研管理系統</Red></Li>
+      <Li>那些白牌伺服器，大多是台灣代工</Li>
+      <Li>以前的門檻：管理系統得自己寫</Li>
+      <Li>現在：從裸機到儲存，<Red>每一層都有成熟的開源專案</Red></Li>
+      <Li>Kubernetes 本身就是例子 —— 前身是某家雲端巨頭的內部系統</Li>
     </ul>
   </Light>
 );
