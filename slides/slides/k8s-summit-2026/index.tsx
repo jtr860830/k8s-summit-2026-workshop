@@ -586,7 +586,7 @@ const Demo1: Page = () => (
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
       <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
-      <Li gap={34}>切到已完成的機器：它已是叢集成員</Li>
+      <Li gap={34}>切到已完成的機器：裝好系統、在池裡待命</Li>
     </ul>
   </Dark>
 );
