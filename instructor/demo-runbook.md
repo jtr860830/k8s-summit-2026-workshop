@@ -50,9 +50,11 @@
 - 注意：`kubectl get machines` 短名會解析到 Rufio 的 BMC CRD —— 一律用全名
 - 注意：rollout 進行中絕不重部署 extension（fallback = 換機重灌）
 
-## 場間重置（9/10 場後執行）
+## 場間重置（9/10 場後執行；9/9 演前也跑一次）
 
-- day0 環境：`reset-env.sh` + 重跑步驟 1–5（見 demo① 演前準備）
-- 測試床：`reset-testbed.sh`（W2 填實）：重灌節點回歸驗證、Ceph HEALTH_OK、
-  extension 健康、artifacts 檔案就位（flatcar gz、v1.34.8/9 sysext）
+- 一鍵：capstone repo `workshop/reset-testbed.sh`（`NEXT_K8S=v1.34.9` 為 9/11 場次 demo③ 目標）
+  - 測試床：Ceph/PDB/KCP/extension 健康檢查、`write-baseline.sh` 重寫 demo② 指紋、
+    確認下一版 sysext 在 artifacts、拆 super-admin.conf 空目錄地雷
+  - day0 環境：`reset-env.sh` + 重跑步驟 1–5 → demo① 舞台空景（約 10 分鐘）
+- **demo③ 目標版本**：9/10 場 v1.34.7→v1.34.8；9/11 場 v1.34.8→**v1.34.9**（簡報指令頁寫 v1.34.8，第二場口頭改一個數字）
 - 簡報重播頁即錄影備援 —— 不需另備影片檔
