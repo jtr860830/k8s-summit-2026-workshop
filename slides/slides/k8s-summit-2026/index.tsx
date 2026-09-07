@@ -148,9 +148,9 @@ const Thesis: Page = () => (
 const Claim: Page = () => (
   <Dark eyebrow="THESIS" title="用 K8s 管理整個基礎設施">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={36}>從<Red>自助服務一路到裸機</Red>：使用者的 API、叢集、虛擬機器、儲存、機器開機 —— 同一套 kubectl、YAML、controller、RBAC、GitOps 管到底</Li>
-      <Li gap={36}>每一層都是 K8s 物件：機器是物件、叢集是物件、上架規則是物件 —— <Red>學一套心智模型</Red>，管所有層</Li>
-      <Li gap={36}>不用再為虛擬化、儲存、K8s 各養一批人 —— K8s 團隊的<Red>既有能力直接延伸</Red>到基礎設施</Li>
+      <Li gap={36}>從<Red>自助服務一路到裸機</Red>，同一套 kubectl、YAML、RBAC、GitOps 管到底</Li>
+      <Li gap={36}>機器、叢集、上架規則都是 K8s 物件 —— <Red>一套心智模型</Red>管所有層</Li>
+      <Li gap={36}>不用為虛擬化、儲存各養一批人 —— K8s 團隊的能力<Red>直接延伸</Red>到基礎設施</Li>
     </ul>
   </Dark>
 );
