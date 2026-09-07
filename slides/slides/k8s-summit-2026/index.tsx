@@ -207,14 +207,12 @@ const LayerRow = ({ name, tool, depth }: { name: string; tool: string; depth: nu
 const Architecture: Page = () => (
   <Light eyebrow="架構全景" title="每一層，都是 K8s 的 API">
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginTop: 4 }}>
-      <div style={{ fontSize: 24, color: muted, letterSpacing: '0.1em', marginBottom: 4 }}>使用者</div>
       <LayerRow name="自助服務" tool="kro" depth={0} />
       <LayerRow name="叢集生命週期" tool="Cluster API" depth={1} />
       <LayerRow name="虛擬機器" tool="KubeVirt" depth={2} />
       <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" depth={3} />
       <LayerRow name="作業系統" tool="Flatcar" depth={4} />
       <LayerRow name="裸機佈建" tool="Tinkerbell" depth={5} />
-      <div style={{ fontSize: 24, color: muted, letterSpacing: '0.1em', marginTop: 4 }}>機器</div>
     </div>
   </Light>
 );
