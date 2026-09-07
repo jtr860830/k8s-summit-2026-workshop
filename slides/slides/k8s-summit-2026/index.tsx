@@ -1298,7 +1298,7 @@ const BootstrapFull: Page = () => (
       <Li gap={28}>起始機沒有建叢集，它只放了宣告；<Red>裝機、kubeadm、加入叢集都是機器自己跑完的</Red></Li>
       <Li gap={28}>起始機可以是一台筆電：接上機房網段、跑完九步、pivot、關機。管理叢集不依賴它</Li>
       <Li gap={28}>move 搬的是 Cluster API 的物件（Cluster、Machine、Hardware），不是叢集本身；apiserver、etcd、workload 全程沒動</Li>
-      <Li gap={28}>move 是雙向的：要撤離、整修或演練災難復原，<Red>用同一個指令搬回筆電就行</Red></Li>
+      <Li gap={28}>move 是雙向的：管理叢集要整修、搬遷或演練災難復原，<Red>用同一個指令把物件搬到另一個叢集就行</Red></Li>
     </ul>
   </Dark>
 );
