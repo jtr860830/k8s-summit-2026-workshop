@@ -157,7 +157,7 @@ const Claim: Page = () => (
 
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，現在人人做得起">
+  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，現在有開源版本">
     <div style={{ display: 'flex', gap: 40, alignItems: 'stretch', fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: muted }}>雲端巨頭</div>
