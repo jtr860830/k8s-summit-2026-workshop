@@ -9,7 +9,11 @@ CACHE_DIR="${HOME}/.summit-workshop"
 mkdir -p "${CACHE_DIR}"
 
 echo "==> 校驗檔案完整性"
-( cd "${SRC}" && shasum -a 256 -c SHA256SUMS --quiet ) && echo " ✓ 校驗通過"
+if command -v shasum >/dev/null 2>&1; then
+  ( cd "${SRC}" && shasum -a 256 -c SHA256SUMS --quiet ) && echo " ✓ 校驗通過"
+else
+  ( cd "${SRC}" && sha256sum -c SHA256SUMS --quiet ) && echo " ✓ 校驗通過"
+fi
 
 case "$(uname)-$(uname -m)" in
   Linux-x86_64) PLAT=linux-amd64 ;;
@@ -27,5 +31,28 @@ echo "==> 載入映像檔"
 docker load -i "${SRC}/images.tar"
 cp "${SRC}/images.tar" "${CACHE_DIR}/images.tar"
 cp "${SRC}/kro-${KRO_VERSION}.tgz" "${CACHE_DIR}/"
+
+echo "==> Cluster API provider 離線倉庫 + clusterctl 設定（init 全程不需要網路）"
+rm -rf "${CACHE_DIR}/capi-repo" && cp -r "${SRC}/capi-repo" "${CACHE_DIR}/capi-repo"
+REPO="${CACHE_DIR}/capi-repo"
+mkdir -p "${HOME}/.config/cluster-api"
+cat > "${HOME}/.config/cluster-api/clusterctl.yaml" <<CLUSTERCTL_EOF
+cert-manager:
+  url: "file://${REPO}/cert-manager/${CERT_MANAGER_VERSION}/cert-manager.yaml"
+  version: "${CERT_MANAGER_VERSION}"
+providers:
+  - name: cluster-api
+    type: CoreProvider
+    url: "file://${REPO}/cluster-api/${CAPI_VERSION}/core-components.yaml"
+  - name: kubeadm
+    type: BootstrapProvider
+    url: "file://${REPO}/bootstrap-kubeadm/${CAPI_VERSION}/bootstrap-components.yaml"
+  - name: kubeadm
+    type: ControlPlaneProvider
+    url: "file://${REPO}/control-plane-kubeadm/${CAPI_VERSION}/control-plane-components.yaml"
+  - name: docker
+    type: InfrastructureProvider
+    url: "file://${REPO}/infrastructure-docker/${CAPD_VERSION}/infrastructure-components-development.yaml"
+CLUSTERCTL_EOF
 
 echo "SETUP-OK（USB 備援路徑）—— 可以開始第一幕了。"
