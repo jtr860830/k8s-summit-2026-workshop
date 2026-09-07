@@ -1177,7 +1177,7 @@ const Act2Recap: Page = () => (
       <Li>今天底下是 Docker container；實際平台底下是裸機（Tinkerbell）和虛擬機器（KubeVirt）</Li>
     </ul>
     <p style={{ fontSize: 38, marginTop: 40, fontWeight: 700 }}>
-      接下來兩個示範，就是這套 API 接到裸機之後的行為。
+      兩幕裡機器壞了或設定改了，Cluster API 的做法都是換一台。container 換一台幾十秒，裸機呢？
     </p>
   </Light>
 );
