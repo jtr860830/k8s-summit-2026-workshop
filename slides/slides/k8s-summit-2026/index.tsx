@@ -157,7 +157,7 @@ const Claim: Page = () => (
 
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，現在有開源版本">
+  <Light eyebrow="WHY NOW" title="從裸機到儲存，每一層都有成熟的開源專案">
     <div style={{ display: 'flex', gap: 40, alignItems: 'stretch', fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: muted }}>雲端巨頭</div>
@@ -167,7 +167,7 @@ const WhiteBox: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>現在</div>
         <p style={{ lineHeight: 1.6, marginTop: 22 }}>白牌伺服器 + <b style={{ color: 'var(--osd-accent)' }}>開源</b>管理系統</p>
-        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>從裸機到儲存，每一層都有成熟的開源專案</p>
+        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>Tinkerbell、Cluster API、KubeVirt、Rook —— 各管一層</p>
       </div>
     </div>
   </Light>
