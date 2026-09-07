@@ -16,7 +16,8 @@
    燒到 USB（exFAT，Mac/Linux 都能讀）；學員端指令：`./setup/load-from-usb.sh /Volumes/<USB>`（2026-09-07 全鏈實測通過）
 3. 連線演練：會場網路 + 手機熱點雙線路，Tailscale 經 node-01 跳板到 poc1-seed / day0-seed / pve-node05 各打一次
 4. 簡報 `npm run build` 一次、離線開一次 dist 確認字體與重播頁正常
-5. Ceph HEALTH_OK（版本已釘 v19.2.6；若再有重灌節點拉到新版會回 HEALTH_WARN —— 釘版後不會）
+5. Ceph HEALTH_OK（版本已釘 v19.2.6，重灌節點不會再拉到不同版）。`ceph health` 會顯示
+   `HEALTH_OK (muted: AUTH_INSECURE_*)` —— 那是 19.2.6 新增的 cephx 金鑰稽核，lab 內刻意靜音，正常
 
 ## demo① 插電上架 —— 舞台：day0 環境（時限：discovery 2 分鐘內要出現）
 
