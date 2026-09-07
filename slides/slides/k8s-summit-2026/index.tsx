@@ -196,23 +196,22 @@ const Lineage: Page = () => (
 );
 
 /* ── 06 架構全景 ─────────────────────────────────────── */
-const LayerRow = ({ name, tool, note }: { name: string; tool: string; note: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 28, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '18px 30px' }}>
-    <div style={{ width: 210, fontWeight: 800, fontSize: 30 }}>{name}</div>
-    <div style={{ width: 330, fontFamily: mono, fontSize: 29, color: 'var(--osd-accent)', fontWeight: 700 }}>{tool}</div>
-    <div style={{ fontSize: 27, color: '#5a5148' }}>{note}</div>
+const LayerRow = ({ name, tool }: { name: string; tool: string }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '19px 30px' }}>
+    <div style={{ width: 360, fontSize: 32, fontWeight: 800 }}>{name}</div>
+    <div style={{ fontFamily: mono, fontSize: 30, color: 'var(--osd-accent)', fontWeight: 700 }}>{tool}</div>
   </div>
 );
 
 const Architecture: Page = () => (
   <Light eyebrow="架構全景" title="每一層，都是 K8s 的 API">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 4 }}>
-      <LayerRow name="自助服務" tool="kro" note="使用者看到的高階 API（service catalog）—— 今天第二幕" />
-      <LayerRow name="叢集生命週期" tool="Cluster API" note="宣告式開叢集 —— 今天第一幕" />
-      <LayerRow name="虛擬機器" tool="KubeVirt" note="虛擬機器也是一種 K8s 資源" />
-      <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" note="分散式儲存與 CNI + LB" />
-      <LayerRow name="作業系統" tool="Flatcar" note="不可變、原子更新的 container OS" />
-      <LayerRow name="裸機佈建" tool="Tinkerbell" note="插電自動上架 —— 等一下的示範" />
+      <LayerRow name="自助服務" tool="kro" />
+      <LayerRow name="叢集生命週期" tool="Cluster API" />
+      <LayerRow name="虛擬機器" tool="KubeVirt" />
+      <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" />
+      <LayerRow name="作業系統" tool="Flatcar" />
+      <LayerRow name="裸機佈建" tool="Tinkerbell" />
     </div>
   </Light>
 );
