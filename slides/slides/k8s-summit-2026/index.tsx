@@ -157,11 +157,20 @@ const Claim: Page = () => (
 
 /* ── 04 在地優勢 ─────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，每一層都有開源實作了">
-    <ul style={{ fontSize: 44, paddingLeft: 46, margin: 0 }}>
-      <Li gap={44}>雲端巨頭的機房：<Red>白牌伺服器 + 自研管理系統</Red></Li>
-      <Li gap={44}>現在：從裸機到儲存，<Red>每一層都有成熟的開源專案</Red></Li>
-    </ul>
+  <Light eyebrow="WHY NOW" title="雲端巨頭的做法，現在人人做得起">
+    <div style={{ display: 'flex', gap: 40, alignItems: 'stretch', fontSize: 34, marginTop: 8 }}>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
+        <div style={{ fontWeight: 800, fontSize: 40, color: muted }}>雲端巨頭</div>
+        <p style={{ lineHeight: 1.6, marginTop: 22 }}>白牌伺服器 + <b>自研</b>管理系統</p>
+        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>門檻：管理系統得自己寫，只有那種規模寫得起</p>
+      </div>
+      <div style={{ alignSelf: 'center', fontSize: 56, color: muted }}>→</div>
+      <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
+        <div style={{ fontWeight: 800, fontSize: 40, color: 'var(--osd-accent)' }}>現在</div>
+        <p style={{ lineHeight: 1.6, marginTop: 22 }}>白牌伺服器 + <b style={{ color: 'var(--osd-accent)' }}>開源</b>管理系統</p>
+        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>從裸機到儲存，每一層都有成熟的開源專案</p>
+      </div>
+    </div>
   </Light>
 );
 
