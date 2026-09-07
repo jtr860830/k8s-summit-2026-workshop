@@ -440,10 +440,11 @@ const d0s7Lines: RLine[] = [
 const D0S7Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={7} total={9} title="裝 Cluster API（含裸機 provider）"
     cmd={`./install-capi.sh
-# 兩個上游沒寫清楚的必要設定：
+# 三個上游沒寫清楚的必要設定：
 #   provider 名錄要手動登記 tinkerbell
-#   CAPT 要知道 Tinkerbell 的位址`}
-    expect="Ignition 格式的 feature gate 必須在 init 前開（Flatcar 用 Ignition 不用 cloud-init）" />
+#   CAPT 要知道 Tinkerbell 的位址
+#   Ignition feature gate 要在 init 前開`}
+    expect="看到 initialized successfully；core、bootstrap、control-plane、tinkerbell 四組 controller 全部 Running" />
 );
 const D0S7Replay: Page = () => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
