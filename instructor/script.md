@@ -236,7 +236,7 @@ demo② 全程 13 分鐘、demo③ 全程 30 分鐘，都不可能在 82–90 �
 - 三種角色輪流：使用者、破壞者、平台工程師。
 - 先確認第一幕的 demo 叢集拆了，8 GB 跑兩個叢集會不夠。
 
-**73–75 步驤 1 裝 kro、定義 API**
+**73–75 步驟 1 裝 kro、定義 API**
 - helm 裝 kro，apply RGD，等 STATE Active。
 - 最後一行 `get crd workloadclusters.kro.run`：叢集裡多了一個 API。
 
@@ -260,7 +260,7 @@ demo② 全程 13 分鐘、demo③ 全程 30 分鐘，都不可能在 82–90 �
 - `advanced.kubeletExtraArgs` 原樣到底層 kubeadm。
 - 注意控制平面開始滾動換機。改 kubeadm 設定就是換機器，這是 Cluster API 的正常行為。再一次鋪 demo②。
 
-**91–93 步驗 7 拆掉**
+**91–93 步驟 7 拆掉**
 - delete workloadcluster 一個指令，Cluster、Machine、container 全部回收，順序 kro 和 Cluster API 處理。
 
 **94 第二幕回收**
