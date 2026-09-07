@@ -162,7 +162,6 @@ const WhiteBox: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: muted }}>雲端巨頭</div>
         <p style={{ lineHeight: 1.6, marginTop: 22 }}>白牌伺服器 + <b>自研</b>管理系統</p>
-        <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>門檻：管理系統得自己寫，只有那種規模寫得起</p>
       </div>
       <div style={{ alignSelf: 'center', fontSize: 56, color: muted }}>→</div>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
