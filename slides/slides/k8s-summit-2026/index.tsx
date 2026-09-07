@@ -522,7 +522,7 @@ const TinkRow = ({ name, role }: { name: string; role: string }) => (
 );
 
 const TinkerbellStack: Page = () => (
-  <Light eyebrow="上架系統怎麼搭" title="Tinkerbell：五個元件，全部跑在 K8s 上">
+  <Light eyebrow="上架系統怎麼搭" title="Tinkerbell：五個元件">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
       <TinkRow name="smee" role="監聽 PXE 廣播、補充開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
