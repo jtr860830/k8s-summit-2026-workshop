@@ -1314,13 +1314,13 @@ const RoleKnob = ({ q, a, detail }: { q: string; a: string; detail: string }) =>
 const RoleDecision: Page = () => (
   <Light eyebrow="DAY-0 · 收束" title="一台機器的角色，是怎麼決定的">
     <div style={{ display: 'flex', gap: 24, marginBottom: 30 }}>
-      <RoleKnob q="哪一台？" a="標籤" detail="Hardware 貼體質標籤，template 用 hardwareAffinity 認領 —— 第 8 步的 day0/role: mgmt" />
-      <RoleKnob q="什麼角色？" a="擁有者" detail="KubeadmControlPlane 生的是控制平面；MachineDeployment 生的是 worker —— 第一幕的 demo-md-0 就是它" />
-      <RoleKnob q="幾台？" a="replicas" detail="一個數字。擴容、縮容、HA 全是改這裡 —— kro 的 profile: ha 展開的就是它" />
+      <RoleKnob q="哪一台？" a="標籤" detail="Hardware 上貼標籤，Machine template 用 hardwareAffinity 挑有對應標籤的機器。第 8 步的 day0/role: mgmt 就是這個" />
+      <RoleKnob q="什麼角色？" a="誰建的 Machine" detail="KubeadmControlPlane 建的 Machine 是控制平面，MachineDeployment 建的是 worker。第一幕的 demo-md-0 就是後者" />
+      <RoleKnob q="幾台？" a="replicas" detail="擴容、縮容、HA 都是改這個數字。kro 的 profile: ha 展開後也是改它" />
     </div>
     <ul style={{ fontSize: 31, paddingLeft: 44, margin: 0 }}>
-      <Li gap={18}>進門是另一層：RuleSet 管「誰能進池、裝哪個 OS」—— 角色到認領那一刻才存在</Li>
-      <Li gap={18}>我們的管理叢集刻意 <Red>CP-only + 拔 taint</Red>（HCI）：平台元件跑在控制平面上，worker 屬於 workload 叢集</Li>
+      <Li gap={18}>上架是另一層：RuleSet 只管誰能進池、裝哪個 OS。機器在被認領之前沒有角色</Li>
+      <Li gap={18}>這次的管理叢集只有控制平面、沒有 worker，<Red>拔掉 taint 讓平台元件直接跑在上面</Red>；worker 留給 workload 叢集</Li>
     </ul>
   </Light>
 );
