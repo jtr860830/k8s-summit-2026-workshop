@@ -1371,12 +1371,12 @@ const Ecosystem: Page = () => (
 
 /* ── 22 Roadmap ──────────────────────────────────────── */
 const Roadmap: Page = () => (
-  <Light eyebrow="下一步" title="把「人肉控制器」寫成真的控制器">
+  <Light eyebrow="下一步" title="還缺一個 controller">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>今天示範裡人手做的事：關 allowPXE、貼標籤、判斷開機時機，都該由同一個元件接手</Li>
-      <Li>Enrollment Controller：機器從<Red>插電到退役</Red>的生命週期自動化；待命方式、貼標籤政策都在這裡宣告</Li>
-      <Li>六十多項排雷發現，就是它的需求規格書</Li>
-      <Li>預計以開源方式進行 —— 歡迎關注、更歡迎一起來踩雷</Li>
+      <Li>今天有三件事還是人手做：裝完關 allowPXE、給 Hardware 貼標籤、判斷機器什麼時候該重開</Li>
+      <Li>要寫一個 <Red>enrollment controller</Red> 接手，管機器從插電到退役；待命方式、貼標籤規則用 CRD 宣告</Li>
+      <Li>這幾個月踩到的六十多個坑，整理成它的需求清單</Li>
+      <Li>會開源，歡迎一起做</Li>
     </ul>
   </Light>
 );

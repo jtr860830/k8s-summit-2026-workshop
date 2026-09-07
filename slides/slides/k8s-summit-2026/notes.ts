@@ -212,9 +212,9 @@ export const nD3NodeReplay = `節點內部：sysext 換 /usr 疊加層、kubeadm
 export const nEcosystem = `GitOps、RBAC、Policy、觀測，四條各一句。
 團隊每多會一個 K8s 工具，基礎設施就多一個能用的工具。`;
 
-export const nRoadmap = `今天人手做的事：關 allowPXE、貼標籤、判斷開機時機。全該是同一個 controller。
-Enrollment Controller：插電到退役；待命方式、貼標籤政策都在這裡宣告。
-六十多項排雷是它的需求規格。開源進行，歡迎一起踩雷。`;
+export const nRoadmap = `三件人手做的事各對應前面一頁：關 allowPXE 是 day-0 第 6 步、貼標籤是角色頁、開機時機是 demo②。
+enrollment controller 一個元件接手，池的待命方式和貼標籤規則用 CRD 宣告。
+六十多個坑就是需求清單。會開源，歡迎一起做。`;
 
 export const nCredits = `帶過。指一下簡報字體也是開源的。`;
 
