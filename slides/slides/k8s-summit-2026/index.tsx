@@ -196,22 +196,25 @@ const Lineage: Page = () => (
 );
 
 /* ── 06 架構全景 ─────────────────────────────────────── */
-const LayerRow = ({ name, tool }: { name: string; tool: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '19px 30px' }}>
-    <div style={{ width: 360, fontSize: 32, fontWeight: 800 }}>{name}</div>
-    <div style={{ fontFamily: mono, fontSize: 30, color: 'var(--osd-accent)', fontWeight: 700 }}>{tool}</div>
+const LayerRow = ({ name, tool, depth }: { name: string; tool: string; depth: number }) => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 1180,
+    background: `rgba(38,38,38,${0.03 + depth * 0.035})`, border: '1px solid #e0d8d3', borderRadius: 8, padding: '18px 40px' }}>
+    <div style={{ fontSize: 33, fontWeight: 800 }}>{name}</div>
+    <div style={{ fontFamily: mono, fontSize: 29, color: 'var(--osd-accent)', fontWeight: 700 }}>{tool}</div>
   </div>
 );
 
 const Architecture: Page = () => (
   <Light eyebrow="架構全景" title="每一層，都是 K8s 的 API">
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 4 }}>
-      <LayerRow name="自助服務" tool="kro" />
-      <LayerRow name="叢集生命週期" tool="Cluster API" />
-      <LayerRow name="虛擬機器" tool="KubeVirt" />
-      <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" />
-      <LayerRow name="作業系統" tool="Flatcar" />
-      <LayerRow name="裸機佈建" tool="Tinkerbell" />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginTop: 4 }}>
+      <div style={{ fontSize: 24, color: muted, letterSpacing: '0.1em', marginBottom: 4 }}>使用者</div>
+      <LayerRow name="自助服務" tool="kro" depth={0} />
+      <LayerRow name="叢集生命週期" tool="Cluster API" depth={1} />
+      <LayerRow name="虛擬機器" tool="KubeVirt" depth={2} />
+      <LayerRow name="儲存 / 網路" tool="Rook-Ceph / Cilium" depth={3} />
+      <LayerRow name="作業系統" tool="Flatcar" depth={4} />
+      <LayerRow name="裸機佈建" tool="Tinkerbell" depth={5} />
+      <div style={{ fontSize: 24, color: muted, letterSpacing: '0.1em', marginTop: 4 }}>機器</div>
     </div>
   </Light>
 );
