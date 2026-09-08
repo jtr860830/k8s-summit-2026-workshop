@@ -658,7 +658,7 @@ const Demo1: Page = () => (
       <Li gap={34}>一台空機器：硬碟沒有 OS，只設成從網路開機</Li>
       <Li gap={34}>現在開機。畫面上 Hardware、Workflow 都還是空的</Li>
       <Li gap={34}>幾十秒後 Hardware <Red>自己出現</Red>；接著 Workflow 出現、開始裝</Li>
-      <Li gap={34}>裝完要 5 分鐘。先講原理，講到 day-0 第 6 步回來看結果</Li>
+      <Li gap={34}>裝完要 5 分鐘。先講原理，講完回來看結果</Li>
     </ul>
   </Dark>
 );
@@ -674,6 +674,18 @@ const HowPxe: Page = () => (
       <Li>BMC 是選配而非必要 —— 連沒有 BMC 的消費級機器都能全自動</Li>
     </ul>
   </Light>
+);
+
+/* ── 09b demo① 收割 ──────────────────────────────────── */
+const Demo1Result: Page = () => (
+  <Dark eyebrow="DEMO ① · 回到終端機" title="它自己裝好了" world="demo">
+    <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={34}>Hardware 出現了，名字裡是它自己回報的 MAC</Li>
+      <Li gap={34}>Workflow 三個動作：寫映像、寫設定、重開機，<Red>SUCCESS</Red></Li>
+      <Li gap={34}>ssh 進去，是一台 Flatcar。在池裡待命</Li>
+      <Li gap={34}>從開機到這裡，人沒碰過它。接下來講這套怎麼從零建起來</Li>
+    </ul>
+  </Dark>
 );
 
 /* ── 10 第一幕指引 ───────────────────────────────────── */
@@ -1501,7 +1513,7 @@ export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
   Thesis, Claim, WhiteBox, Architecture, Glossary, Principles,
-  Demo1, TinkerbellStack, EnrollFlow, HowPxe,
+  Demo1, TinkerbellStack, EnrollFlow, HowPxe, Demo1Result,
   D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
@@ -1519,7 +1531,7 @@ export const notes: string[] = [
   N.nCover, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
   N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nPrinciples,
-  N.nDemo1, N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
+  N.nDemo1, N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe, N.nDemo1Result,
   N.nD0Prereq, N.nD0Intro,
   N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
   N.nD0S4, N.nD0S4, R, N.nD0S5, N.nD0S5, R, N.nD0S6, N.nD0S6, R,
