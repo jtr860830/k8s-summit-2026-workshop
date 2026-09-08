@@ -77,9 +77,9 @@ export const nDemo1 = `講到這裡先來看真的東西。接下來這一段是
 【動作】切 day0-seed 終端。畫面上是 watch kubectl get hardware,workflow，現在是空的，什麼都沒有。
 【動作】另一個視窗 qm start 9211。
 
-我剛剛開機了一台機器。這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。接下來我什麼都不會做。我們回簡報講三頁原理，大概五分鐘，講完回來看它。
+我剛剛開機了一台機器。這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。接下來我什麼都不會做。我們回簡報講幾頁原理，講完回來看它跑到哪。
 
-決策點：120 秒沒看到 Hardware 出現，回來看結果那頁改用 day-0 第 6 步的重播，不等。`;
+決策點：120 秒沒看到 Hardware 出現，直接用 day-0 第 6 步的重播頁，不等。`;
 
 export const nTinkerbellStack = `剛剛那台機器背後是 Tinkerbell，五個元件。
 
@@ -107,17 +107,6 @@ export const nHowPxe = `PXE 不是新東西，1999 年的規格，每張伺服�
 BMC 不是必要。有 BMC 可以遠端開關機，沒有就得有人按電源或 ssh reboot。今天示範的機器都沒有 BMC，連消費級的機器都能走這條路。
 
 【若被問 順序】網卡發 DHCP discover → 機房 DHCP 給 IP，smee 以 ProxyDHCP 身份只補開機檔位址 → TFTP 抓 iPXE → HTTP 抓 HookOS kernel 和 initrd → HookOS 起來跟 tink 拿工作。`;
-
-export const nDemo1Result = `原理講完，回去看那台機器。
-
-【動作】切 day0-seed 終端。這時候應該已經有 Hardware 和 workflow，理想狀態是 SUCCESS。
-
-看 Hardware 的名字，後面那串是 MAC，是機器自己回報的，我沒有登記過它。Workflow 三個動作：寫映像、寫設定、重開機，狀態 SUCCESS。
-【動作】ssh core@<IP> hostnamectl，是一台 Flatcar。
-
-從開機到現在，人沒有碰過它。它現在在池裡待命。接下來講這套東西是怎麼從零建起來的，九個步驟。
-
-決策點：還沒 SUCCESS 就先看 Hardware 和 workflow 正在跑的動作，說「等我們講到第 6 步它就好了」；完全沒畫面就用第 6 步重播。`;
 
 export const nD0Prereq = `那機房要準備什麼？需要四樣：一個 L2 網段當裝機網段、機房既有的 DHCP、一台 Linux 當起始機、要納管的伺服器支援網路開機。
 
@@ -159,13 +148,17 @@ export const nD0S5 = `第五步，上架規則，定義哪些機器要裝。
 
 翻下一頁前說：這就是剛才 demo 開始時的畫面。`;
 
-export const nD0S6 = `第六步，插電。就是剛才 demo 做的事。
+export const nD0S6 = `第六步，插電。我們回去看剛才那台機器。
 
-這次用錄製看細節：實錄 5.5 分鐘壓成 25 秒。Hardware 先出現，Workflow 從 write-image 到 write-ignition 到 reboot，狀態轉 SUCCESS。動作跟第 4 步範本一致。
+【動作】切回 day0-seed 終端。這時候應該已經有 Hardware 和 workflow，理想狀態是 SUCCESS。
 
-有一個收尾動作剛才沒講：關 allowPXE。不然它每次開機都會回到 HookOS 重來一次。這是上游沒做的事，今天是腳本補的，之後要交給 controller。
+看 Hardware 的名字，後面那串是 MAC，是機器自己回報的，我沒有登記過它。workflow 三個動作跟第 4 步範本一致：寫映像、寫設定、重開機。
 
-結論一句：插電之後人沒有碰過它。到這裡，一台空機器變成池裡一台待命的 Flatcar。`;
+有一個收尾動作要講：關 allowPXE。不然它每次開機都會回到 HookOS 重來一次。這是上游沒做的事，今天是腳本補的，之後要交給 controller。
+
+現場沒跑完就用重播，實錄 5.5 分鐘壓成 25 秒。
+
+結論一句：插電之後人沒有碰過它。現在它在池裡待命，可以 ssh 進去，是一台活的 Flatcar。`;
 
 export const nAct1Guide = `剛剛那段是真實機房。現在回到動手，第一幕開始，接下來 20 分鐘你們自己動手。
 
