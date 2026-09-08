@@ -245,14 +245,14 @@ const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: s
     {children}
   </div>
 );
-const GTerm = ({ term, en, desc }: { term: string; en: string; desc: string }) => (
+const GTerm = ({ term, zh, desc }: { term: string; zh?: string; desc: string }) => (
   <div style={{ fontSize: 25, lineHeight: 1.4 }}>
-    <b style={{ color: 'var(--osd-accent)' }}>{term}</b><span style={{ color: muted, fontSize: 21 }}>　{en}</span>
+    <b style={{ color: 'var(--osd-accent)', fontFamily: mono, fontSize: 27 }}>{term}</b>{zh && <span style={{ color: muted, fontSize: 22 }}>　{zh}</span>}
     <div style={{ color: '#3a3a3a' }}>{desc}</div>
   </div>
 );
 const Glossary: Page = () => (
-  <Light eyebrow="GLOSSARY" title="Cluster API 的五個詞，等一下會一直用">
+  <Light eyebrow="GLOSSARY" title="Cluster API">
     <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
       <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -268,11 +268,11 @@ const Glossary: Page = () => (
         <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
       </div>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <GTerm term="管理叢集" en="management cluster" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
-        <GTerm term="workload 叢集" en="workload cluster" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
-        <GTerm term="起始機" en="bootstrap cluster" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
-        <GTerm term="Machine" en="" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
-        <GTerm term="provider" en="" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
+        <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
+        <GTerm term="workload cluster" zh="workload 叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
+        <GTerm term="bootstrap cluster" zh="起始機" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
+        <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
+        <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
       </div>
     </div>
   </Light>
