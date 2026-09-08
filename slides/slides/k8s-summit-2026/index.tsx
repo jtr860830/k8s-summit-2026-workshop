@@ -748,7 +748,7 @@ const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: st
 
 const ReplayPage = ({ world, title, lines }: { world: World; title: string; lines: RLine[] }) => (
   <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <div style={{ position: 'absolute', top: 28, right: 80 }}><WorldChip world={world} dark /></div>
+    <div style={{ position: 'absolute', top: 28, right: 80 }}><WorldChip world={world} hint={world === 'demo' ? '' : undefined} dark /></div>
     <TerminalReplay title={title} lines={lines} />
   </div>
 );
@@ -758,7 +758,7 @@ const RawLog = ({ k, title }: { k: string; title: string }) => (
   <div style={{ ...fill, background: darkBg, padding: '56px 80px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 20 }}>
       <span style={{ fontSize: 24, fontWeight: 800, letterSpacing: '0.12em', color: '#e05545' }}>完整錄製檔</span>
-      <span style={{ marginLeft: 'auto' }}><WorldChip world={/^(d0|d2|d3)/.test(k) ? 'demo' : 'lab'} dark /></span>
+      <span style={{ marginLeft: 'auto' }}><WorldChip world={/^(d0|d2|d3)/.test(k) ? 'demo' : 'lab'} hint={/^(d0|d2|d3)/.test(k) ? '' : undefined} dark /></span>
       <span style={{ fontSize: 26, color: mutedDark }}>{title} · 原始輸出未剪裁（可捲動、可複製）</span>
     </div>
     <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: codeBg, border: `1px solid ${codeBorder}`, borderRadius: 'var(--osd-radius)', padding: '28px 34px' }}>
@@ -812,7 +812,7 @@ const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: 
           <Red>{demo ? '會看到：' : '預期：'}</Red>{expect}
         </p>
       </div>
-      <Footer dark={demo} world={world} hint={demo ? undefined : LAB_HINT[act]} />
+      <Footer dark={demo} world={world} hint={demo ? '' : LAB_HINT[act]} />
     </div>
   );
 };
