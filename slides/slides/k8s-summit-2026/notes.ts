@@ -52,7 +52,7 @@ export const nGlossary = `接下來會一直用到五個詞，先定義好，後
 
 管理叢集，management cluster。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。動手環境就是那個 kind；真實機房是三台裸機。
 
-workload 叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
+工作負載叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
 
 起始機，bootstrap cluster。一個臨時的管理叢集，只為了開出第一個真正的管理叢集，之後把管理權搬過去，這個動作叫 pivot，然後就可以關掉。
 
@@ -242,7 +242,7 @@ export const nRoleDecision = `一台機器的角色是怎麼決定的，三個�
 
 上架是另一層。RuleSet 只管誰能進池、裝哪個 OS。機器在被認領之前沒有角色。
 
-今天的管理叢集只有控制平面、沒有 worker，拔掉 taint 讓平台元件直接跑在上面，worker 留給 workload 叢集。
+今天的管理叢集只有控制平面、沒有 worker，拔掉 taint 讓平台元件直接跑在上面，worker 留給 工作負載叢集。
 
 【若被問 沒寫 hardwareAffinity】CAPT 從未認領的 Hardware 任選一台。第 6 步那台也在池裡，標籤是把「哪一台」從隨機變成可控。
 【若被問 之後新機器怎麼加入】插電進池、貼標籤、某個叢集 replicas 加一，CAPT 認領重灌加入。貼標籤今天是人手，這就是 Roadmap。`;

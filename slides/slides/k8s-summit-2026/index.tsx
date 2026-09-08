@@ -262,14 +262,14 @@ const Glossary: Page = () => (
         </div>
         <div style={{ textAlign: 'center', fontSize: 24, color: muted }}>↓ 開出、擴縮、升級、拆掉</div>
         <div style={{ display: 'flex', gap: 14 }}>
-          <div style={{ flex: 1 }}><GBox title="workload 叢集 A" sub="Machine × 3 → Node × 3" /></div>
-          <div style={{ flex: 1 }}><GBox title="workload 叢集 B" sub="Machine × 2 → Node × 2" /></div>
+          <div style={{ flex: 1 }}><GBox title="工作負載叢集 A" sub="Machine × 3 → Node × 3" /></div>
+          <div style={{ flex: 1 }}><GBox title="工作負載叢集 B" sub="Machine × 2 → Node × 2" /></div>
         </div>
         <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
       </div>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
-        <GTerm term="workload cluster" zh="workload 叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
+        <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
         <GTerm term="bootstrap cluster" zh="起始機" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
         <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
         <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
@@ -1378,7 +1378,7 @@ const RoleDecision: Page = () => (
     </div>
     <ul style={{ fontSize: 31, paddingLeft: 44, margin: 0 }}>
       <Li gap={18}>上架是另一層：RuleSet 只管誰能進池、裝哪個 OS。機器在被認領之前沒有角色</Li>
-      <Li gap={18}>這次的管理叢集只有控制平面、沒有 worker，<Red>拔掉 taint 讓平台元件直接跑在上面</Red>；worker 留給 workload 叢集</Li>
+      <Li gap={18}>這次的管理叢集只有控制平面、沒有 worker，<Red>拔掉 taint 讓平台元件直接跑在上面</Red>；worker 留給 工作負載叢集</Li>
     </ul>
   </Light>
 );
