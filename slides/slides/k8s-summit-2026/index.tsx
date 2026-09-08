@@ -252,7 +252,7 @@ const GTerm = ({ term, en, desc }: { term: string; en: string; desc: string }) =
   </div>
 );
 const Glossary: Page = () => (
-  <Light eyebrow="名詞" title="Cluster API 的五個詞，等一下會一直用">
+  <Light eyebrow="GLOSSARY" title="Cluster API 的五個詞，等一下會一直用">
     <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
       <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
