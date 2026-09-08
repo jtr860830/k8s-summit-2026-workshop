@@ -54,7 +54,7 @@ export const nGlossary = `接下來會一直用到五個詞，先定義好，後
 
 工作負載叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
 
-起始叢集，bootstrap cluster。跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後把管理權搬過去，這個動作叫 pivot，然後就可以關掉。
+起始叢集，bootstrap cluster。跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後把管理權搬過去，這個動作叫 pivot，然後就可以關掉。動手環境沒有這一步，你的 kind 一開始就是管理叢集。
 
 Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機、虛擬機器。你在叢集裡 get nodes 看到的 Node，是同一台機器的另一個名字。
 

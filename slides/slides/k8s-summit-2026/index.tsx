@@ -256,7 +256,7 @@ const Glossary: Page = () => (
     <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
       <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s，或你電腦上的 kind" /></div>
+          <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s；動手環境沒有這步" /></div>
           <div style={{ fontSize: 24, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
           <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
         </div>
