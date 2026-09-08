@@ -72,16 +72,16 @@ export const nPrinciples = `選型三個原則。只用開源授權的專案，C
 
 缺點也要自己講。這些專案都還年輕，文件少，坑要自己踩。我們這幾個月踩了六十多個，最後 Roadmap 會提怎麼處理。`;
 
-export const nDemo1 = `講到這裡先來看真的東西。接下來這一段是真實機房的示範，你們不用動手，看投影就好。
+export const nDemo1 = `九步講之前，先把機器開起來。接下來這一段是真實機房的示範，你們不用動手，看投影就好。
 
 【動作】切 day0-seed 終端。畫面上是 watch kubectl get hardware,workflow，現在是空的，什麼都沒有。
 【動作】另一個視窗 qm start 9211。
 
-我剛剛開機了一台機器。這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。接下來我什麼都不會做。我們回簡報講幾頁原理，講完回來看它跑到哪。
+我剛剛開機了一台機器。這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。接下來我什麼都不會做。我們回簡報講前五步，講到第 6 步回來看它。
 
 決策點：120 秒沒看到 Hardware 出現，直接用 day-0 第 6 步的重播頁，不等。`;
 
-export const nTinkerbellStack = `剛剛那台機器背後是 Tinkerbell，五個元件。
+export const nTinkerbellStack = `上架這件事靠 Tinkerbell，五個元件。
 
 smee 負責聽 PXE 廣播、補充開機資訊，它不發 IP，不搶機房 DHCP 的位置。HookOS 是一個只存在記憶體裡的小型 Linux，機器開機先載入它，它回報硬體規格、執行安裝，不碰硬碟。tootles 是 metadata 服務，機器開機時來這裡拿自己的設定。tink 是 workflow 引擎，定義裝機要做哪幾步。Rufio 是 BMC 電源控制，選配，有 BMC 的機器可以遠端開關機。
 
