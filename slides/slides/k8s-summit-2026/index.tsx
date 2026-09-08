@@ -36,7 +36,7 @@ const WorldChip = ({ world, hint, dark = false }: { world: World; hint?: string;
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '6px 18px', borderRadius: 999,
       background: w.bg, border: `1px solid ${w.border}`, color: dark && world === 'lab' ? '#9fd39f' : w.fg,
       fontSize: 22, fontWeight: 800, letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>
-      {w.name}<span style={{ fontWeight: 500, opacity: 0.85 }}>{hint ?? w.sub}</span>
+      {w.name}{(hint ?? w.sub) && <span style={{ fontWeight: 500, opacity: 0.85 }}>{hint ?? w.sub}</span>}
     </span>
   );
 };
