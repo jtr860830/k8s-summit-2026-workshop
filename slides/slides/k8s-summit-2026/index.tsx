@@ -655,9 +655,10 @@ const Step0Replay: Page = () => (
 const Demo1: Page = () => (
   <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
-      <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
-      <Li gap={34}>切到已完成的機器：裝好系統、在池裡待命</Li>
+      <Li gap={34}>一台空機器：硬碟沒有 OS，只設成從網路開機</Li>
+      <Li gap={34}>現在開機。畫面上 Hardware、Workflow 都還是空的</Li>
+      <Li gap={34}>幾十秒後 Hardware <Red>自己出現</Red>；接著 Workflow 出現、開始裝</Li>
+      <Li gap={34}>裝完要 5 分鐘。先講原理，講到 day-0 第 6 步回來看結果</Li>
     </ul>
   </Dark>
 );
