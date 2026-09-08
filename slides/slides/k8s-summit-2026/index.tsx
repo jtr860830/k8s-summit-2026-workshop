@@ -24,17 +24,35 @@ const codeBorder = '#2c2c34';
 
 const fill = { width: '100%', height: '100%', fontFamily: 'var(--osd-font-body)' } as const;
 
-const Footer = ({ dark = false }: { dark?: boolean }) => {
+type World = 'demo' | 'lab';
+const WORLD = {
+  demo: { name: '我的機房', sub: '講師操作，不用跟', bg: 'rgba(240,181,161,0.16)', fg: '#f0b5a1', border: 'rgba(240,181,161,0.5)' },
+  lab: { name: '你的筆電', sub: '跟著做', bg: 'rgba(61,122,61,0.10)', fg: '#3d7a3d', border: 'rgba(61,122,61,0.45)' },
+} as const;
+
+const WorldChip = ({ world, hint, dark = false }: { world: World; hint?: string; dark?: boolean }) => {
+  const w = WORLD[world];
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '6px 18px', borderRadius: 999,
+      background: w.bg, border: `1px solid ${w.border}`, color: dark && world === 'lab' ? '#9fd39f' : w.fg,
+      fontSize: 22, fontWeight: 800, letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>
+      {w.name}<span style={{ fontWeight: 500, opacity: 0.85 }}>{hint ?? w.sub}</span>
+    </span>
+  );
+};
+
+const Footer = ({ dark = false, world, hint }: { dark?: boolean; world?: World; hint?: string }) => {
   const { current, total } = useSlidePageNumber();
   return (
     <div
       style={{
         position: 'absolute', left: 120, right: 120, bottom: 44,
-        display: 'flex', justifyContent: 'space-between',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         fontSize: 22, color: dark ? mutedDark : muted, letterSpacing: '0.05em',
       }}
     >
       <span>用 Kubernetes 打造自動化私有雲基礎設施 · KubeSummit 2026</span>
+      {world && <WorldChip world={world} hint={hint} dark={dark} />}
       <span>{String(current).padStart(2, '0')} / {total}</span>
     </div>
   );
@@ -52,21 +70,21 @@ const H = ({ children, size = 76 }: { children: React.ReactNode; size?: number }
   </h2>
 );
 
-const Light = ({ eyebrow, title, children }: { eyebrow: string; title: React.ReactNode; children?: React.ReactNode }) => (
+const Light = ({ eyebrow, title, children, world, hint }: { eyebrow: string; title: React.ReactNode; children?: React.ReactNode; world?: World; hint?: string }) => (
   <div style={{ ...fill, background: 'var(--osd-bg)', color: 'var(--osd-text)', padding: 120, position: 'relative' }}>
     <Eyebrow>{eyebrow}</Eyebrow>
     <H>{title}</H>
     <div style={{ marginTop: 52 }}>{children}</div>
-    <Footer />
+    <Footer world={world} hint={hint} />
   </div>
 );
 
-const Dark = ({ eyebrow, title, children }: { eyebrow: string; title: React.ReactNode; children?: React.ReactNode }) => (
+const Dark = ({ eyebrow, title, children, world, hint }: { eyebrow: string; title: React.ReactNode; children?: React.ReactNode; world?: World; hint?: string }) => (
   <div style={{ ...fill, background: darkBg, color: '#ffffff', padding: 120, position: 'relative' }}>
     <Eyebrow dark>{eyebrow}</Eyebrow>
     <H size={88}>{title}</H>
     <div style={{ marginTop: 52 }}>{children}</div>
-    <Footer dark />
+    <Footer dark world={world} hint={hint} />
   </div>
 );
 
@@ -109,10 +127,11 @@ const Cover: Page = () => (
 /* ── 02 開場約定 ─────────────────────────────────────── */
 
 /* ── 02b Agenda ──────────────────────────────────────── */
-const AgendaRow = ({ time, name }: { time: string; name: string }) => (
+const AgendaRow = ({ time, name, world }: { time: string; name: string; world?: World }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 30, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '19px 30px' }}>
     <div style={{ width: 190, fontFamily: mono, fontSize: 30, fontWeight: 700, color: 'var(--osd-accent)' }}>{time}</div>
-    <div style={{ fontSize: 33, fontWeight: 800 }}>{name}</div>
+    <div style={{ fontSize: 33, fontWeight: 800, flex: 1 }}>{name}</div>
+    {world && <WorldChip world={world} hint="" />}
   </div>
 );
 
@@ -120,11 +139,11 @@ const Agenda: Page = () => (
   <Light eyebrow="AGENDA" title="90 分鐘怎麼進行">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
       <AgendaRow time="03–10" name="主張：為什麼用 K8s 管基礎設施" />
-      <AgendaRow time="10–30" name="示範①：插電上架 ＋ Day-0 建置（前六步）" />
-      <AgendaRow time="33–53" name="動手：純 Cluster API" />
-      <AgendaRow time="53–62" name="Day-0 後三步" />
-      <AgendaRow time="62–82" name="動手：kro 自助服務" />
-      <AgendaRow time="82–90" name="示範②③與總結" />
+      <AgendaRow time="10–30" name="示範①：插電上架 ＋ Day-0 建置（前六步）" world="demo" />
+      <AgendaRow time="33–53" name="動手：純 Cluster API" world="lab" />
+      <AgendaRow time="53–62" name="Day-0 後三步" world="demo" />
+      <AgendaRow time="62–82" name="動手：kro 自助服務" world="lab" />
+      <AgendaRow time="82–90" name="示範②③與總結" world="demo" />
     </div>
   </Light>
 );
@@ -218,6 +237,47 @@ const Architecture: Page = () => (
   </Light>
 );
 
+/* ── 06b 名詞 ────────────────────────────────────────── */
+const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: string; accent?: boolean; children?: React.ReactNode }) => (
+  <div style={{ background: '#fff', border: accent ? '2px solid var(--osd-accent)' : '1px solid #e8e2df', borderRadius: 10, padding: '14px 20px', textAlign: 'center' }}>
+    <div style={{ fontSize: 27, fontWeight: 800, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
+    {sub && <div style={{ fontSize: 21, color: '#5a5148', marginTop: 4 }}>{sub}</div>}
+    {children}
+  </div>
+);
+const GTerm = ({ term, en, desc }: { term: string; en: string; desc: string }) => (
+  <div style={{ fontSize: 25, lineHeight: 1.4 }}>
+    <b style={{ color: 'var(--osd-accent)' }}>{term}</b><span style={{ color: muted, fontSize: 21 }}>　{en}</span>
+    <div style={{ color: '#3a3a3a' }}>{desc}</div>
+  </div>
+);
+const Glossary: Page = () => (
+  <Light eyebrow="名詞" title="Cluster API 的五個詞，等一下會一直用">
+    <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
+      <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{ flex: 1 }}><GBox title="起始機" sub="臨時的管理叢集：k3s 或 kind" /></div>
+          <div style={{ fontSize: 24, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
+          <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
+        </div>
+        <div style={{ textAlign: 'center', fontSize: 24, color: muted }}>↓ 開出、擴縮、升級、拆掉</div>
+        <div style={{ display: 'flex', gap: 14 }}>
+          <div style={{ flex: 1 }}><GBox title="workload 叢集 A" sub="Machine × 3 → Node × 3" /></div>
+          <div style={{ flex: 1 }}><GBox title="workload 叢集 B" sub="Machine × 2 → Node × 2" /></div>
+        </div>
+        <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（今天你的筆電）／裸機（我的機房）／虛擬機器</div>
+      </div>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <GTerm term="管理叢集" en="management cluster" desc="放 Cluster API 的叢集，用它開別的叢集。今天是你筆電上的 kind；我的機房是三台裸機。" />
+        <GTerm term="workload 叢集" en="workload cluster" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
+        <GTerm term="起始機" en="bootstrap cluster" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
+        <GTerm term="Machine" en="" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
+        <GTerm term="provider" en="" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
+      </div>
+    </div>
+  </Light>
+);
+
 /* ── 07 選型原則 ─────────────────────────────────────── */
 const Principles: Page = () => (
   <Light eyebrow="選型原則" title="不被任何元件綁死">
@@ -305,9 +365,7 @@ const D0S1Cmd: Page = () => (
     expect="get nodes 看到 Ready" />
 );
 const D0S1Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 1 步 —— 實際執行過程" lines={d0s1Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 1 步 —— 實際執行過程" lines={d0s1Lines} />
 );
 
 const d0s2Lines: RLine[] = [
@@ -331,9 +389,7 @@ const D0S2Cmd: Page = () => (
     expect="STATUS: deployed；tinkerbell namespace 三個 pod Running；kubectl get crd 多出 tinkerbell.org 一組" />
 );
 const D0S2Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 2 步 —— 實際執行過程" lines={d0s2Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 2 步 —— 實際執行過程" lines={d0s2Lines} />
 );
 
 const d0s3Lines: RLine[] = [
@@ -353,9 +409,7 @@ const D0S3Cmd: Page = () => (
     expect="SHA512 OK；目錄下兩個檔案（Flatcar 映像、kubelet sysext）；curl 映像伺服器回 HTTP 200" />
 );
 const D0S3Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 3 步 —— 實際執行過程" lines={d0s3Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 3 步 —— 實際執行過程" lines={d0s3Lines} />
 );
 
 const d0s4Lines: RLine[] = [
@@ -376,9 +430,7 @@ python3 gen-template.py config.ign \\
     expect="看到 template.tinkerbell.org/flatcar-install created；get template 列出一筆" />
 );
 const D0S4Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 4 步 —— 實際執行過程" lines={d0s4Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 4 步 —— 實際執行過程" lines={d0s4Lines} />
 );
 
 const d0s5Lines: RLine[] = [
@@ -399,9 +451,7 @@ const D0S5Cmd: Page = () => (
     expect="看到規則建立；Hardware 與 Workflow 都還是空的 —— 等第一台機器插電" />
 );
 const D0S5Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 5 步 —— 實際執行過程" lines={d0s5Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 5 步 —— 實際執行過程" lines={d0s5Lines} />
 );
 
 const d0s6Hdr = 'NAME                                    STATE     ACTION          AGENT';
@@ -430,9 +480,30 @@ watch kubectl -n tinkerbell \\
     expect="Hardware 無中生有；安裝 workflow 自動出現、逐步轉 SUCCESS；機器重開進 Flatcar（實錄 5.5 分鐘）" />
 );
 const D0S6Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 6 步 —— 插電，然後看著（實錄 5.5 分鐘）" lines={d0s6Lines} />
+  <ReplayPage world="demo" title="DAY-0 · 第 6 步 —— 插電，然後看著（實錄 5.5 分鐘）" lines={d0s6Lines} />
+);
+
+/* ── 第一幕 → day-0 後三步 過場 ─────────────────────── */
+const PairRow = ({ you, me }: { you: string; me: string }) => (
+  <div style={{ display: 'flex', gap: 20 }}>
+    <div style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, padding: '18px 26px', fontSize: 29, lineHeight: 1.45 }}>{you}</div>
+    <div style={{ alignSelf: 'center', fontSize: 34, color: mutedDark }}>=</div>
+    <div style={{ flex: 1, background: 'rgba(240,181,161,0.10)', border: '1px solid rgba(240,181,161,0.4)', borderRadius: 10, padding: '18px 26px', fontSize: 29, lineHeight: 1.45 }}>{me}</div>
   </div>
+);
+const BackToDay0: Page = () => (
+  <Dark eyebrow="我的機房 · DAY-0 後三步（約 9 分鐘）" title="放下鍵盤。你剛做的，我在機房做過一次" world="demo">
+    <div style={{ display: 'flex', gap: 20, marginBottom: 14, fontSize: 26, fontWeight: 800, letterSpacing: '0.1em' }}>
+      <div style={{ flex: 1, color: '#9fd39f' }}>你的筆電（kind + Docker）</div>
+      <div style={{ width: 34 }} />
+      <div style={{ flex: 1, color: '#f0b5a1' }}>我的機房（k3s + 裸機）</div>
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <PairRow you="步驟 2：clusterctl init，infrastructure 是 docker" me="第 7 步：同一個指令，infrastructure 換成 tinkerbell" />
+      <PairRow you="步驟 3：apply 200 行，開出 demo 叢集" me="第 8 步：同一個結構，開出跑在裸機上的管理叢集" />
+      <PairRow you="（沒有這步，kind 用完就丟）" me="第 9 步：pivot，把管理權搬進剛開出來的叢集，關掉起始機" />
+    </div>
+  </Dark>
 );
 
 const d0s7Lines: RLine[] = [
@@ -454,9 +525,7 @@ const D0S7Cmd: Page = () => (
     expect="看到 initialized successfully；core、bootstrap、control-plane、tinkerbell 四組 controller 全部 Running" />
 );
 const D0S7Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 7 步 —— 實際執行過程" lines={d0s7Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 7 步 —— 實際執行過程" lines={d0s7Lines} />
 );
 
 const d0s8Hdr = 'NAME            CLUSTER   NODE NAME   PHASE          AGE   VERSION';
@@ -485,9 +554,7 @@ python3 gen-mgmt-cluster.py mgmt 1 \\
     expect="Machine 從 Provisioning 轉 Running（實錄 13 分鐘，全程不碰機器）；裝上 CNI 後 get nodes 看到 Ready" />
 );
 const D0S8Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 8 步 —— 實際執行過程（實錄 13 分鐘）" lines={d0s8Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 8 步 —— 實際執行過程（實錄 13 分鐘）" lines={d0s8Lines} />
 );
 
 const d0s9Hdr = 'NAME            CLUSTER   NODE NAME   READY   PHASE     AGE   VERSION';
@@ -516,9 +583,7 @@ sudo systemctl stop k3s   # seed 停役`}
     expect="move 之後，管理叢集裡看得到自己的 Machine；起始機停掉 k3s 後，Machine 仍是 Running" />
 );
 const D0S9Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DAY-0 · 第 9 步 —— 實際執行過程" lines={d0s9Lines} />
-  </div>
+  <ReplayPage world="demo" title="DAY-0 · 第 9 步 —— 實際執行過程" lines={d0s9Lines} />
 );
 
 /* ── 07b Tinkerbell 建置 ─────────────────────────────── */
@@ -583,14 +648,12 @@ const Step0Cmd: Page = () => (
     expect="看到 SETUP-OK 就緒；有任何 ✗ 照訊息排除或舉手找助教" />
 );
 const Step0Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="開始動手前 —— 環境驗證" lines={step0Lines} />
-  </div>
+  <ReplayPage world="lab" title="開始動手前 —— 環境驗證" lines={step0Lines} />
 );
 
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
-  <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架">
+  <Dark eyebrow="我的機房 · DEMO ①" title="插電，然後看著它自己上架" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
       <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
@@ -614,26 +677,29 @@ const HowPxe: Page = () => (
 
 /* ── 10 第一幕指引 ───────────────────────────────────── */
 const Act1Guide: Page = () => (
-  <Dark eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣">
+  <Light eyebrow="你的筆電 · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`cd k8s-summit-2026-workshop
 less labs/01-capi/README.md   # 跟著走
 # 卡住了：
 ./labs/checkpoints/reset-to-01-end.sh`}</Code>
-        <p style={{ fontSize: 32, color: mutedDark, marginTop: 28, lineHeight: 1.5 }}>
+        <p style={{ fontSize: 30, color: '#5a5148', marginTop: 28, lineHeight: 1.5 }}>
           兩個終端機並排：一邊 <span style={{ fontFamily: mono }}>watch kubectl get machines</span>，
           一邊 <span style={{ fontFamily: mono }}>watch docker ps</span>
         </p>
       </div>
-      <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, color: '#f0f0f0', width: 620 }}>
+      <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, width: 620 }}>
         <Li gap={24}>apply 七個物件 → 叢集長出來</Li>
         <Li gap={24}>每個 Machine 就是一個 container</Li>
         <Li gap={24}>擴容 = 改一個數字</Li>
         <Li gap={24}>升級 = <Red>換機器</Red>，不是修機器</Li>
       </ul>
     </div>
-  </Dark>
+    <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
+      剛剛看的是我的機房。接下來底層換成你筆電上的 Docker container，指令一樣。
+    </p>
+  </Light>
 );
 
 
@@ -680,11 +746,19 @@ const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: st
   );
 };
 
+const ReplayPage = ({ world, title, lines }: { world: World; title: string; lines: RLine[] }) => (
+  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
+    <div style={{ position: 'absolute', top: 28, right: 80 }}><WorldChip world={world} dark /></div>
+    <TerminalReplay title={title} lines={lines} />
+  </div>
+);
+
 /* ── 完整錄製檔頁（存證用，簡報時快速帶過）───────────── */
 const RawLog = ({ k, title }: { k: string; title: string }) => (
   <div style={{ ...fill, background: darkBg, padding: '56px 80px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 20 }}>
       <span style={{ fontSize: 24, fontWeight: 800, letterSpacing: '0.12em', color: '#e05545' }}>完整錄製檔</span>
+      <span style={{ marginLeft: 'auto' }}><WorldChip world={/^(d0|d2|d3)/.test(k) ? 'demo' : 'lab'} dark /></span>
       <span style={{ fontSize: 26, color: mutedDark }}>{title} · 原始輸出未剪裁（可捲動、可複製）</span>
     </div>
     <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: codeBg, border: `1px solid ${codeBorder}`, borderRadius: 'var(--osd-radius)', padding: '28px 34px' }}>
@@ -718,19 +792,30 @@ const RawD0S8: Page = () => <RawLog k="d0s8" title="DAY-0 · 第 8 步（開出�
 const RawD0S9: Page = () => <RawLog k="d0s9" title="DAY-0 · 第 9 步（pivot）" />;
 const RawD3: Page = () => <RawLog k="d3" title="DEMO ③ · 免重開升級" />;
 
-const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: number; total: number; title: string; cmd: string; expect: string }) => (
-  <div style={{ ...fill, background: 'var(--osd-bg)', color: 'var(--osd-text)', padding: 120, position: 'relative' }}>
-    <Eyebrow>{`${act} · 步驟 ${step}/${total}`}</Eyebrow>
-    <H>{title}</H>
-    <div style={{ marginTop: 56 }}>
-      <Code size={34}>{cmd}</Code>
-      <p style={{ fontSize: 34, marginTop: 44, lineHeight: 1.55 }}>
-        <Red>預期：</Red>{expect}
-      </p>
+const LAB_HINT: Record<string, string> = {
+  '開始動手前': '跟著做 · setup/',
+  '第一幕': '跟著做 · labs/01-capi/README.md',
+  '第二幕': '跟著做 · labs/02-kro/README.md',
+};
+const worldOf = (act: string): World => (act in LAB_HINT ? 'lab' : 'demo');
+
+const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: number; total: number; title: string; cmd: string; expect: string }) => {
+  const world = worldOf(act);
+  const demo = world === 'demo';
+  return (
+    <div style={{ ...fill, background: demo ? darkBg : 'var(--osd-bg)', color: demo ? '#ffffff' : 'var(--osd-text)', padding: 120, position: 'relative' }}>
+      <Eyebrow dark={demo}>{demo ? `${WORLD.demo.name} · ${act} · 第 ${step}/${total} 步` : `${WORLD.lab.name} · ${act} · 步驟 ${step}/${total}`}</Eyebrow>
+      <H>{title}</H>
+      <div style={{ marginTop: 56 }}>
+        <Code size={34}>{cmd}</Code>
+        <p style={{ fontSize: 34, marginTop: 44, lineHeight: 1.55, color: demo ? '#f0f0f0' : undefined }}>
+          <Red>{demo ? '會看到：' : '預期：'}</Red>{expect}
+        </p>
+      </div>
+      <Footer dark={demo} world={world} hint={demo ? undefined : LAB_HINT[act]} />
     </div>
-    <Footer />
-  </div>
-);
+  );
+};
 
 // 真實輸出（2026-08-25 錄於驗收機；時間軸壓縮為演講節奏，雜訊行已剪）
 const step1Lines: RLine[] = [
@@ -775,7 +860,8 @@ const step3Lines: RLine[] = [
 
 const Step1Cmd: Page = () => (
   <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 為第一幕動手做準備"
-    cmd={`kind create cluster \\
+    cmd={`# 管理叢集：放 Cluster API 的叢集，之後用它開別的叢集
+kind create cluster \\
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
 kind load image-archive \\
   ~/.summit-workshop/images.tar --name mgmt`}
@@ -783,9 +869,7 @@ kind load image-archive \\
 );
 
 const Step1Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="開始動手前 · 步驟 1 —— 實際執行過程" lines={step1Lines} />
-  </div>
+  <ReplayPage world="lab" title="開始動手前 · 步驟 1 —— 參考輸出（會前錄製）" lines={step1Lines} />
 );
 
 const Step3Cmd: Page = () => (
@@ -797,9 +881,7 @@ watch kubectl get machines`}
 );
 
 const Step3Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 3 —— 實際執行過程" lines={step3Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 3 —— 參考輸出（會前錄製）" lines={step3Lines} />
 );
 
 const step2Lines: RLine[] = [
@@ -825,9 +907,7 @@ const Step2Cmd: Page = () => (
     expect="看到 initialized successfully；約 2–3 分鐘" />
 );
 const Step2Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 2 —— 實際執行過程" lines={step2Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 2 —— 參考輸出（會前錄製）" lines={step2Lines} />
 );
 
 const step4Lines: RLine[] = [
@@ -847,9 +927,7 @@ kubectl --kubeconfig /tmp/demo.kubeconfig \\
     expect="新叢集的節點先是 NotReady（還沒有 CNI）；裝上 CNI 後約 1 分鐘轉 Ready" />
 );
 const Step4Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 4 —— 實際執行過程" lines={step4Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 4 —— 參考輸出（會前錄製）" lines={step4Lines} />
 );
 
 const mHdr = 'NAME                       PHASE          AGE';
@@ -870,9 +948,7 @@ watch kubectl get machines`}
     expect="約 90 秒後 get machines 多出一台 md-0 worker，Running" />
 );
 const Step5Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 5 —— 實際執行過程" lines={step5Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 5 —— 參考輸出（會前錄製）" lines={step5Lines} />
 );
 
 const dHdr = 'NAMES                      STATUS';
@@ -893,9 +969,7 @@ watch docker ps`}
     expect="機器 container 依序消失；mgmt 管理叢集保留給第二幕" />
 );
 const Step7Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 7 —— 實際執行過程" lines={step7Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 7 —— 參考輸出（會前錄製）" lines={step7Lines} />
 );
 
 const step6Lines: RLine[] = [
@@ -917,9 +991,7 @@ watch kubectl get machines`}
     expect="被刪的 worker 進入 Deleting；同時出現一台新 worker，Provisioning 轉 Running" />
 );
 const Step6Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第一幕 · 步驟 6 —— 實際執行過程" lines={step6Lines} />
-  </div>
+  <ReplayPage world="lab" title="第一幕 · 步驟 6 —— 參考輸出（會前錄製）" lines={step6Lines} />
 );
 
 /* ── 11 第一幕回收 ───────────────────────────────────── */
@@ -989,23 +1061,26 @@ const FourLayers: Page = () => (
 
 /* ── 14 第二幕指引 ───────────────────────────────────── */
 const Act2Guide: Page = () => (
-  <Dark eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當">
+  <Light eyebrow="你的筆電 · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`less labs/02-kro/README.md
 # 卡住了：
 ./labs/checkpoints/reset-to-02-end.sh`}</Code>
-        <p style={{ fontSize: 32, color: mutedDark, marginTop: 28, lineHeight: 1.55 }}>
+        <p style={{ fontSize: 30, color: '#5a5148', marginTop: 28, lineHeight: 1.55 }}>
           先確認第一幕的 demo 叢集拆掉了 ——<br />8 GB 記憶體同時跑兩個叢集會不夠
         </p>
       </div>
-      <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, color: '#f0f0f0', width: 640 }}>
+      <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, width: 640 }}>
         <Li gap={24}><Red>使用者</Red>：6 行開叢集、改 profile 變 HA</Li>
         <Li gap={24}><Red>破壞者</Red>：塞不該開放的欄位，看 apply 被拒</Li>
         <Li gap={24}><Red>平台工程師</Red>：改 RGD，演進你的 API</Li>
       </ul>
     </div>
-  </Dark>
+    <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
+      回到你的筆電。管理叢集還是剛才那個 kind，這次在它上面多裝一層 kro。
+    </p>
+  </Light>
 );
 
 const a2s1Lines: RLine[] = [
@@ -1027,9 +1102,7 @@ kubectl get rgd -w   # 等 STATE 變 Active`}
     expect="RGD 轉 Active 後，叢集裡多了一個新的 API：WorkloadCluster" />
 );
 const A2S1Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 1 —— 實際執行過程" lines={a2s1Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 1 —— 參考輸出（會前錄製）" lines={a2s1Lines} />
 );
 
 const wHdr = 'NAME     STATE    READY   |  MACHINE                        PHASE          AGE';
@@ -1055,9 +1128,7 @@ EOF`}
     expect="約 4 分鐘後 get cluster 的 CONTROLPLANEREADY 轉 true；底層 CAPI 物件由 kro 代為建立" />
 );
 const A2S2Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 2 —— 實際執行過程" lines={a2s2Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 2 —— 參考輸出（會前錄製）" lines={a2s2Lines} />
 );
 
 const a2s3Lines: RLine[] = [
@@ -1077,9 +1148,7 @@ watch kubectl get machines`}
     expect="約 90 秒後 get machines 多一台 team-a-md-0 worker，Running" />
 );
 const A2S3Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 3 —— 實際執行過程" lines={a2s3Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 3 —— 參考輸出（會前錄製）" lines={a2s3Lines} />
 );
 
 const a2s4Lines: RLine[] = [
@@ -1098,9 +1167,7 @@ kubectl get kubeadmcontrolplane team-ha-control-plane`}
     expect="kubeadmcontrolplane 的 DESIRED 顯示 3；使用者只寫了 profile: ha" />
 );
 const A2S4Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 4 —— 實際執行過程" lines={a2s4Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 4 —— 參考輸出（會前錄製）" lines={a2s4Lines} />
 );
 
 const a2s5Lines: RLine[] = [
@@ -1118,9 +1185,7 @@ spec: {certSANs: [evil.example]}`}
     expect="apply 被拒，錯誤是 unknown field；這個欄位不在 API 裡" />
 );
 const A2S5Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 5 —— 實際執行過程" lines={a2s5Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 5 —— 參考輸出（會前錄製）" lines={a2s5Lines} />
 );
 
 const a2s6Lines: RLine[] = [
@@ -1141,9 +1206,7 @@ const A2S6Cmd: Page = () => (
     expect="kubeadmcontrolplane 的 kubeletExtraArgs 出現 v=2；控制平面接著滾動換機，這是改 kubeadm 設定的正常行為" />
 );
 const A2S6Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 6 —— 實際執行過程" lines={a2s6Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 6 —— 參考輸出（會前錄製）" lines={a2s6Lines} />
 );
 
 const cHdr = 'NAME     PHASE         |  MACHINE                        PHASE      AGE';
@@ -1163,9 +1226,7 @@ watch kubectl get cluster,machines`}
     expect="Cluster、Machine 依序消失，docker ps 不再有 team-a 的 container；順序由 kro 與 Cluster API 處理" />
 );
 const A2S7Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="第二幕 · 步驟 7 —— 實際執行過程" lines={a2s7Lines} />
-  </div>
+  <ReplayPage world="lab" title="第二幕 · 步驟 7 —— 參考輸出（會前錄製）" lines={a2s7Lines} />
 );
 
 /* ── 15 第二幕回收 ───────────────────────────────────── */
@@ -1185,13 +1246,14 @@ const Act2Recap: Page = () => (
 
 /* ── 16 demo② 過場 ───────────────────────────────────── */
 const Demo2: Page = () => (
-  <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少">
+  <Dark eyebrow="我的機房 · DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>HCI 節點上有分散式儲存（Ceph）—— 「換機哲學」最怕的就是它</Li>
       <Li gap={30}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
       <Li gap={30}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
       <Li gap={30}>驗證：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid <Red>完全一致</Red></Li>
     </ul>
+    <p style={{ fontSize: 30, color: mutedDark, marginTop: 34 }}>對照：第一幕步驟 6 你刪過一台 Machine，底下是 container。這次底下是裸機。</p>
   </Dark>
 );
 
@@ -1225,21 +1287,20 @@ const d2Lines: RLine[] = [
   { t: 25.5, text: '重灌了一台 Ceph 節點 —— 資料一個位元都沒少', kind: 'ok' },
 ];
 const D2Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DEMO ② —— 換機哲學碰上分散式儲存（實錄）" lines={d2Lines} />
-  </div>
+  <ReplayPage world="demo" title="DEMO ② —— 換機哲學碰上分散式儲存（實錄）" lines={d2Lines} />
 );
 const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
 
 /* ── 17 demo③ 過場 ───────────────────────────────────── */
 const Demo3: Page = () => (
-  <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器不用重開機">
+  <Dark eyebrow="我的機房 · DEMO ③" title="升級 Kubernetes，機器不用重開機" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>裸機的痛：照 Pod 哲學「換機升級」，每台要重灌 + 資料重建</Li>
       <Li gap={30}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
       <Li gap={30}>現場改一個版本欄位 → kubelet 原地換版</Li>
       <Li gap={30}>驗證：Machine uid 不變、<span style={{ fontFamily: mono }}>uptime</span> 不歸零</Li>
     </ul>
+    <p style={{ fontSize: 30, color: mutedDark, marginTop: 34 }}>對照：第二幕步驟 6 改設定時控制平面滾動換機。裸機上這樣做太貴，所以要原地升級。</p>
   </Dark>
 );
 
@@ -1271,9 +1332,7 @@ const d3Lines: RLine[] = [
   { t: 26.0, text: '三台原地升級完成（實測 30 分鐘）—— uid 不變、uptime 不歸零', kind: 'ok' },
 ];
 const D3Replay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DEMO ③ · 控制面視角 —— 一個欄位，三台逐台原地升級" lines={d3Lines} />
-  </div>
+  <ReplayPage world="demo" title="DEMO ③ · 控制面視角 —— 一個欄位，三台逐台原地升級" lines={d3Lines} />
 );
 
 const d3jLines: RLine[] = [
@@ -1287,9 +1346,7 @@ const d3jLines: RLine[] = [
   { t: 18.5, text: '換的是 /usr 上的「疊加層」—— 主機、磁碟、記憶體裡的一切原地不動', kind: 'ok' },
 ];
 const D3NodeReplay: Page = () => (
-  <div style={{ ...fill, background: darkBg, padding: 80, position: 'relative' }}>
-    <TerminalReplay title="DEMO ③ · 節點內部視角 —— sysext 換版 + kubeadm 升級實錄" lines={d3jLines} />
-  </div>
+  <ReplayPage world="demo" title="DEMO ③ · 節點內部視角 —— sysext 換版 + kubeadm 升級實錄" lines={d3jLines} />
 );
 
 /* ── day-0 章節收束：自舉與角色 ──────────────────────── */
@@ -1442,13 +1499,13 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
-  Thesis, Claim, WhiteBox, Architecture, Principles,
+  Thesis, Claim, WhiteBox, Architecture, Glossary, Principles,
   Demo1, TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
   D0S4Cmd, D0S4Replay, RawD0S4, D0S5Cmd, D0S5Replay, RawD0S5, D0S6Cmd, D0S6Replay, RawD0S6,
   Act1Guide, Step2Cmd, Step2Replay, RawS2, Step3Cmd, Step3Replay, RawS3, Step4Cmd, Step4Replay, RawS4, Step5Cmd, Step5Replay, RawS5, Step6Cmd, Step6Replay, RawS6, Step7Cmd, Step7Replay, RawS7, Act1Recap,
-  D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision, PoolPolicy,
+  BackToDay0, D0S7Cmd, D0S7Replay, RawD0S7, D0S8Cmd, D0S8Replay, RawD0S8, D0S9Cmd, D0S9Replay, RawD0S9, BootstrapFull, RoleDecision, PoolPolicy,
   Act2Intro, FourLayers, Act2Guide, A2S1Cmd, A2S1Replay, RawA2S1, A2S2Cmd, A2S2Replay, RawA2S2, A2S3Cmd, A2S3Replay, RawA2S3, A2S4Cmd, A2S4Replay, RawA2S4, A2S5Cmd, A2S5Replay, RawA2S5, A2S6Cmd, A2S6Replay, RawA2S6, A2S7Cmd, A2S7Replay, RawA2S7, Act2Recap,
   Lineage,
   Demo2, D2Cmd, D2Replay, RawD2, Demo3, D3Cmd, D3Replay, D3NodeReplay, RawD3,
@@ -1460,13 +1517,13 @@ const R = N.RAW_NOTE;
 export const notes: string[] = [
   N.nCover, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
-  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nPrinciples,
+  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nPrinciples,
   N.nDemo1, N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
   N.nD0Prereq, N.nD0Intro,
   N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
   N.nD0S4, N.nD0S4, R, N.nD0S5, N.nD0S5, R, N.nD0S6, N.nD0S6, R,
   N.nAct1Guide, N.nStep2, N.nStep2, R, N.nStep3, N.nStep3, R, N.nStep4, N.nStep4, R, N.nStep5, N.nStep5, R, N.nStep6, N.nStep6, R, N.nStep7, N.nStep7, R, N.nAct1Recap,
-  N.nD0S7, N.nD0S7, R, N.nD0S8, N.nD0S8, R, N.nD0S9, N.nD0S9, R, N.nBootstrapFull, N.nRoleDecision, N.nPoolPolicy,
+  N.nBackToDay0, N.nD0S7, N.nD0S7, R, N.nD0S8, N.nD0S8, R, N.nD0S9, N.nD0S9, R, N.nBootstrapFull, N.nRoleDecision, N.nPoolPolicy,
   N.nAct2Intro, N.nFourLayers, N.nAct2Guide, N.nA2S1, N.nA2S1, R, N.nA2S2, N.nA2S2, R, N.nA2S3, N.nA2S3, R, N.nA2S4, N.nA2S4, R, N.nA2S5, N.nA2S5, R, N.nA2S6, N.nA2S6, R, N.nA2S7, N.nA2S7, R, N.nAct2Recap,
   N.nLineage,
   N.nDemo2, N.nD2Cmd, N.nD2Replay, R, N.nDemo3, N.nD3Cmd, N.nD3Replay, N.nD3NodeReplay, R,
