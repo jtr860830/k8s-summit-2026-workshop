@@ -234,7 +234,8 @@ move 搬的是 Cluster API 的物件，Cluster、Machine、Hardware，不是叢�
 
 move 也不只用在 pivot。管理叢集要重建或搬遷的時候，先把物件搬到一個臨時叢集接手，修好再搬回來。Cluster API 文件就是這樣寫的。
 
-【若被問 雙向】move 沒有方向的概念，只有來源跟目標。`;
+【若被問 雙向】move 沒有方向的概念，只有來源跟目標。
+【若被問 任何叢集都能搬】不是。目標要先 clusterctl init 同一組 provider；搬的是 Cluster API 物件加關聯的 Secret，Tinkerbell 的 Hardware、Template 不在範圍要自己搬；搬之前 Cluster 會被 paused，狀態要穩定。`;
 
 export const nRoleDecision = `一台機器的角色是怎麼決定的，三個問題。
 
