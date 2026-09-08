@@ -256,7 +256,7 @@ const Glossary: Page = () => (
     <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
       <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ flex: 1 }}><GBox title="起始機" sub="臨時的管理叢集：k3s 或 kind" /></div>
+          <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s，或你電腦上的 kind" /></div>
           <div style={{ fontSize: 24, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
           <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
         </div>
@@ -270,7 +270,7 @@ const Glossary: Page = () => (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
         <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
-        <GTerm term="bootstrap cluster" zh="起始機" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
+        <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
         <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
         <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
       </div>
