@@ -50,7 +50,7 @@ export const nArchitecture = `這是整體架構，由下往上念。最底下 T
 
 export const nGlossary = `接下來會一直用到五個詞，先定義好，後面不再解釋。
 
-管理叢集，management cluster。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。今天在你筆電上就是那個 kind；在我的機房是三台裸機。
+管理叢集，management cluster。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。動手環境就是那個 kind；真實機房是三台裸機。
 
 workload 叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
 
@@ -62,17 +62,17 @@ provider。Cluster API 接底層的外掛。docker、tinkerbell、kubevirt。換
 
 後面聽到這五個詞，就回到這張圖。`;
 
-export const nBackToDay0 = `第一幕收了，放下鍵盤，回到我的機房。
+export const nBackToDay0 = `第一幕收了，放下鍵盤，看真實機房。
 
-接下來九分鐘講 day-0 後三步。你剛做的事，我在機房用同樣的指令做過一次，對照著看。步驟 2 的 clusterctl init，我的第 7 步是同一個指令，只是 infrastructure 從 docker 換成 tinkerbell。步驟 3 apply 200 行開叢集，我的第 8 步是同一個結構，只是開在裸機上。第 9 步 pivot 你們沒做，因為 kind 用完就丟，不需要把管理權搬走。
+接下來九分鐘講 day-0 後三步。你剛做的事，真實機房用同樣的指令做過一次，對照著看。步驟 2 的 clusterctl init，我的第 7 步是同一個指令，只是 infrastructure 從 docker 換成 tinkerbell。步驟 3 apply 200 行開叢集，我的第 8 步是同一個結構，只是開在裸機上。第 9 步 pivot 你們沒做，因為 kind 用完就丟，不需要把管理權搬走。
 
-看的時候留意底色：深底是我的機房，淺底是你的筆電。`;
+看的時候留意底色：深底是示範，淺底是動手。`;
 
 export const nPrinciples = `選型三個原則。只用開源授權的專案，CNCF 或社群治理的，不用付授權費，也不會有人突然改條款。每個元件都能單獨換掉，不動其他層。商用 HCI 套裝跟 source-available 的方案不在選項裡，它們好用，但一用下去就被綁住了。
 
 缺點也要自己講。這些專案都還年輕，文件少，坑要自己踩。我們這幾個月踩了六十多個，最後 Roadmap 會提怎麼處理。`;
 
-export const nDemo1 = `講到這裡先來看真的東西。接下來這一段是我的機房，你們不用動手，看投影就好。
+export const nDemo1 = `講到這裡先來看真的東西。接下來這一段是真實機房的示範，你們不用動手，看投影就好。
 
 【動作】切 day0-seed 終端。畫面上是 watch kubectl get hardware,workflow，現在是空的，什麼都沒有。
 【動作】另一個視窗 qm start 9211。
@@ -160,7 +160,7 @@ export const nD0S6 = `第六步，插電。我們回去看剛才那台機器。
 
 結論一句：插電之後人沒有碰過它。現在它在池裡待命，可以 ssh 進去，是一台活的 Flatcar。`;
 
-export const nAct1Guide = `剛剛那段是我的機房。現在回到你的筆電，第一幕開始，接下來 20 分鐘你們自己動手。
+export const nAct1Guide = `剛剛那段是真實機房。現在回到動手，第一幕開始，接下來 20 分鐘你們自己動手。
 
 先講今天跟真實環境的差別。教室沒有裸機，所以今天的機器是 Docker container。Cluster API 有一個 Docker 的 provider，行為跟裸機完全一樣，只是快很多。
 
@@ -257,7 +257,7 @@ export const nPoolPolicy = `機器在池裡待命的時候，是什麼狀態？�
 
 沒有標準答案，這是政策，可以按機型混用，已知機型直接裝、未知機型待命等鑑定。政策要有地方宣告，Roadmap 會回來講。`;
 
-export const nAct2Intro = `第二幕，回到你的筆電。右邊這 6 行就是一個完整的叢集定義。
+export const nAct2Intro = `第二幕，回到動手。右邊這 6 行就是一個完整的叢集定義。
 
 平台工程在做的事，是把第一幕那些決定寫成預設值：版本、CNI、控制平面幾台、哪些欄位開放。使用者只需要碰需要選的那幾個欄位。
 
@@ -313,7 +313,7 @@ export const nAct2Recap = `第二幕你們做了什麼：在 Kubernetes 裡加�
 
 最後一個問題。兩幕裡機器壞了或設定改了，Cluster API 的做法都是換一台。container 換一台幾十秒。裸機呢？`;
 
-export const nLineage = `最後這段，放下鍵盤，回到我的機房。
+export const nLineage = `最後這段，放下鍵盤，看真實機房。
 
 這個原則叫 reconcile by replacement，壞了不修，直接換。
 

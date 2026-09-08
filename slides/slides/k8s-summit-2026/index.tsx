@@ -26,8 +26,8 @@ const fill = { width: '100%', height: '100%', fontFamily: 'var(--osd-font-body)'
 
 type World = 'demo' | 'lab';
 const WORLD = {
-  demo: { name: '我的機房', sub: '講師操作，不用跟', bg: 'rgba(240,181,161,0.16)', fg: '#f0b5a1', border: 'rgba(240,181,161,0.5)' },
-  lab: { name: '你的筆電', sub: '跟著做', bg: 'rgba(61,122,61,0.10)', fg: '#3d7a3d', border: 'rgba(61,122,61,0.45)' },
+  demo: { name: 'DEMO', sub: '真實機房，看投影就好', bg: 'rgba(240,181,161,0.16)', fg: '#f0b5a1', border: 'rgba(240,181,161,0.5)' },
+  lab: { name: 'HANDS-ON', sub: '跟著做', bg: 'rgba(61,122,61,0.10)', fg: '#3d7a3d', border: 'rgba(61,122,61,0.45)' },
 } as const;
 
 const WorldChip = ({ world, hint, dark = false }: { world: World; hint?: string; dark?: boolean }) => {
@@ -265,10 +265,10 @@ const Glossary: Page = () => (
           <div style={{ flex: 1 }}><GBox title="workload 叢集 A" sub="Machine × 3 → Node × 3" /></div>
           <div style={{ flex: 1 }}><GBox title="workload 叢集 B" sub="Machine × 2 → Node × 2" /></div>
         </div>
-        <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（今天你的筆電）／裸機（我的機房）／虛擬機器</div>
+        <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
       </div>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <GTerm term="管理叢集" en="management cluster" desc="放 Cluster API 的叢集，用它開別的叢集。今天是你筆電上的 kind；我的機房是三台裸機。" />
+        <GTerm term="管理叢集" en="management cluster" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
         <GTerm term="workload 叢集" en="workload cluster" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
         <GTerm term="起始機" en="bootstrap cluster" desc="臨時的管理叢集，只為了開出第一個管理叢集，之後關掉。" />
         <GTerm term="Machine" en="" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
@@ -492,11 +492,11 @@ const PairRow = ({ you, me }: { you: string; me: string }) => (
   </div>
 );
 const BackToDay0: Page = () => (
-  <Dark eyebrow="我的機房 · DAY-0 後三步（約 9 分鐘）" title="放下鍵盤。你剛做的，我在機房做過一次" world="demo">
+  <Dark eyebrow="DEMO · DAY-0 後三步（約 9 分鐘）" title="放下鍵盤。你剛做的，真實機房做過一次" world="demo">
     <div style={{ display: 'flex', gap: 20, marginBottom: 14, fontSize: 26, fontWeight: 800, letterSpacing: '0.1em' }}>
-      <div style={{ flex: 1, color: '#9fd39f' }}>你的筆電（kind + Docker）</div>
+      <div style={{ flex: 1, color: '#9fd39f' }}>動手環境（kind + Docker）</div>
       <div style={{ width: 34 }} />
-      <div style={{ flex: 1, color: '#f0b5a1' }}>我的機房（k3s + 裸機）</div>
+      <div style={{ flex: 1, color: '#f0b5a1' }}>真實機房（k3s + 裸機）</div>
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <PairRow you="步驟 2：clusterctl init，infrastructure 是 docker" me="第 7 步：同一個指令，infrastructure 換成 tinkerbell" />
@@ -653,7 +653,7 @@ const Step0Replay: Page = () => (
 
 /* ── 08 demo① 過場 ───────────────────────────────────── */
 const Demo1: Page = () => (
-  <Dark eyebrow="我的機房 · DEMO ①" title="插電，然後看著它自己上架" world="demo">
+  <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={34}>一台空機器開機 —— 沒有 OS、沒有代理程式</Li>
       <Li gap={34}>看 <span style={{ fontFamily: mono }}>Hardware</span> 物件<Red>無中生有</Red>、規格自動回報</Li>
@@ -677,7 +677,7 @@ const HowPxe: Page = () => (
 
 /* ── 10 第一幕指引 ───────────────────────────────────── */
 const Act1Guide: Page = () => (
-  <Light eyebrow="你的筆電 · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
+  <Light eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`cd k8s-summit-2026-workshop
@@ -697,7 +697,7 @@ less labs/01-capi/README.md   # 跟著走
       </ul>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      剛剛看的是我的機房。接下來底層換成你筆電上的 Docker container，指令一樣。
+      剛剛看的是真實機房。接下來底層換成你電腦上的 Docker container，指令一樣。
     </p>
   </Light>
 );
@@ -1061,7 +1061,7 @@ const FourLayers: Page = () => (
 
 /* ── 14 第二幕指引 ───────────────────────────────────── */
 const Act2Guide: Page = () => (
-  <Light eyebrow="你的筆電 · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
+  <Light eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`less labs/02-kro/README.md
@@ -1078,7 +1078,7 @@ const Act2Guide: Page = () => (
       </ul>
     </div>
     <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      回到你的筆電。管理叢集還是剛才那個 kind，這次在它上面多裝一層 kro。
+      回到動手。管理叢集還是剛才那個 kind，這次在它上面多裝一層 kro。
     </p>
   </Light>
 );
@@ -1246,7 +1246,7 @@ const Act2Recap: Page = () => (
 
 /* ── 16 demo② 過場 ───────────────────────────────────── */
 const Demo2: Page = () => (
-  <Dark eyebrow="我的機房 · DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
+  <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>HCI 節點上有分散式儲存（Ceph）—— 「換機哲學」最怕的就是它</Li>
       <Li gap={30}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
@@ -1293,7 +1293,7 @@ const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
 
 /* ── 17 demo③ 過場 ───────────────────────────────────── */
 const Demo3: Page = () => (
-  <Dark eyebrow="我的機房 · DEMO ③" title="升級 Kubernetes，機器不用重開機" world="demo">
+  <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器不用重開機" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={30}>裸機的痛：照 Pod 哲學「換機升級」，每台要重灌 + 資料重建</Li>
       <Li gap={30}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
