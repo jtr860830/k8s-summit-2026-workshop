@@ -224,7 +224,9 @@ export const nD0S9 = `第九步，pivot，平台開始管理自己。
 
 clusterctl move 之後，管理叢集裡看得到自己的 Machine。接著把起始機的 k3s 停掉，再看一次，Machine 還是 Running。
 
-起始機關了，平台管理著自己。day-0 完成。`;
+起始機關了，平台管理著自己。day-0 完成。
+
+【若被問 為什麼叫 pivot】pivot 是 Cluster API 文件對這個場景的稱呼：起始叢集開出一個叢集，再把管理權搬進去，被管的變成管自己的，關係翻轉。早期 clusterctl 真的有 pivot 這個子指令，後來抽成通用的 move。move 是動作，pivot 是「目標叢集是自己開出來的」這種特例。`;
 
 export const nBootstrapFull = `收一下 day-0，起始機做了什麼、沒做什麼。
 
