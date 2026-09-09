@@ -1,5 +1,5 @@
 # ============================================================================
-# Platform API: WorkloadCluster, the productized version of the 200 lines from act 1
+# Platform API: WorkloadCluster, the productized version of the act-1 definition
 #
 # Four-layer design (same shape as the API of our real private cloud):
 #   1. Minimal top level: version / nodes / profile, all with defaults

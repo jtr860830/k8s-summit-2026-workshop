@@ -1,6 +1,6 @@
 # ============================================================================
 # Act 1: this is the raw definition of one Kubernetes cluster. Take in the size of it.
-# Seven objects, chained by name references. Act 2 turns it into 6 lines.
+# Seven objects, chained by name references. Act 2 turns it into a single object.
 # ============================================================================
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster

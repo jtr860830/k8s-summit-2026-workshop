@@ -6,7 +6,7 @@ export const RAW_NOTE = '完整錄製檔，帶過。有人問細節時停在這�
 
 export const nCover = `大家好，我是 Josh，在寬橋做平台工程。今天這 90 分鐘要講的東西，是我們自己私有雲的做法，不是概念，是這幾個月真的在機房裡跑起來的。
 
-今天做三件事。第一，看一台空機器插電之後自己把作業系統裝好。第二，你們自己動手，用 Cluster API 開一個 Kubernetes 叢集。第三，把那 200 行 YAML 包成 6 行，變成一個自助服務的 API。中間會穿插我們怎麼從零把整個平台建起來。`;
+今天做三件事。第一，看一台空機器插電之後自己把作業系統裝好。第二，你們自己動手，用 Cluster API 開一個 Kubernetes 叢集。第三，把那七個物件包成一個，變成一個自助服務的 API。中間會穿插我們怎麼從零把整個平台建起來。`;
 
 export const nAgenda = `時間配置是這樣。兩段動手各 20 分鐘，其餘是示範跟解說。動手段有助教在場，卡住就舉手；每一步都有 reset 腳本，落後了可以直接跳到那一步的結尾狀態，不會被丟下。
 
@@ -72,7 +72,7 @@ Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機
 
 export const nBackToDay0 = `第一幕收了，放下鍵盤，看真實機房。
 
-接下來九分鐘講 day-0 後三步。你剛做的事，真實機房用同樣的指令做過一次，對照著看。步驟 2 的 clusterctl init，我的第 7 步是同一個指令，只是 infrastructure 從 docker 換成 tinkerbell。步驟 3 apply 200 行開叢集，我的第 8 步是同一個結構，只是開在裸機上。第 9 步 pivot 你們沒做，因為 kind 用完就丟，不需要把管理權搬走。
+接下來九分鐘講 day-0 後三步。你剛做的事，真實機房用同樣的指令做過一次，對照著看。步驟 2 的 clusterctl init，我的第 7 步是同一個指令，只是 infrastructure 從 docker 換成 tinkerbell。步驟 3 apply 七個物件開叢集，我的第 8 步是同一個結構，只是開在裸機上。第 9 步 pivot 你們沒做，因為 kind 用完就丟，不需要把管理權搬走。
 
 看的時候留意底色：深底是示範，淺底是動手。`;
 
@@ -178,7 +178,7 @@ export const nStep2 = `步驟 2，裝 Cluster API。版本寫死是為了離線�
 
 四個 provider：core、bootstrap、control-plane、infrastructure。infrastructure 今天是 docker，day-0 是 tinkerbell，其他三個一模一樣。這就是 Cluster API 的設計，換底層只換一個 provider。`;
 
-export const nStep3 = `步驟 3，開一個叢集，用最原始的方式。先 less 看一下那 200 行，感受一下。七個物件，名字互相引用。
+export const nStep3 = `步驟 3，開一個叢集，用最原始的方式。先 less 看一下那份 YAML，感受一下。七個物件，名字互相引用。
 
 apply 之後看 machines 的 PHASE 走：Pending、Provisioning、Provisioned、Running，大概 3 分鐘。另一邊 docker ps 會多三個 container：一台 control plane、一台 worker、一個負載平衡器。
 
@@ -204,7 +204,7 @@ mgmt 那個 kind 叢集不要刪，第二幕還要用。`;
 
 export const nAct1Recap = `第一幕你們剛剛做了什麼。左邊是得到的：叢集是一份宣告，apply 就有；擴縮、汰換都是改欄位；機器變成 cattle。
 
-右邊是付出的，三條都是真的。七個物件、200 行 YAML。名稱互相引用，錯一個字全垮。哪些欄位危險，要靠經驗。
+右邊是付出的，三條都是真的。七個物件、一整份 YAML。名稱互相引用，錯一個字全垮。哪些欄位危險，要靠經驗。
 
 這是基礎設施工程師的日常，但不該是使用者的日常。第二幕就是解這個。在那之前，先把 day-0 後三步講完。`;
 
@@ -214,7 +214,7 @@ export const nD0S7 = `第七步，起始機裝 Cluster API。跟你們剛才步�
 
 export const nD0S8 = `第八步，開出管理叢集，這次是裸機。兩個 apply。
 
-第一個預先登記一台 Hardware，帶固定 IP 跟一個標籤 day0/role: mgmt。第二個是 Cluster API 的叢集定義，跟你們第一幕的 200 行同一個結構。
+第一個預先登記一台 Hardware，帶固定 IP 跟一個標籤 day0/role: mgmt。第二個是 Cluster API 的叢集定義，跟你們第一幕那份同一個結構。
 
 之後發生的事：CAPT 看到 Machine，用 hardwareAffinity 挑有標籤的 Hardware，替它建 workflow。機器 PXE 進 HookOS 重灌，這次 Ignition 裡有 kubeadm init。重開之後控制平面起來，Machine 轉 Running。
 
@@ -264,7 +264,7 @@ export const nPoolPolicy = `機器在池裡待命的時候，是什麼狀態？�
 
 沒有標準答案，這是政策，可以按機型混用，已知機型直接裝、未知機型待命等鑑定。政策要有地方宣告，Roadmap 會回來講。`;
 
-export const nAct2Intro = `第二幕，回到動手。右邊這 6 行就是一個完整的叢集定義。
+export const nAct2Intro = `第二幕，回到動手。右邊這幾行就是一個完整的叢集定義。
 
 平台工程在做的事，是把第一幕那些決定寫成預設值：版本、CNI、控制平面幾台、哪些欄位開放。使用者只需要碰需要選的那幾個欄位。
 
@@ -276,7 +276,7 @@ export const nFourLayers = `我們的平台 API 分四層。
 
 第四層要反過來想：哪些欄位不開放，本身就是設計。步驟 5 會撞到它。`;
 
-export const nAct2Guide = `第二幕開始，25 分鐘，三種角色輪流當。使用者：6 行開叢集，改 profile 變 HA。破壞者：塞不該開放的欄位，看 apply 被拒。平台工程師：改 RGD，演進你的 API。
+export const nAct2Guide = `第二幕開始，25 分鐘，三種角色輪流當。使用者：一個物件開叢集，改 profile 變 HA。破壞者：塞不該開放的欄位，看 apply 被拒。平台工程師：改 RGD，演進你的 API。
 
 先確認第一幕的 demo 叢集拆了。8 GB 記憶體同時跑兩個叢集會不夠。
 
@@ -288,7 +288,7 @@ export const nA2S1 = `步驟 1，裝 kro，apply RGD，等 STATE 變 Active。
 
 最後一行 get crd workloadclusters.kro.run。叢集裡多了一個 API，是你剛剛定義的。`;
 
-export const nA2S2 = `步驟 2，六行一個叢集。spec 是空的，所有欄位都有預設值。
+export const nA2S2 = `步驟 2，一個物件，一個叢集。spec 是空的，所有欄位都有預設值。
 
 大概 4 分鐘收斂，CONTROLPLANEREADY 轉 true。底下那七個 Cluster API 物件是 kro 建的，你沒有碰它們。`;
 
@@ -314,7 +314,7 @@ export const nA2S7 = `步驟 7，拆掉。delete workloadcluster 一個指令，
 
 export const nAct2Recap = `第二幕你們做了什麼：在 Kubernetes 裡加了一個新的 API。
 
-200 行變 6 行，少掉的部分是第一幕那些決定寫進了 RGD。status、更新、刪除都照 Kubernetes 原本的方式運作，使用者不需要知道底下有 Cluster API。
+七個物件變一個，少掉的部分是第一幕那些決定寫進了 RGD。status、更新、刪除都照 Kubernetes 原本的方式運作，使用者不需要知道底下有 Cluster API。
 
 我們自己的私有雲用的是同一份 WorkloadCluster schema，只換 infrastructure provider。今天底下是 Docker container，實際平台底下是裸機跟虛擬機器。
 

@@ -496,7 +496,7 @@ const BackToDay0: Page = () => (
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <PairRow you="步驟 2：clusterctl init，infrastructure 是 docker" me="第 7 步：同一個指令，infrastructure 換成 tinkerbell" />
-      <PairRow you="步驟 3：apply 200 行，開出 demo 叢集" me="第 8 步：同一個結構，開出跑在裸機上的管理叢集" />
+      <PairRow you="步驟 3：apply 七個物件，開出 demo 叢集" me="第 8 步：同一個結構，開出跑在裸機上的管理叢集" />
       <PairRow you="（沒有這步，kind 用完就丟）" me="第 9 步：pivot，把管理權搬進剛開出來的叢集，關掉起始機" />
     </div>
   </Dark>
@@ -674,7 +674,7 @@ const HowPxe: Page = () => (
 
 /* ── 10 Act 1 guide ───────────────────────────────────── */
 const Act1Guide: Page = () => (
-  <Light eyebrow="HANDS-ON · ACT 1（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
+  <Light eyebrow="HANDS-ON · ACT 1（約 20 分鐘）" title="純 Cluster API：先看原始定義長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`cd k8s-summit-2026-workshop
@@ -873,7 +873,7 @@ const Step1Replay: Page = () => (
 
 const Step3Cmd: Page = () => (
   <StepCmd act="第一幕" step={3} total={7} title="開一個叢集 —— 原始的方式"
-    cmd={`less labs/01-capi/cluster-raw.yaml   # 先看看 200 行長什麼樣
+    cmd={`less labs/01-capi/cluster-raw.yaml   # 先看看原始定義長什麼樣
 kubectl apply -f labs/01-capi/cluster-raw.yaml
 watch kubectl get machines`}
     expect="七個物件建立後，Machine 約 3 分鐘轉為 Running；docker ps 會多出三個 container" />
@@ -1008,7 +1008,7 @@ const Act1Recap: Page = () => (
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)' }}>付出的</div>
         <ul style={{ fontSize: 33, paddingLeft: 40, marginTop: 20, lineHeight: 1.55 }}>
-          <li>七個物件、200 行 YAML</li>
+          <li>七個物件、一整份 YAML</li>
           <li>名稱互相引用，錯一個字全垮</li>
           <li>哪些欄位危險？要靠經驗</li>
         </ul>
@@ -1022,7 +1022,7 @@ const Act1Recap: Page = () => (
 
 /* ── 12 Act 2 intro ───────────────────────────────────── */
 const Act2Intro: Page = () => (
-  <Dark eyebrow="ACT 2" title={<>把 200 行，變成 6 行</>}>
+  <Dark eyebrow="ACT 2" title={<>把七個物件，變成一個</>}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'center' }}>
       <Code size={30}>{`apiVersion: kro.run/v1alpha1
 kind: WorkloadCluster
@@ -1071,7 +1071,7 @@ const Act2Guide: Page = () => (
         </p>
       </div>
       <ul style={{ fontSize: 34, paddingLeft: 40, margin: 0, width: 640 }}>
-        <Li gap={24}><Red>使用者</Red>：6 行開叢集、改 profile 變 HA</Li>
+        <Li gap={24}><Red>使用者</Red>：一個物件開叢集、改 profile 變 HA</Li>
         <Li gap={24}><Red>破壞者</Red>：塞不該開放的欄位，看 apply 被拒</Li>
         <Li gap={24}><Red>平台工程師</Red>：改 RGD，演進你的 API</Li>
       </ul>
@@ -1117,7 +1117,7 @@ const a2s2Lines: RLine[] = [
   { t: 18.5, text: '（spec: {} —— 所有欄位都有預設值；status 由底層自動匯總）', kind: 'ok' },
 ];
 const A2S2Cmd: Page = () => (
-  <StepCmd act="第二幕" step={2} total={7} title="六行，一個叢集"
+  <StepCmd act="第二幕" step={2} total={7} title="一個物件，一個叢集"
     cmd={`cat <<EOF | kubectl apply -f -
 apiVersion: kro.run/v1alpha1
 kind: WorkloadCluster
@@ -1232,7 +1232,7 @@ const A2S7Replay: Page = () => (
 const Act2Recap: Page = () => (
   <Light eyebrow="ACT 2 · RECAP" title="你在 K8s 裡加了一個新的 API">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>200 行變 6 行，少掉的部分是<Red>把第一幕的決定寫進 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
+      <Li>七個物件變一個，少掉的部分是<Red>把第一幕的決定寫進 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
       <Li>status、更新、刪除都照 K8s 原本的方式運作，使用者不需要知道底下有 Cluster API</Li>
       <Li>我們自己的私有雲用<Red>同一份 WorkloadCluster schema</Red>，只有 infrastructure provider 不同</Li>
       <Li>今天底下是 Docker container；實際平台底下是裸機（Tinkerbell）和虛擬機器（KubeVirt）</Li>
