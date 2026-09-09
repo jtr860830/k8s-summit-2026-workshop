@@ -1209,7 +1209,7 @@ const A2S7Replay: Page = () => (
 const Act2Recap: Page = () => (
   <Light eyebrow="ACT 2 · RECAP" title="你在 K8s 裡加了一個新的 API">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>七個物件變一個，少掉的部分是<Red>manifests 的預設值寫進了 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
+      <Li>七個物件變一個，少掉的部分是 <Red>manifests 的預設值寫進了 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
       <Li>status、更新、刪除都照 K8s 原本的方式運作，使用者不需要知道底下有 Cluster API</Li>
       <Li>我們自己的私有雲用<Red>同一份 WorkloadCluster schema</Red>，只有 infrastructure provider 不同</Li>
       <Li>今天底下是 Docker container；實際平台底下是裸機（Tinkerbell）和虛擬機器（KubeVirt）</Li>
