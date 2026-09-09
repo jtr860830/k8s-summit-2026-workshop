@@ -477,7 +477,7 @@ const d0s6Lines: RLine[] = [
   { t: 25.5, text: '資源池第一台機器上線 —— 插電之後，人沒碰過它', kind: 'ok' },
 ];
 const D0S6Cmd: Page = () => (
-  <StepCmd act="DAY-0 建置" step={6} total={9} title="插電時刻"
+  <StepCmd act="DAY-0 建置" step={6} total={9} title="幫新機器接上電源"
     cmd={`# 把空白機器接上網路，開機。
 # 然後 —— 什麼都不用做。
 
@@ -795,7 +795,7 @@ const RawD0S2: Page = () => <RawLog k="d0s2" title="DAY-0 · 第 2 步" />;
 const RawD0S3: Page = () => <RawLog k="d0s3" title="DAY-0 · 第 3 步" />;
 const RawD0S4: Page = () => <RawLog k="d0s4" title="DAY-0 · 第 4 步" />;
 const RawD0S5: Page = () => <RawLog k="d0s5" title="DAY-0 · 第 5 步" />;
-const RawD0S6: Page = () => <RawLog k="d0s6" title="DAY-0 · 第 6 步（插電時刻）" />;
+const RawD0S6: Page = () => <RawLog k="d0s6" title="DAY-0 · 第 6 步（接上電源）" />;
 const RawD0S7: Page = () => <RawLog k="d0s7" title="DAY-0 · 第 7 步" />;
 const RawD0S8: Page = () => <RawLog k="d0s8" title="DAY-0 · 第 8 步（開出管理叢集）" />;
 const RawD0S9: Page = () => <RawLog k="d0s9" title="DAY-0 · 第 9 步（pivot）" />;
