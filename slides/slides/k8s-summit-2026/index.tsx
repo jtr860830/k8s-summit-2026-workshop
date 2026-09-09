@@ -483,8 +483,7 @@ const D0S6Cmd: Page = () => (
 
 watch kubectl -n tinkerbell \\
   get hardware,workflow
-# 裝完補一手收尾（關 allowPXE）——
-# 上游留白，enrollment controller 未來的職責`}
+# 裝完補一手收尾（關 allowPXE）`}
     expect="Hardware 無中生有；安裝 workflow 自動出現、逐步轉 SUCCESS；機器重開進 Flatcar（實錄 5.5 分鐘）" />
 );
 const D0S6Replay: Page = () => (
