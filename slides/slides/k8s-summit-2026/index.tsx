@@ -1363,7 +1363,7 @@ const PoolMode = ({ name, sub, accent = false }: { name: string; sub: string; ac
   </div>
 );
 const PoolPolicy: Page = () => (
-  <Light eyebrow="DAY-0 · WRAP-UP" title="資源池的兩種待命方式">
+  <Light eyebrow="DAY-0 · WRAP-UP" title="資源池的待命方式">
     <div style={{ display: 'flex', gap: 40, marginTop: 30 }}>
       <PoolMode name="HookOS 待命" sub="上游預設" />
       <PoolMode name="先裝基礎 OS" sub="今天的示範" accent />
