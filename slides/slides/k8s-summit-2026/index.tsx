@@ -4,6 +4,7 @@ import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 import { RAW } from './rawlogs';
 import * as N from './notes';
 import './fonts.css';
+import logoUrl from './assets/brobridge-logo.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
@@ -108,9 +109,16 @@ const Red = ({ children }: { children: React.ReactNode }) => (
   <span style={{ color: 'var(--osd-accent)', fontWeight: 800 }}>{children}</span>
 );
 
+const Logo = ({ height = 64 }: { height?: number }) => (
+  <div style={{ display: 'inline-flex', alignItems: 'center', background: '#fff', borderRadius: 12, padding: '16px 28px' }}>
+    <img src={logoUrl} alt="Brobridge" style={{ height, display: 'block' }} />
+  </div>
+);
+
 /* ── 01 封面 ─────────────────────────────────────────── */
 const Cover: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
+    <div style={{ position: 'absolute', right: 160, bottom: 96 }}><Logo height={56} /></div>
     <Eyebrow dark>KUBESUMMIT 2026 · 體驗工作坊</Eyebrow>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 108, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.2 }}>
       用 Kubernetes 打造<br />自動化私有雲基礎設施
@@ -1476,7 +1484,7 @@ const OpenSourceCredits: Page = () => (
 
 /* ── 24 封底 ─────────────────────────────────────────── */
 const Thanks: Page = () => (
-  <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+  <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 800, margin: 0 }}>謝謝</h1>
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh） · 寬橋 · KubeSummit 2026
@@ -1487,6 +1495,7 @@ const Thanks: Page = () => (
     <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
       會後在 Q&A 區或寬橋攤位，都找得到我 —— 歡迎來交流。
     </p>
+    <div style={{ position: 'absolute', bottom: 88 }}><Logo height={52} /></div>
   </div>
 );
 
