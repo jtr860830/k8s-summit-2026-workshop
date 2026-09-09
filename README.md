@@ -10,7 +10,7 @@ KubeSummit 2026 體驗工作坊（9/10、9/11）的學員教材。90 分鐘內�
 ## 開始之前（會前必做）
 
 > **請務必在工作坊前完成前置作業。** 現場網路無法供 60 人同時下載數 GB 的映像檔；
-> 沒完成的學員現場會有 USB 備援，但流程較慢。
+> 沒完成的學員現場仍可用會場網路下載，但會慢很多。
 
 1. 詳讀並依照 [`setup/prereqs.md`](setup/prereqs.md) 準備環境（macOS 或 Linux、Docker、4 CPU / 8 GB RAM 以上）
 2. 執行一鍵準備腳本，直到看見 `SETUP-OK`：
@@ -23,7 +23,7 @@ cd k8s-summit-2026-workshop
 
 ## 現場三步開跑
 
-1. 確認 `./setup/setup.sh` 曾輸出 `SETUP-OK`（或依講師指示使用 USB 備援：`./setup/load-from-usb.sh`）
+1. 確認 `./setup/setup.sh` 曾輸出 `SETUP-OK`
 2. 等講師口令，開啟第一幕：[`labs/01-capi/README.md`](labs/01-capi/README.md)
 3. 跟不上進度時，執行對應段落的追趕腳本（`labs/checkpoints/`），一鍵回到隊伍裡
 
@@ -31,7 +31,7 @@ cd k8s-summit-2026-workshop
 
 | 路徑 | 內容 |
 |---|---|
-| `setup/` | 前置指南、一鍵準備腳本、USB 備援工具 |
+| `setup/` | 前置指南、一鍵準備腳本、離線打包工具 |
 | `labs/01-capi/` | 第一幕：裸 Cluster API —— 先看原始定義長什麼樣 |
 | `labs/02-kro/` | 第二幕：kro 自助服務 —— 一個物件開出一個叢集 |
 | `labs/checkpoints/` | 各段落的追趕腳本 |

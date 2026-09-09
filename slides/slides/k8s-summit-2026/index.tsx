@@ -635,10 +635,9 @@ const step0Lines: RLine[] = [
 ];
 const Step0Cmd: Page = () => (
   <StepCmd act="開始動手前" step={0} total={7} title="確認環境就緒"
-    cmd={`cd k8s-summit-2026-workshop
+    cmd={`git clone https://github.com/jtr860830/k8s-summit-2026-workshop.git
+cd k8s-summit-2026-workshop
 ./setup/setup.sh        # 會前跑過的話，這裡只是再驗證一次
-# 沒跑過？舉手拿 USB：
-./setup/load-from-usb.sh /path/to/usb
 # 有 ✗ 就照訊息排除，或舉手找助教`}
     expect="每一項打勾，最後一行 SETUP-OK" />
 );
