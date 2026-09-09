@@ -1268,13 +1268,11 @@ const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
 /* ── 17 Demo 3 intro ──────────────────────────────────── */
 const Demo3: Page = () => (
   <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器不用重開機" world="demo">
-    <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={30}>裸機的痛：照 Pod 哲學「換機升級」，每台要重灌 + 資料重建</Li>
-      <Li gap={30}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
-      <Li gap={30}>現場改一個版本欄位 → kubelet 原地換版</Li>
-      <Li gap={30}>驗證：Machine uid 不變、<span style={{ fontFamily: mono }}>uptime</span> 不歸零</Li>
+    <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={36}>Cluster API 的 in-place update：升級<Red>交給外掛</Red>在節點上原地執行</Li>
+      <Li gap={36}>現場改一個版本欄位 → kubelet 原地換版</Li>
+      <Li gap={36}>驗證：Machine uid 不變、<span style={{ fontFamily: mono }}>uptime</span> 不歸零</Li>
     </ul>
-    <p style={{ fontSize: 30, color: mutedDark, marginTop: 34 }}>對照：第二幕步驟 6 改設定時控制平面滾動換機。裸機上這樣做太貴，所以要原地升級。</p>
   </Dark>
 );
 
