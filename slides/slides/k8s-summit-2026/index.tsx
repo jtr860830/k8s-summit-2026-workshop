@@ -5,6 +5,7 @@ import { RAW } from './rawlogs';
 import * as N from './notes';
 import './fonts.css';
 import logoUrl from './assets/brobridge-logo.png';
+import joshUrl from './assets/josh.png';
 
 export const design: DesignSystem = {
   palette: { bg: '#faf5f2', text: '#262626', accent: '#c00000' },
@@ -129,6 +130,26 @@ const Cover: Page = () => (
     <p style={{ fontSize: 30, color: mutedDark, marginTop: 60 }}>
       謝禹沆（Josh）<span style={{ color: '#f0b5a1', margin: '0 16px' }}>|</span>Platform Engineer, 寬橋
     </p>
+  </div>
+);
+
+/* ── 01b About ─────────────────────────────────────────── */
+const About: Page = () => (
+  <div style={{ ...fill, background: darkBg, color: '#fff', padding: 120, position: 'relative', display: 'flex', alignItems: 'center', gap: 96 }}>
+    <img src={joshUrl} alt="Josh Hsieh" style={{ width: 460, height: 460, objectFit: 'cover', objectPosition: 'center 20%', borderRadius: 28, flexShrink: 0 }} />
+    <div style={{ flex: 1 }}>
+      <Eyebrow dark>ABOUT</Eyebrow>
+      <h2 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 84, fontWeight: 800, margin: '20px 0 0', lineHeight: 1.15 }}>謝禹沆 <span style={{ fontSize: 56, color: mutedDark, fontWeight: 700 }}>Josh Hsieh</span></h2>
+      <p style={{ fontSize: 36, marginTop: 28, color: '#f0f0f0' }}>Platform Engineer · 寬橋 Brobridge</p>
+      <p style={{ fontSize: 32, marginTop: 10, color: mutedDark }}>資訊工程博士生</p>
+      <div style={{ marginTop: 44, fontSize: 30, lineHeight: 1.7, color: '#f0f0f0' }}>
+        <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>領域</span>　Infrastructure · Operating System · Networking</div>
+        <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>工具</span>　Linux · Kubernetes · Container · Rust</div>
+        <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>貢獻</span>　rustup · kubernetes/website · koa · grule-rule-engine</div>
+      </div>
+      <p style={{ fontFamily: mono, fontSize: 28, marginTop: 44, color: '#7ee787' }}>josh.tw · github.com/jtr860830</p>
+    </div>
+    <Footer dark />
   </div>
 );
 
@@ -1447,7 +1468,7 @@ export const meta: SlideMeta = {
 };
 
 export default [
-  Cover, Agenda,
+  Cover, About, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
   Thesis, Claim, WhiteBox, Architecture, Glossary, GlossaryTerms,
   TinkerbellStack, EnrollFlow, HowPxe,
@@ -1465,7 +1486,7 @@ export default [
 // Speaker notes: index-aligned with the pages array above (presenter mode, press P)
 const R = N.RAW_NOTE;
 export const notes: string[] = [
-  N.nCover, N.nAgenda,
+  N.nCover, N.nAbout, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
   N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
   N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
