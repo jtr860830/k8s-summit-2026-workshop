@@ -1338,24 +1338,20 @@ const BootstrapFull: Page = () => (
 );
 
 const RoleKnob = ({ q, a, detail }: { q: string; a: string; detail: string }) => (
-  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '28px 32px' }}>
-    <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 12 }}>{q}</div>
-    <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>{a}</div>
-    <div style={{ fontSize: 26, color: '#5a5148', lineHeight: 1.45 }}>{detail}</div>
+  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '36px 38px' }}>
+    <div style={{ fontSize: 34, fontWeight: 800, marginBottom: 16 }}>{q}</div>
+    <div style={{ fontSize: 42, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 20 }}>{a}</div>
+    <div style={{ fontSize: 29, color: '#5a5148', lineHeight: 1.5 }}>{detail}</div>
   </div>
 );
 
 const RoleDecision: Page = () => (
   <Light eyebrow="DAY-0 · WRAP-UP" title="一台機器的角色，是怎麼決定的">
-    <div style={{ display: 'flex', gap: 24, marginBottom: 30 }}>
+    <div style={{ display: 'flex', gap: 32, marginTop: 10 }}>
       <RoleKnob q="哪一台？" a="標籤" detail="Hardware 上貼標籤，Machine template 用 hardwareAffinity 挑有對應標籤的機器。第 8 步的 day0/role: mgmt 就是這個" />
       <RoleKnob q="什麼角色？" a="誰建的 Machine" detail="KubeadmControlPlane 建的 Machine 是控制平面，MachineDeployment 建的是 worker。第一幕的 demo-md-0 就是後者" />
       <RoleKnob q="幾台？" a="replicas" detail="擴容、縮容、HA 都是改這個數字。kro 的 profile: ha 展開後也是改它" />
     </div>
-    <ul style={{ fontSize: 31, paddingLeft: 44, margin: 0 }}>
-      <Li gap={18}>上架是另一層：RuleSet 只管誰能進池、裝哪個 OS。機器在被認領之前沒有角色</Li>
-      <Li gap={18}>這次的管理叢集只有控制平面、沒有 worker，<Red>拔掉 taint 讓平台元件直接跑在上面</Red>；worker 留給 工作負載叢集</Li>
-    </ul>
   </Light>
 );
 
