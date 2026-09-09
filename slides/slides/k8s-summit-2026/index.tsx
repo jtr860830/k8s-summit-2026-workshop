@@ -484,16 +484,16 @@ const PairRow = ({ you, me }: { you: string; me: string }) => (
   </div>
 );
 const BackToDay0: Page = () => (
-  <Dark eyebrow="DEMO · DAY-0 STEPS 7–9（約 9 分鐘）" title="放下鍵盤。你剛做的，真實機房做過一次" world="demo">
+  <Dark eyebrow="DEMO · DAY-0 STEPS 7–9" title="同樣的指令，換到真實機房" world="demo">
     <div style={{ display: 'flex', gap: 20, marginBottom: 14, fontSize: 26, fontWeight: 800, letterSpacing: '0.1em' }}>
       <div style={{ flex: 1, color: '#9fd39f' }}>動手環境（kind + Docker）</div>
       <div style={{ width: 34 }} />
       <div style={{ flex: 1, color: '#f0b5a1' }}>真實機房（k3s + 裸機）</div>
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <PairRow you="步驟 2：clusterctl init，infrastructure 是 docker" me="第 7 步：同一個指令，infrastructure 換成 tinkerbell" />
-      <PairRow you="步驟 3：apply 七個物件，開出 demo 叢集" me="第 8 步：同一個結構，開出跑在裸機上的管理叢集" />
-      <PairRow you="（沒有這步，kind 用完就丟）" me="第 9 步：pivot，把管理權搬進剛開出來的叢集，關掉起始機" />
+      <PairRow you="步驟 2：clusterctl init，provider 是 docker" me="第 7 步：clusterctl init，provider 是 tinkerbell" />
+      <PairRow you="步驟 3：apply 七個物件，開出 demo 叢集" me="第 8 步：apply 同樣的物件，開出裸機上的管理叢集" />
+      <PairRow you="沒有這一步" me="第 9 步：pivot，管理權搬進新叢集，關掉起始機" />
     </div>
   </Dark>
 );
