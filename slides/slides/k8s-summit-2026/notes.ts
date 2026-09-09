@@ -379,9 +379,11 @@ GitOps：機房狀態全進 Git，叢集、機器、上架規則可版控、可�
 
 之後團隊每多會一個 Kubernetes 工具，基礎設施就多一個能用的工具。`;
 
-export const nRoadmap = `下一步。今天有三件事還是靠腳本或人手補：上架裝完關 allowPXE、補齊 Hardware 欄位讓 CAPT 能認領、決定角色貼標籤。這三件事都該由同一個 controller 接手。
+export const nRoadmap = `下一步是把今天講的東西系統化，開源出來。
 
-我們要寫一個 enrollment controller，管機器從插電到退役。池的待命方式、貼標籤的規則，都用 CRD 宣告。這幾個月踩到的六十多個坑，就是它的需求清單。
+第一，今天有三件事還是靠腳本或人手補：上架裝完關 allowPXE、補齊 Hardware 欄位讓 CAPT 能認領、決定角色貼標籤。這些要寫成一個 enrollment controller，管機器從插電到退役，池的待命方式、貼標籤的規則都用 CRD 宣告。
+
+第二，這幾個月的 POC、設定檔、踩到的六十多個坑，整理成一個可以照跟的專案，不只是今天這份教材。
 
 會開源。有興趣一起做的，會後找我。
 

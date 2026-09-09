@@ -1378,12 +1378,11 @@ const Ecosystem: Page = () => (
 
 /* ── 22 Roadmap ──────────────────────────────────────── */
 const Roadmap: Page = () => (
-  <Light eyebrow="ROADMAP" title="還缺一個 controller">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>今天有三件事靠腳本或人手補：上架裝完關 allowPXE、補齊 Hardware 欄位讓 CAPT 能認領、決定角色貼標籤</Li>
-      <Li>要寫一個 <Red>enrollment controller</Red> 接手，管機器從插電到退役；待命方式、貼標籤規則用 CRD 宣告</Li>
-      <Li>這幾個月踩到的六十多個坑，整理成它的需求清單</Li>
-      <Li>會開源，歡迎一起做</Li>
+  <Light eyebrow="ROADMAP" title="把今天講的東西系統化，開源出來">
+    <ul style={{ fontSize: 42, paddingLeft: 52, margin: 0, marginTop: 20 }}>
+      <Li gap={40}>今天靠腳本和人手補的地方，寫成 <Red>controller</Red>：上架、貼標籤、待命方式都用 CRD 宣告</Li>
+      <Li gap={40}>這幾個月的 POC 和踩過的坑，整理成<Red>可以照跟的專案</Red></Li>
+      <Li gap={40}>開源，歡迎一起做</Li>
     </ul>
   </Light>
 );
