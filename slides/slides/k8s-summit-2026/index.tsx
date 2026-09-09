@@ -273,7 +273,7 @@ const Glossary: Page = () => (
         <div style={{ flex: 1 }}><GBox title="workload cluster A" sub="Machine × 3 → Node × 3" /></div>
         <div style={{ flex: 1 }}><GBox title="workload cluster B" sub="Machine × 2 → Node × 2" /></div>
       </div>
-      <div style={{ textAlign: 'center', fontSize: 28, color: muted, marginTop: 6 }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
+      <div style={{ textAlign: 'center', fontSize: 28, color: muted, marginTop: 6 }}>Machine 底下是 container／裸機／虛擬機器</div>
     </div>
   </Light>
 );
