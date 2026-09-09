@@ -294,9 +294,6 @@ const Principles: Page = () => (
       <Li>每個元件都能單獨換掉，不用動到其他層</Li>
       <Li>商用 HCI 套裝、Source-available 的方案不在選項裡 —— 好用，但<Red>容易被綁住</Red></Li>
     </ul>
-    <p style={{ fontSize: 30, color: muted, marginTop: 40 }}>
-      缺點也要講：這些專案都還年輕，文件少、坑要自己踩。
-    </p>
   </Light>
 );
 
