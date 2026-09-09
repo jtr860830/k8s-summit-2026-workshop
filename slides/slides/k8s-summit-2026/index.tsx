@@ -1370,7 +1370,7 @@ const Ecosystem: Page = () => (
   <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用" world={undefined}>
     <div style={{ display: 'flex', gap: 32, marginTop: 40 }}>
       {['GitOps', 'RBAC', 'Policy', '觀測'].map((t) => (
-        <div key={t} style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)', borderRadius: 'var(--osd-radius)', padding: '84px 24px', textAlign: 'center', fontSize: 48, fontWeight: 800, color: '#f0f0f0' }}>{t}</div>
+        <div key={t} style={{ flex: 1, background: 'rgba(240,181,161,0.10)', border: '2px solid rgba(240,181,161,0.55)', borderRadius: 'var(--osd-radius)', padding: '84px 24px', textAlign: 'center', fontSize: 48, fontWeight: 800, color: '#f0b5a1' }}>{t}</div>
       ))}
     </div>
   </Dark>
