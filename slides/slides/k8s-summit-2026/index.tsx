@@ -302,13 +302,13 @@ const Principles: Page = () => (
 
 /* ── 07a2 Day-0 overview ──────────────────────────────── */
 const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] }) => (
-  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
-    <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 18 }}>{title}</div>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '38px 40px' }}>
+    <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 30 }}>{title}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
       {steps.map(([n, s]) => (
-        <div key={n} style={{ display: 'flex', gap: 16, alignItems: 'baseline' }}>
-          <div style={{ fontFamily: mono, fontSize: 26, fontWeight: 700, color: 'var(--osd-accent)', width: 34, flexShrink: 0 }}>{n}</div>
-          <div style={{ fontSize: 28, lineHeight: 1.35 }}>{s}</div>
+        <div key={n} style={{ display: 'flex', gap: 22, alignItems: 'baseline' }}>
+          <div style={{ fontFamily: mono, fontSize: 34, fontWeight: 700, color: 'var(--osd-accent)', width: 42, flexShrink: 0 }}>{n}</div>
+          <div style={{ fontSize: 34, lineHeight: 1.4 }}>{s}</div>
         </div>
       ))}
     </div>
@@ -317,7 +317,7 @@ const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] })
 
 const D0Intro: Page = () => (
   <Light eyebrow="DAY-0 · 從零建起" title="步驟">
-    <div style={{ display: 'flex', gap: 24, marginTop: 6 }}>
+    <div style={{ display: 'flex', gap: 36, marginTop: 10 }}>
       <D0Phase title="準備起始機" steps={[['1', '裝 k3s'], ['2', '裝 Tinkerbell'], ['3', '準備作業系統映像']]} />
       <D0Phase title="自動上架" steps={[['4', '定義安裝範本'], ['5', '定義上架規則'], ['6', '插電，看它自己上架']]} />
       <D0Phase title="自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集'], ['9', 'pivot，平台管理自己']]} />
