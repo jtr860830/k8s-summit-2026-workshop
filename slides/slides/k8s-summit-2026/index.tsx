@@ -316,7 +316,7 @@ const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] })
 );
 
 const D0Intro: Page = () => (
-  <Light eyebrow="DAY-0 · 從零建起" title="九個步驟">
+  <Light eyebrow="DAY-0 · 從零建起" title="步驟">
     <div style={{ display: 'flex', gap: 24, marginTop: 6 }}>
       <D0Phase title="1–3 準備起始機" steps={[['1', '裝 k3s'], ['2', '裝 Tinkerbell'], ['3', '準備作業系統映像']]} />
       <D0Phase title="4–6 自動上架" steps={[['4', '定義安裝範本'], ['5', '定義上架規則'], ['6', '插電，看它自己上架']]} />
