@@ -812,7 +812,7 @@ const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: 
   const demo = world === 'demo';
   return (
     <div style={{ ...fill, background: demo ? darkBg : 'var(--osd-bg)', color: demo ? '#ffffff' : 'var(--osd-text)', padding: 120, position: 'relative' }}>
-      <Eyebrow dark={demo}>{demo ? `${WORLD.demo.name} · ${act} · 第 ${step}/${total} 步` : `${WORLD.lab.name} · ${act} · 步驟 ${step}/${total}`}</Eyebrow>
+      <Eyebrow dark={demo}>{demo ? (act.startsWith('DEMO') ? act : `${WORLD.demo.name} · ${act} · 第 ${step}/${total} 步`) : `${WORLD.lab.name} · ${act} · 步驟 ${step}/${total}`}</Eyebrow>
       <H>{title}</H>
       <div style={{ marginTop: 56 }}>
         <Code size={34}>{cmd}</Code>
