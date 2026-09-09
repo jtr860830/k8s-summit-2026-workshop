@@ -8,7 +8,7 @@ export const nCover = `大家好，我是 Josh，在寬橋做平台工程。今�
 
 今天做三件事。第一，看一台空機器插電之後自己把作業系統裝好。第二，你們自己動手，用 Cluster API 開一個 Kubernetes 叢集。第三，把那七個物件包成一個，變成一個自助服務的 API。中間會穿插我們怎麼從零把整個平台建起來。`;
 
-export const nAbout = `簡單自我介紹。我是謝禹沆，Josh，在寬橋做平台工程，同時是資工博士生。做的東西一直在基礎設施這一層：作業系統、網路、Kubernetes，最近幾年都在裸機和私有雲上面。
+export const nAbout = `簡單自我介紹。我是謝禹沆，Josh，在寬橋做平台工程，同時是資工博士生。做的東西一直在基礎設施這一層：作業系統、網路、Kubernetes，最近幾年都在裸機和私有雲上面。CNCF 的 Golden Kubestronaut，Kubernetes 相關的認證都拿過一輪。
 
 今天講的內容之後也會開源出來。`;
 
