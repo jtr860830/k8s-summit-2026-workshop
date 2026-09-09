@@ -995,27 +995,24 @@ const Step6Replay: Page = () => (
 /* ── 11 Act 1 recap ───────────────────────────────────── */
 const Act1Recap: Page = () => (
   <Light eyebrow="ACT 1 · RECAP" title="好用，但也真的很囉唆">
-    <div style={{ display: 'flex', gap: 48 }}>
-      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
-        <div style={{ fontSize: 34, fontWeight: 800, color: '#3d7a3d' }}>得到的</div>
-        <ul style={{ fontSize: 33, paddingLeft: 40, marginTop: 20, lineHeight: 1.55 }}>
+    <div style={{ display: 'flex', gap: 40, marginTop: 10 }}>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
+        <div style={{ fontSize: 36, fontWeight: 800, color: '#3d7a3d', marginBottom: 26 }}>得到的</div>
+        <ul style={{ fontSize: 36, paddingLeft: 44, margin: 0, lineHeight: 1.9 }}>
           <li>叢集 = 一份宣告，apply 即得</li>
           <li>擴縮、汰換全是改欄位</li>
           <li>機器變成 cattle</li>
         </ul>
       </div>
-      <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: 40 }}>
-        <div style={{ fontSize: 34, fontWeight: 800, color: 'var(--osd-accent)' }}>付出的</div>
-        <ul style={{ fontSize: 33, paddingLeft: 40, marginTop: 20, lineHeight: 1.55 }}>
+      <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
+        <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 26 }}>付出的</div>
+        <ul style={{ fontSize: 36, paddingLeft: 44, margin: 0, lineHeight: 1.9 }}>
           <li>七個物件、一整份 YAML</li>
           <li>名稱互相引用，錯一個字全垮</li>
           <li>哪些欄位危險？要靠經驗</li>
         </ul>
       </div>
     </div>
-    <p style={{ fontSize: 38, marginTop: 44, fontWeight: 700 }}>
-      這是基礎設施工程師的日常，但不該是使用者的日常。
-    </p>
   </Light>
 );
 
