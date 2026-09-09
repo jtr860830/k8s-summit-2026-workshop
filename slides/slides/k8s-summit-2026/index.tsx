@@ -710,9 +710,13 @@ const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: st
     return () => clearInterval(id);
   }, [active, speed]);
 
-  const visible = lines.filter((l) => l.t <= elapsed && l.kind !== 'frame');
-  const frames = lines.filter((l) => l.kind === 'frame' && l.t <= elapsed);
-  const frame = frames.length ? frames[frames.length - 1] : null;
+  // Render in time order; a run of consecutive frames collapses to its latest one, in place.
+  const visible: RLine[] = [];
+  for (const l of lines) {
+    if (l.t > elapsed) continue;
+    if (l.kind === 'frame' && visible.length && visible[visible.length - 1].kind === 'frame') visible[visible.length - 1] = l;
+    else visible.push(l);
+  }
   const done = lines.length > 0 && elapsed >= lines[lines.length - 1].t;
 
   return (
@@ -732,7 +736,6 @@ const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: st
             {l.kind === 'cmd' ? '$ ' + l.text : l.text}
           </div>
         ))}
-        {frame && <div style={{ color: '#e8e8e8' }}>{frame.text}</div>}
         {!done && <span style={{ display: 'inline-block', width: 14, height: 30, background: '#e8e8e8', verticalAlign: 'text-bottom' }} />}
       </pre>
     </div>
