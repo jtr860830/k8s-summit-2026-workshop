@@ -194,6 +194,11 @@ const WhiteBox: Page = () => (
         <p style={{ lineHeight: 1.6, marginTop: 10, color: '#5a5148' }}>裸機、叢集、虛擬機器、儲存、網路 —— 各有各的專案</p>
       </div>
     </div>
+    <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '0.25em', color: 'var(--osd-accent)', marginTop: 48 }}>選型原則</div>
+    <ul style={{ fontSize: 36, paddingLeft: 48, margin: '16px 0 0' }}>
+      <Li gap={18}>只用<Red>開源授權</Red>的專案（CNCF 或社群治理）</Li>
+      <Li gap={18}>每個元件都能<Red>單獨抽換</Red>，不用動到其他層</Li>
+    </ul>
   </Light>
 );
 
@@ -289,15 +294,6 @@ const GlossaryTerms: Page = () => (
   </Light>
 );
 
-/* ── 07 Principles ────────────────────────────────────── */
-const Principles: Page = () => (
-  <Light eyebrow="選型原則" title="不被任何元件綁死">
-    <ul style={{ fontSize: 44, paddingLeft: 52, margin: 0, marginTop: 20 }}>
-      <Li gap={44}>只用<Red>開源授權</Red>的專案（CNCF 或社群治理）</Li>
-      <Li gap={44}>每個元件都能<Red>單獨抽換</Red>，不用動到其他層</Li>
-    </ul>
-  </Light>
-);
 
 /* ── 07a2 Day-0 overview ──────────────────────────────── */
 const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] }) => (
@@ -1501,7 +1497,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
-  Thesis, Claim, WhiteBox, Principles, Architecture, Glossary, GlossaryTerms,
+  Thesis, Claim, WhiteBox, Architecture, Glossary, GlossaryTerms,
   TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro, Demo1,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
@@ -1519,7 +1515,7 @@ const R = N.RAW_NOTE;
 export const notes: string[] = [
   N.nCover, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
-  N.nThesis, N.nClaim, N.nWhiteBox, N.nPrinciples, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
+  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
   N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
   N.nD0Prereq, N.nD0Intro, N.nDemo1,
   N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
