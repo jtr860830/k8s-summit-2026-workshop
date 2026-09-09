@@ -60,9 +60,9 @@ export const nGlossaryTerms = `bootstrap cluster，起始叢集。跑在起始�
 
 中間兩個是今天最常講的。management cluster，管理叢集。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。動手環境就是那個 kind；真實機房是三台裸機。workload cluster，工作負載叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
 
-Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機、虛擬機器。你在叢集裡 get nodes 看到的 Node，是同一台機器的另一個名字。
+provider。Cluster API 接底層的外掛。docker、tinkerbell、kubevirt。換底層只換這個，上面的 YAML 不動。這也是動手環境跟真實機房唯一的差別。
 
-provider。Cluster API 接底層的外掛。docker、tinkerbell、kubevirt。換底層只換這個，上面的 YAML 不動。
+Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機、虛擬機器。你在叢集裡 get nodes 看到的 Node，是同一台機器的另一個名字。
 
 後面聽到這五個詞，就回到前一頁那張圖。`;
 

@@ -280,8 +280,8 @@ const GlossaryTerms: Page = () => (
       <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
       <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。" core />
       <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。" core />
+      <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。" core />
       <GTerm term="Machine" desc="一台機器的 K8s 物件。" />
-      <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。" />
     </div>
   </Light>
 );
