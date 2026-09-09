@@ -164,10 +164,6 @@ const Thesis: Page = () => (
       白牌硬體 + Kubernetes 原生<br />
       <span style={{ color: '#e05545' }}>= 不被授權綁住的私有雲</span>
     </h1>
-    <p style={{ fontSize: 34, color: mutedDark, marginTop: 56, lineHeight: 1.6, maxWidth: 1400 }}>
-      商用虛擬化的代價有兩個：授權費年年漲，還要養一批只會這個平台的人。
-      被綁住的不只是錢，還有團隊的技術路線。
-    </p>
     <Footer dark />
   </div>
 );
