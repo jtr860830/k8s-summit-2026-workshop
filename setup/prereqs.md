@@ -44,5 +44,4 @@ cd k8s-summit-2026-workshop
 - **`docker: permission denied`（Linux）**：把自己加進 docker 群組後重新登入：
   `sudo usermod -aG docker $USER`
 - **公司網路拉不了映像檔**：換一般網路（家用或手機熱點）再跑一次。
-- **來不及做完**：現場備有 USB 隨身碟（`./setup/load-from-usb.sh`），但流程較慢，
-  建議還是提前完成。
+- **來不及做完**：現場仍可用會場網路下載，但會慢很多，建議還是提前完成。
