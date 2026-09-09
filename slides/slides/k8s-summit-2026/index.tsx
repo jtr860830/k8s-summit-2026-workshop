@@ -1007,7 +1007,7 @@ metadata:
   name: team-a
 spec: {}`}</Code>
       <ul style={{ fontSize: 38, paddingLeft: 40, margin: 0, color: '#f0f0f0', flex: 1 }}>
-        <Li gap={28}>平台工程 = 把第一幕那些決定<Red>寫成預設值</Red></Li>
+        <Li gap={28}>平台工程 = 規劃 manifests 的<Red>預設值</Red></Li>
         <Li gap={28}>只開放需要選的欄位</Li>
         <Li gap={28}>用 kro 在 K8s 裡定義你自己的 API</Li>
       </ul>
