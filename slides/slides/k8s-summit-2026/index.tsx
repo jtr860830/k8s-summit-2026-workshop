@@ -110,7 +110,7 @@ const Red = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Logo = ({ height = 84 }: { height?: number }) => (
-  <div style={{ display: 'inline-flex', alignItems: 'center', background: '#000', borderRadius: 12, padding: '14px 24px' }}>
+  <div style={{ display: 'inline-flex', alignItems: 'center', background: '#000', borderRadius: 14, padding: '18px 30px' }}>
     <img src={logoUrl} alt="Brobridge" style={{ height, display: 'block' }} />
   </div>
 );
@@ -118,7 +118,7 @@ const Logo = ({ height = 84 }: { height?: number }) => (
 /* ── 01 封面 ─────────────────────────────────────────── */
 const Cover: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
-    <div style={{ position: 'absolute', right: 160, bottom: 96 }}><Logo height={84} /></div>
+    <div style={{ position: 'absolute', right: 160, bottom: 88 }}><Logo height={120} /></div>
     <Eyebrow dark>KUBESUMMIT 2026 · 體驗工作坊</Eyebrow>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 108, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.2 }}>
       用 Kubernetes 打造<br />自動化私有雲基礎設施
@@ -1496,7 +1496,7 @@ const Thanks: Page = () => (
     <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
       會後在 Q&A 區或寬橋攤位都找得到我，歡迎來交流
     </p>
-    <div style={{ marginTop: 84 }}><Logo height={76} /></div>
+    <div style={{ marginTop: 84 }}><Logo height={110} /></div>
   </div>
 );
 
