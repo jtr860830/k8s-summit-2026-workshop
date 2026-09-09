@@ -318,9 +318,9 @@ const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] })
 const D0Intro: Page = () => (
   <Light eyebrow="DAY-0 · 從零建起" title="步驟">
     <div style={{ display: 'flex', gap: 24, marginTop: 6 }}>
-      <D0Phase title="1–3 準備起始機" steps={[['1', '裝 k3s'], ['2', '裝 Tinkerbell'], ['3', '準備作業系統映像']]} />
-      <D0Phase title="4–6 自動上架" steps={[['4', '定義安裝範本'], ['5', '定義上架規則'], ['6', '插電，看它自己上架']]} />
-      <D0Phase title="7–9 自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集'], ['9', 'pivot，平台管理自己']]} />
+      <D0Phase title="準備起始機" steps={[['1', '裝 k3s'], ['2', '裝 Tinkerbell'], ['3', '準備作業系統映像']]} />
+      <D0Phase title="自動上架" steps={[['4', '定義安裝範本'], ['5', '定義上架規則'], ['6', '插電，看它自己上架']]} />
+      <D0Phase title="自我承載" steps={[['7', '裝 Cluster API'], ['8', '開出管理叢集'], ['9', 'pivot，平台管理自己']]} />
     </div>
     <p style={{ fontSize: 32, marginTop: 34, fontWeight: 700 }}>
       九步之後起始機關機 —— 之後每台新機器，只剩插電、開機。
