@@ -1356,29 +1356,18 @@ const RoleDecision: Page = () => (
 );
 
 /* ── Pool policy ──────────────────────────────────────── */
+const PoolMode = ({ name, sub, accent = false }: { name: string; sub: string; accent?: boolean }) => (
+  <div style={{ flex: 1, background: '#fff', border: accent ? '2px solid var(--osd-accent)' : '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '72px 48px', textAlign: 'center' }}>
+    <div style={{ fontSize: 48, fontWeight: 800, color: accent ? 'var(--osd-accent)' : undefined }}>{name}</div>
+    <div style={{ fontSize: 30, color: '#5a5148', marginTop: 20 }}>{sub}</div>
+  </div>
+);
 const PoolPolicy: Page = () => (
   <Light eyebrow="DAY-0 · WRAP-UP" title="資源池的兩種待命方式">
-    <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
-      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
-        <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>HookOS 待命（上游預設）</div>
-        <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
-          <li>認領那一刻才裝，<b>一次到位</b>（裝的就是最後要跑的系統）</li>
-          <li>不需要裝後收尾狀態機</li>
-          <li>代價：待命機在記憶體小系統裡 —— 不可 SSH、斷電後要靠裝機服務重新拉起</li>
-        </ul>
-      </div>
-      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
-        <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>先裝基礎 OS（今天的示範）</div>
-        <ul style={{ fontSize: 27, paddingLeft: 34, margin: 0, lineHeight: 1.55 }}>
-          <li>池裡是活的機器：可 SSH、可燒機、可更新韌體</li>
-          <li>理論上可以直接 join 進現有叢集（今天沒示範）</li>
-          <li>代價：被認領去開新叢集時要<b>再重灌一次</b></li>
-        </ul>
-      </div>
+    <div style={{ display: 'flex', gap: 40, marginTop: 30 }}>
+      <PoolMode name="HookOS 待命" sub="上游預設" />
+      <PoolMode name="先裝基礎 OS" sub="今天的示範" accent />
     </div>
-    <p style={{ fontSize: 33, fontWeight: 700, margin: 0 }}>
-      沒有標準答案，這是<span style={{ color: 'var(--osd-accent)' }}>政策</span>，可以按機型混用。今天是人在決定；讓它變成可宣告的設定，是最後 Roadmap 的一項。
-    </p>
   </Light>
 );
 
