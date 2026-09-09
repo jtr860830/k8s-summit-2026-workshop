@@ -550,10 +550,7 @@ const d0s9Lines: RLine[] = [
 ];
 const D0S9Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={9} total={9} title="pivot —— 平台開始管理自己"
-    cmd={`# mgmt 就位：Tinkerbell + Cluster API
-# 搬資料面（Workflow 歷史不搬 ——
-#   匯入後狀態歸零會把機器重灌！）
-clusterctl move \\
+    cmd={`clusterctl move \\
   --to-kubeconfig mgmt.kubeconfig
 sudo systemctl stop k3s   # seed 停役`}
     expect="move 之後，管理叢集裡看得到自己的 Machine；起始機停掉 k3s 後，Machine 仍是 Running" />
