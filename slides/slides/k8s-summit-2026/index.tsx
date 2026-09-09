@@ -994,7 +994,7 @@ const Step6Replay: Page = () => (
 
 /* ── 11 Act 1 recap ───────────────────────────────────── */
 const Act1Recap: Page = () => (
-  <Light eyebrow="ACT 1 · RECAP" title="好用，但也真的很囉唆">
+  <Light eyebrow="ACT 1 · RECAP" title="好用，但寫起來很麻煩">
     <div style={{ display: 'flex', gap: 40, marginTop: 10 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
         <div style={{ fontSize: 36, fontWeight: 800, color: '#3d7a3d', marginBottom: 26 }}>得到的</div>
