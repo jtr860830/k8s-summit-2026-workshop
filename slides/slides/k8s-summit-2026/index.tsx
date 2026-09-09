@@ -416,7 +416,7 @@ const d0s4Lines: RLine[] = [
   { t: 7.0, text: '安裝流程三個動作：寫映像 → 寫設定 → 重開機', kind: 'ok' },
 ];
 const D0S4Cmd: Page = () => (
-  <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 進來的機器怎麼裝"
+  <StepCmd act="DAY-0 建置" step={4} total={9} title="安裝範本 —— 新加入的機器怎麼裝"
     cmd={`butane base.bu > config.ign
 python3 gen-template.py config.ign \\
   | kubectl apply -f -
