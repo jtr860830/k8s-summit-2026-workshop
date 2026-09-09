@@ -145,7 +145,6 @@ const About: Page = () => (
       <div style={{ marginTop: 44, fontSize: 30, lineHeight: 1.7, color: '#f0f0f0' }}>
         <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>領域</span>　Infrastructure · Operating System · Networking</div>
         <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>工具</span>　Linux · Kubernetes · Container · Rust</div>
-        <div><span style={{ color: '#f0b5a1', fontWeight: 800 }}>貢獻</span>　rustup · kubernetes/website · koa · grule-rule-engine</div>
       </div>
       <p style={{ fontFamily: mono, fontSize: 28, marginTop: 44, color: '#7ee787' }}>josh.tw · github.com/jtr860830</p>
     </div>
