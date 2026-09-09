@@ -181,7 +181,7 @@ const Claim: Page = () => (
 
 /* ── 04 Why now ───────────────────────────────────────── */
 const WhiteBox: Page = () => (
-  <Light eyebrow="WHY NOW" title="從裸機到儲存，每一層都有成熟的開源專案">
+  <Light eyebrow="WHY NOW" title="從裸機到自助服務，每一層都有成熟的開源專案">
     <div style={{ display: 'flex', gap: 40, alignItems: 'stretch', fontSize: 34, marginTop: 8 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontWeight: 800, fontSize: 40, color: muted }}>雲端巨頭</div>
