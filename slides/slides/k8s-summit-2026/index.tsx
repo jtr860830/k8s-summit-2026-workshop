@@ -251,10 +251,13 @@ const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: s
 );
 const GTerm = ({ term, zh, desc, core = false }: { term: string; zh?: string; desc: string; core?: boolean }) => (
   <div style={core
-    ? { fontSize: 33, lineHeight: 1.45, background: '#fff', borderLeft: '8px solid var(--osd-accent)', borderRadius: 10, padding: '18px 30px' }
-    : { fontSize: 29, lineHeight: 1.45, padding: '0 38px' }}>
-    <b style={{ color: core ? 'var(--osd-accent)' : '#262626', fontFamily: mono, fontSize: core ? 40 : 31 }}>{term}</b>{zh && <span style={{ color: muted, fontSize: core ? 28 : 25 }}>　{zh}</span>}
-    <div style={{ color: core ? '#262626' : '#5a5148' }}>{desc}</div>
+    ? { display: 'flex', alignItems: 'baseline', gap: 36, background: '#fff', borderLeft: '8px solid var(--osd-accent)', borderRadius: 10, padding: '22px 34px' }
+    : { display: 'flex', alignItems: 'baseline', gap: 36, padding: '6px 42px' }}>
+    <div style={{ width: 600, flexShrink: 0, whiteSpace: 'nowrap' }}>
+      <b style={{ color: core ? 'var(--osd-accent)' : '#262626', fontFamily: mono, fontSize: core ? 38 : 30 }}>{term}</b>
+      {zh && <span style={{ color: muted, fontSize: core ? 27 : 24 }}>　{zh}</span>}
+    </div>
+    <div style={{ fontSize: core ? 31 : 27, lineHeight: 1.45, color: core ? '#262626' : '#5a5148' }}>{desc}</div>
   </div>
 );
 const Glossary: Page = () => (
@@ -276,7 +279,7 @@ const Glossary: Page = () => (
 );
 const GlossaryTerms: Page = () => (
   <Light eyebrow="GLOSSARY" title="Cluster API">
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 22, marginTop: -6 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 26, marginTop: 10 }}>
       <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
       <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。" core />
       <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。" core />
