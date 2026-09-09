@@ -1367,16 +1367,12 @@ const PoolPolicy: Page = () => (
 /* ── 21 Ecosystem ─────────────────────────────────────── */
 
 const Ecosystem: Page = () => (
-  <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用">
-    <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={26}><Red>GitOps</Red>：機房狀態全進 Git —— 叢集、機器、上架規則可版控、可稽核、可重建</Li>
-      <Li gap={26}><Red>RBAC</Red>：「誰能開機器、誰能刪叢集」—— 用管 Pod 的同一套權限模型管到裸機</Li>
-      <Li gap={26}><Red>Policy</Red>：「沒貼標籤的機器不准進池」—— 一條 admission 規則的事</Li>
-      <Li gap={26}><Red>觀測</Red>：機器的生命週期就是 events 與 metrics —— 現有監控告警直接沿用</Li>
-    </ul>
-    <p style={{ fontSize: 34, marginTop: 38, fontWeight: 700, color: '#f0f0f0' }}>
-      之後團隊每多會一個 K8s 工具，基礎設施就多一個能用的工具。
-    </p>
+  <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用" world={undefined}>
+    <div style={{ display: 'flex', gap: 32, marginTop: 40 }}>
+      {['GitOps', 'RBAC', 'Policy', '觀測'].map((t) => (
+        <div key={t} style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)', borderRadius: 'var(--osd-radius)', padding: '84px 24px', textAlign: 'center', fontSize: 48, fontWeight: 800, color: '#f0f0f0' }}>{t}</div>
+      ))}
+    </div>
   </Dark>
 );
 
