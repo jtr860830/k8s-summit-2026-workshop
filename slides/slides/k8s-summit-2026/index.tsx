@@ -292,10 +292,9 @@ const GlossaryTerms: Page = () => (
 /* ── 07 Principles ────────────────────────────────────── */
 const Principles: Page = () => (
   <Light eyebrow="選型原則" title="不被任何元件綁死">
-    <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
-      <Li>只用開源授權的專案（CNCF 或社群治理）—— <Red>不用付授權費</Red>，也不會有人突然改授權條款</Li>
-      <Li>每個元件都能單獨換掉，不用動到其他層</Li>
-      <Li>商用 HCI 套裝、Source-available 的方案不在選項裡 —— 好用，但<Red>容易被綁住</Red></Li>
+    <ul style={{ fontSize: 44, paddingLeft: 52, margin: 0, marginTop: 20 }}>
+      <Li gap={44}>只用<Red>開源授權</Red>的專案（CNCF 或社群治理）</Li>
+      <Li gap={44}>每個元件都能<Red>單獨抽換</Red>，不用動到其他層</Li>
     </ul>
   </Light>
 );
