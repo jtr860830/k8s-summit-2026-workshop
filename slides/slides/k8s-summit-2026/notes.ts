@@ -385,7 +385,7 @@ export const nRoadmap = `下一步。今天有三件事還是靠腳本或人手�
 【若被問 為什麼不用腳本就好】除了 BMC 電源之外都能先用腳本頂，但腳本是輪詢，會錯過 waitdaemon 45 秒的時序；controller 是 watch，還有 status 記狀態。計畫是先把腳本合成一個 Deployment 跑在管理叢集，再改寫成正式的。
 demo② 的 ssh reboot 不算在內，那是沒有 BMC 的問題，該由 Rufio 接手。`;
 
-export const nCredits = `這場工作坊全部由開源軟體組成，包括這份簡報跟它的字體。謝謝每一位維護者。今天示範的每一層都是開源社群的成果，我們只是把它們接起來。`;
+export const nCredits = `這場工作坊全部由開源軟體組成，包括這份簡報跟它的字體。謝謝每一位維護者。今天示範的每一層都是開源社群的成果。`;
 
 export const nThanks = `謝謝大家。repo 網址在畫面上，所有教材、day-0 那九步的設定檔都在裡面，回去可以自己照跟。
 

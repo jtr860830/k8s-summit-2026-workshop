@@ -1477,7 +1477,7 @@ const OpenSourceCredits: Page = () => (
       ]} />
     </div>
     <p style={{ fontSize: 30, marginTop: 40, fontWeight: 700 }}>
-      謝謝每一位維護者。今天示範的每一層都是<span style={{ color: 'var(--osd-accent)' }}>開源社群的成果</span>，我們只是把它們接起來。
+      謝謝每一位維護者。今天示範的每一層都是<span style={{ color: 'var(--osd-accent)' }}>開源社群的成果</span>。
     </p>
   </Light>
 );
