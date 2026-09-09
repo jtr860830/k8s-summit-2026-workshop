@@ -650,8 +650,8 @@ const Demo1: Page = () => (
   <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={34}>一台空機器：硬碟沒有 OS，只設成從網路開機</Li>
-      <Li gap={34}>現在開機。畫面上 Hardware、Workflow 都還是空的</Li>
-      <Li gap={34}>幾十秒後 Hardware <Red>自己出現</Red>；接著 Workflow 出現、開始裝</Li>
+      <Li gap={34}>開機幾十秒後 Hardware <Red>自己出現</Red>；接著 Workflow 出現、開始裝</Li>
+      <Li gap={34}>全程錄製，5.5 分鐘壓成 25 秒；人沒碰過機器</Li>
     </ul>
   </Dark>
 );

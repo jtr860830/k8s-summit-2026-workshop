@@ -80,14 +80,11 @@ demo① 那台機器現在裝好 Flatcar，在資源池待命，還沒加入任�
 
 你剛做的步驟 2 和步驟 3，在這裡會用同樣的指令再看一次，差別只有 provider 從 docker 換成 tinkerbell。`;
 
-export const nDemo1 = `九步講之前，先把機器開起來。接下來這一段是真實機房的示範，你們不用動手，看投影就好。
+export const nDemo1 = `九步講之前，先看一台機器插電之後會發生什麼。這一段是真實機房的錄製，你們不用動手，看投影就好。
 
-【動作】切 day0-seed 終端。畫面上是 watch kubectl get hardware,workflow，現在是空的，什麼都沒有。
-【動作】另一個視窗 qm start 9211。
+這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。開機之後人沒有碰過它。等一下 day-0 講到第 6 步時播錄製，實錄 5.5 分鐘壓成 25 秒，會看到 Hardware 自己出現、Workflow 跑完、機器開進 Flatcar。
 
-我剛剛開機了一台機器。這台機器硬碟是空的，沒有作業系統，沒有任何 agent，它只知道要從網路開機。接下來我什麼都不會做。我們回簡報講前五步，講到第 6 步回來看它。
-
-決策點：120 秒沒看到 Hardware 出現，直接用 day-0 第 6 步的重播頁，不等。`;
+先講前面五步，看這套東西是怎麼建起來的。`;
 
 export const nTinkerbellStack = `上架這件事靠 Tinkerbell，五個元件。
 
@@ -156,17 +153,15 @@ export const nD0S5 = `第五步，上架規則，定義哪些機器要裝。
 
 翻下一頁前說：這就是剛才 demo 開始時的畫面。`;
 
-export const nD0S6 = `第六步，插電。我們回去看剛才那台機器。
+export const nD0S6 = `第六步，插電。就是剛才 DEMO ① 頁講的那台機器，這裡播錄製。
 
-【動作】切回 day0-seed 終端。這時候應該已經有 Hardware 和 workflow，理想狀態是 SUCCESS。
+【動作】翻到重播頁，讓它自己播完，25 秒。
 
-看 Hardware 的名字，後面那串是 MAC，是機器自己回報的，我沒有登記過它。workflow 三個動作跟第 4 步範本一致：寫映像、寫設定、重開機。
+看 Hardware 的名字，後面那串是 MAC，是機器自己回報的，我沒有登記過它。Workflow 三個動作跟第 4 步範本一致：寫映像、寫設定、重開機，狀態轉 SUCCESS。最後 ssh 進去 hostnamectl，是一台 Flatcar。
 
-有一個收尾動作要講：關 allowPXE。不然它每次開機都會回到 HookOS 重來一次。這是上游沒做的事，今天是腳本補的，之後要交給 controller。
+有一個收尾動作要講：關 allowPXE。不然它每次開機都會回到 HookOS 重來一次。這是上游沒做的事，錄製時是腳本補的，之後要交給 controller。
 
-現場沒跑完就用重播，實錄 5.5 分鐘壓成 25 秒。
-
-結論一句：插電之後人沒有碰過它。現在它在池裡待命，可以 ssh 進去，是一台活的 Flatcar。`;
+結論一句：插電之後人沒有碰過它。到這裡，一台空機器變成資源池裡一台待命的 Flatcar。`;
 
 export const nAct1Guide = `剛剛那段是真實機房。現在回到動手，第一幕開始，接下來 20 分鐘你們自己動手。
 
@@ -284,9 +279,7 @@ export const nAct2Guide = `第二幕開始，25 分鐘，三種角色輪流當�
 
 先確認第一幕的 demo 叢集拆了。8 GB 記憶體同時跑兩個叢集會不夠。
 
-README 在 labs/02-kro。
-
-【動作】62 分：這時去測試床按 demo② 扳機（記 sha256/fsid 基線、delete Machine、看到 PENDING 就 ssh reboot），再回來。`;
+README 在 labs/02-kro。`;
 
 export const nA2S1 = `步驟 1，裝 kro，apply RGD，等 STATE 變 Active。
 
@@ -298,9 +291,7 @@ workloadcluster 幾十秒內就會顯示 ACTIVE、READY True，那代表 kro 把
 
 export const nA2S3 = `步驟 3，用平台使用者的方式擴容。patch nodes 等於 2，底下 MachineDeployment 跟著動，90 秒多一台。
 
-使用者不知道 MachineDeployment 存在，也不需要知道。
-
-【動作】70 分左右：確認 demo② 的 Machine 已 Running、Ceph HEALTH_OK，接著 patch kubeadmcontrolplane 版本按 demo③ 扳機，看到升級 Job 出現就回來。`;
+使用者不知道 MachineDeployment 存在，也不需要知道。`;
 
 export const nA2S4 = `步驟 4，高可用。加一行 profile: ha，kubeadmcontrolplane 的 DESIRED 變 3。使用者只寫了兩個字，控制平面從 1 台變 3 台。
 
@@ -332,9 +323,7 @@ Pod 是這樣，換一個的成本趨近於零，所以敢這樣做。Cluster AP
 
 到了裸機，換一台是重灌、搬資料、好幾個小時。這個落差就是接下來兩個示範要解的。`;
 
-export const nDemo2 = `demo②，重灌一台節點，資料一個位元都不少。
-
-【動作】切測試床終端。62 分按下的 delete 應該已經跑完，Machine Running、Ceph HEALTH_OK。
+export const nDemo2 = `demo②，重灌一台節點，資料一個位元都不少。這段也是錄製，8 月 31 日排練實錄。
 
 這台節點上有 Ceph 的 OSD。換機哲學最怕的就是有狀態的節點，換一台等於資料要搬。我們的做法是：刪掉 Machine，Cluster API 自動重灌作業系統，重新入列，但資料碟全程不動，Ceph 沿用原來的 OSD。
 
@@ -349,27 +338,25 @@ export const nD2Cmd = `流程是這樣。先記下資料檔的 sha256 跟 Ceph �
 
 重灌只寫 OS 碟。資料碟用 by-path 鎖定，Workflow 碰不到它。`;
 
-export const nD2Replay = `【動作】現場跑 verify-after.sh，看 fsid-MATCH、sha256-MATCH。
+export const nD2Replay = `【動作】翻到重播頁播完，25 秒。
 
-現場沒跑完就用這頁重播，8 月 31 日排練實錄。看 Ceph 那欄：osd 從 2 up 回到 3 up，HEALTH_OK，沿用原來的 OSD，實測 13 分鐘。
+看 Ceph 那欄：刪掉 Machine 後 osd 2 up，PDB 擋住 drain 不搬資料；新 Machine 重灌只寫 OS 碟；最後 osd 回到 3 up、HEALTH_OK，沿用原來的 OSD，實測 13 分鐘。結尾 verify-after 兩行：fsid-MATCH、sha256-MATCH。
 
 重灌了一台 Ceph 節點，資料一個位元都沒少。`;
 
-export const nDemo3 = `demo③，升級 Kubernetes，機器不用重開機。
+export const nDemo3 = `demo③，升級 Kubernetes，機器不用重開機。也是錄製，8 月 26 日實錄 v1.34.6 升 7。
 
-裸機照換機哲學升級，每台都要重灌加資料重建，三台控制平面就是三次。Cluster API 現在有 in-place update，把升級交給一個外掛在節點上原地執行，Machine 不換。
+裸機照換機哲學升級，每台都要重灌加資料重建，三台控制平面就是三次。Cluster API 現在有 in-place update，把升級交給一個外掛在節點上原地執行，Machine 不換。這個外掛的程式在 repo 的 inplace-update 目錄。
 
 驗證方式：Machine 的 uid 不變，uptime 不歸零。`;
 
 export const nD3Cmd = `只改 kubeadmcontrolplane 的 version 一個欄位，之後什麼都不用做。KCP 逐台編排，落後最多的先動，一台好了才輪下一台。
 
-maxSurge 等於 0 是裸機的前提。雲上升級是先開一台新的再拆舊的，機房沒有多的機器可以先開。
+maxSurge 等於 0 是裸機的前提。雲上升級是先開一台新的再拆舊的，機房沒有多的機器可以先開。`;
 
-9/11 場口頭改成 v1.34.9。`;
+export const nD3Replay = `【動作】翻到重播頁播完，26 秒。
 
-export const nD3Replay = `【動作】現場 get machines.cluster.x-k8s.io 加 uid 欄，跟升級前逐字相同；ssh mgmt-2 看 uptime -s 跟 kubelet --version。
-
-現場沒到就用這頁重播，8 月 26 日實錄 v1.34.6 升 7。三台依序 Updating 再回 Running，30 分鐘。`;
+三台依序 Updating 再回 Running，實測 30 分鐘。最後兩個指令是驗證：Machine 的 uid 跟升級前逐字相同；ssh 進節點看 uptime -s 沒變、kubelet 已是新版。`;
 
 export const nD3NodeReplay = `這頁是節點內部視角，升級外掛在節點上做了什麼。
 
