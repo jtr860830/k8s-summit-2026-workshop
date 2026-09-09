@@ -1223,9 +1223,10 @@ const Act2Recap: Page = () => (
 /* ── 16 Demo 2 intro ──────────────────────────────────── */
 const Demo2: Page = () => (
   <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
-    <ul style={{ fontSize: 44, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={40}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
-      <Li gap={40}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
+    <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={36}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
+      <Li gap={36}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
+      <Li gap={36}>驗證：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid 完全一致</Li>
     </ul>
   </Dark>
 );
