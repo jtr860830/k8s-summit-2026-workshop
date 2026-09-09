@@ -616,11 +616,11 @@ const FlowStep = ({ n, text }: { n: string; text: string }) => (
 const EnrollFlow: Page = () => (
   <Light eyebrow="上架系統怎麼搭" title="插電之後，機器經歷了什麼">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 6 }}>
-      <FlowStep n="1" text="插電開機 —— 網卡韌體廣播「我是 MAC xx:xx，該做什麼？」（PXE）" />
-      <FlowStep n="2" text="smee 補充開機資訊 → 機器載入 HookOS（記憶體內，硬碟不動）" />
-      <FlowStep n="3" text="HookOS 回報硬體規格 → 叢集裡自動出現一個 Hardware 物件" />
-      <FlowStep n="4" text="符合規則就觸發 Workflow：把作業系統映像寫進指定硬碟" />
-      <FlowStep n="5" text="重開機進正式系統，在池裡待命 —— 之後由 Cluster API 認領成叢集節點" />
+      <FlowStep n="1" text="插電開機" />
+      <FlowStep n="2" text="smee 補充開機資訊，機器載入 HookOS" />
+      <FlowStep n="3" text="HookOS 回報硬體規格" />
+      <FlowStep n="4" text="符合規則就觸發 Workflow" />
+      <FlowStep n="5" text="重開機進正式系統，在池裡待命" />
     </div>
   </Light>
 );
