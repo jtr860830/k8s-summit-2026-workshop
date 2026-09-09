@@ -1282,8 +1282,6 @@ const D3Cmd: Page = () => (
     cmd={`kubectl patch kubeadmcontrolplane mgmt-cp \\
   --type=merge \\
   -p '{"spec":{"version":"v1.34.8"}}'
-# 之後 —— 什麼都不用做。
-# KCP 逐台編排，升級外掛原地執行
 # 裸機前提：maxSurge=0（機房沒有多的機器可以先開）`}
     expect="三台 Machine 依序 Updating 再回 Running；升級後 Machine uid 不變、uptime 不歸零、kubelet 顯示新版" />
 );
