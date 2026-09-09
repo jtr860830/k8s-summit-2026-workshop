@@ -652,8 +652,9 @@ const Step0Cmd: Page = () => (
     cmd={`cd k8s-summit-2026-workshop
 ./setup/setup.sh        # 會前跑過的話，這裡只是再驗證一次
 # 沒跑過？舉手拿 USB：
-./setup/load-from-usb.sh /path/to/usb`}
-    expect="看到 SETUP-OK 就緒；有任何 ✗ 照訊息排除或舉手找助教" />
+./setup/load-from-usb.sh /path/to/usb
+# 有 ✗ 就照訊息排除，或舉手找助教`}
+    expect="每一項打勾，最後一行 SETUP-OK" />
 );
 const Step0Replay: Page = () => (
   <ReplayPage world="lab" title="開始動手前 —— 環境驗證" lines={step0Lines} />
