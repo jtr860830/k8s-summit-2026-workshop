@@ -1380,7 +1380,7 @@ const Ecosystem: Page = () => (
 const Roadmap: Page = () => (
   <Light eyebrow="ROADMAP" title="把今天講的東西系統化，開源出來">
     <ul style={{ fontSize: 42, paddingLeft: 52, margin: 0, marginTop: 20 }}>
-      <Li gap={40}>今天靠腳本和人手補的地方，全部<Red>自動化</Red></Li>
+      <Li gap={40}>今天的成果，全部<Red>自動化</Red></Li>
       <Li gap={40}>這幾個月的 POC 和踩過的坑，整理成<Red>一套完整的系統</Red></Li>
       <Li gap={40}>開源，歡迎一起做</Li>
     </ul>
