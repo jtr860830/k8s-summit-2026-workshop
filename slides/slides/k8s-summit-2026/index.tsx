@@ -620,7 +620,7 @@ const EnrollFlow: Page = () => (
       <FlowStep n="2" text="smee 補充開機資訊，機器載入 HookOS" />
       <FlowStep n="3" text="HookOS 回報硬體規格" />
       <FlowStep n="4" text="符合規則就觸發 Workflow" />
-      <FlowStep n="5" text="重開機進正式系統，在池裡待命" />
+      <FlowStep n="5" text="重開機進正式系統，在資源池裡待命" />
     </div>
   </Light>
 );
