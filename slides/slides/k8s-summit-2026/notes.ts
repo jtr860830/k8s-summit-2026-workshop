@@ -48,19 +48,25 @@ export const nArchitecture = `這是整體架構，由下往上念。最底下 T
 
 右邊每一個工具，都是用 CRD 跟 controller 的方式運作。這句話等一下會反覆驗證。`;
 
-export const nGlossary = `接下來會一直用到五個詞，先定義好，後面不再解釋。
+export const nGlossary = `接下來會一直用到幾個詞，先用一張圖對齊。
 
-管理叢集，management cluster。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。動手環境就是那個 kind；真實機房是三台裸機。
+左上是起始叢集，跑在起始機上的 k3s。它開出右邊的管理叢集，然後把管理權搬過去，這個動作叫 pivot，之後起始機就可以關掉。動手環境沒有這一步，你的 kind 一開始就是管理叢集。
 
-工作負載叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
+管理叢集裡放的是 Cluster API 的 controller 和 provider。它往下開出工作負載叢集，擴縮、升級、拆掉也都是它做。每個工作負載叢集裡有幾個 Machine，對應幾個 Node。Machine 底下今天是 container，真實機房是裸機，也可以是虛擬機器。
 
-起始叢集，bootstrap cluster。跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後把管理權搬過去，這個動作叫 pivot，然後就可以關掉。動手環境沒有這一步，你的 kind 一開始就是管理叢集。
+下一頁把這五個詞各給一句定義。`;
+
+export const nGlossaryTerms = `management cluster，管理叢集。放 Cluster API 那些 controller 的叢集，用它去開別的叢集。動手環境就是那個 kind；真實機房是三台裸機。
+
+workload cluster，工作負載叢集。被開出來、給人用的叢集。今天你們會開的 demo、team-a 都是。
+
+bootstrap cluster，起始叢集。跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。
 
 Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機、虛擬機器。你在叢集裡 get nodes 看到的 Node，是同一台機器的另一個名字。
 
 provider。Cluster API 接底層的外掛。docker、tinkerbell、kubevirt。換底層只換這個，上面的 YAML 不動。
 
-後面聽到這五個詞，就回到這張圖。`;
+後面聽到這五個詞，就回到前一頁那張圖。`;
 
 export const nBackToDay0 = `第一幕收了，放下鍵盤，看真實機房。
 

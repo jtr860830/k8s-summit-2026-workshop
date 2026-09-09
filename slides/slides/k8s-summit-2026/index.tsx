@@ -244,40 +244,42 @@ const Architecture: Page = () => (
 /* ── 06b 名詞 ────────────────────────────────────────── */
 const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: string; accent?: boolean; children?: React.ReactNode }) => (
   <div style={{ background: '#fff', border: accent ? '2px solid var(--osd-accent)' : '1px solid #e8e2df', borderRadius: 10, padding: '14px 20px', textAlign: 'center' }}>
-    <div style={{ fontSize: 27, fontWeight: 800, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
-    {sub && <div style={{ fontSize: 21, color: '#5a5148', marginTop: 4 }}>{sub}</div>}
+    <div style={{ fontSize: 34, fontWeight: 800, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
+    {sub && <div style={{ fontSize: 25, color: '#5a5148', marginTop: 6 }}>{sub}</div>}
     {children}
   </div>
 );
 const GTerm = ({ term, zh, desc }: { term: string; zh?: string; desc: string }) => (
-  <div style={{ fontSize: 25, lineHeight: 1.4 }}>
-    <b style={{ color: 'var(--osd-accent)', fontFamily: mono, fontSize: 27 }}>{term}</b>{zh && <span style={{ color: muted, fontSize: 22 }}>　{zh}</span>}
+  <div style={{ fontSize: 31, lineHeight: 1.45 }}>
+    <b style={{ color: 'var(--osd-accent)', fontFamily: mono, fontSize: 34 }}>{term}</b>{zh && <span style={{ color: muted, fontSize: 27 }}>　{zh}</span>}
     <div style={{ color: '#3a3a3a' }}>{desc}</div>
   </div>
 );
 const Glossary: Page = () => (
   <Light eyebrow="GLOSSARY" title="Cluster API">
-    <div style={{ display: 'flex', gap: 44, marginTop: -8 }}>
-      <div style={{ width: 880, display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s；動手環境沒有這步" /></div>
-          <div style={{ fontSize: 24, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
-          <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
-        </div>
-        <div style={{ textAlign: 'center', fontSize: 24, color: muted }}>↓ 開出、擴縮、升級、拆掉</div>
-        <div style={{ display: 'flex', gap: 14 }}>
-          <div style={{ flex: 1 }}><GBox title="工作負載叢集 A" sub="Machine × 3 → Node × 3" /></div>
-          <div style={{ flex: 1 }}><GBox title="工作負載叢集 B" sub="Machine × 2 → Node × 2" /></div>
-        </div>
-        <div style={{ textAlign: 'center', fontSize: 23, color: muted }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
+    <div style={{ width: 1320, margin: '10px auto 0', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+        <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s；動手環境沒有這步" /></div>
+        <div style={{ fontSize: 30, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
+        <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
       </div>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
-        <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
-        <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
-        <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
-        <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
+      <div style={{ textAlign: 'center', fontSize: 30, color: muted }}>↓ 開出、擴縮、升級、拆掉</div>
+      <div style={{ display: 'flex', gap: 22 }}>
+        <div style={{ flex: 1 }}><GBox title="工作負載叢集 A" sub="Machine × 3 → Node × 3" /></div>
+        <div style={{ flex: 1 }}><GBox title="工作負載叢集 B" sub="Machine × 2 → Node × 2" /></div>
       </div>
+      <div style={{ textAlign: 'center', fontSize: 28, color: muted, marginTop: 6 }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
+    </div>
+  </Light>
+);
+const GlossaryTerms: Page = () => (
+  <Light eyebrow="GLOSSARY" title="Cluster API">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 26, marginTop: -6 }}>
+      <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。動手環境是 kind；真實機房是三台裸機。" />
+      <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
+      <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
+      <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
+      <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
     </div>
   </Light>
 );
@@ -1505,7 +1507,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
-  Thesis, Claim, WhiteBox, Architecture, Glossary, Principles,
+  Thesis, Claim, WhiteBox, Architecture, Glossary, GlossaryTerms, Principles,
   TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro, Demo1,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
@@ -1523,7 +1525,7 @@ const R = N.RAW_NOTE;
 export const notes: string[] = [
   N.nCover, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
-  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nPrinciples,
+  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms, N.nPrinciples,
   N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
   N.nD0Prereq, N.nD0Intro, N.nDemo1,
   N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
