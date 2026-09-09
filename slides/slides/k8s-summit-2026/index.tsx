@@ -1120,7 +1120,7 @@ kind: WorkloadCluster
 metadata: {name: team-a}
 spec: {}
 EOF`}
-    expect="約 4 分鐘後 get workloadclusters 的 READY 轉 True；底層 Cluster API 物件由 kro 代為建立" />
+    expect="get workloadclusters 很快顯示 ACTIVE、READY True；約 4 分鐘後兩台 Machine Running。底層 Cluster API 物件由 kro 代為建立" />
 );
 const A2S2Replay: Page = () => (
   <ReplayPage world="lab" title="第二幕 · 步驟 2 —— 參考輸出（會前錄製）" lines={a2s2Lines} />

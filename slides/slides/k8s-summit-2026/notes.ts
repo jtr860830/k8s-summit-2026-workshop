@@ -294,7 +294,7 @@ export const nA2S1 = `步驟 1，裝 kro，apply RGD，等 STATE 變 Active。
 
 export const nA2S2 = `步驟 2，一個物件，一個叢集。spec 是空的，所有欄位都有預設值。
 
-大概 4 分鐘收斂，workloadcluster 的 READY 轉 True。底下那七個 Cluster API 物件是 kro 建的，你沒有碰它們。`;
+workloadcluster 幾十秒內就會顯示 ACTIVE、READY True，那代表 kro 把底層七個物件都建好了；叢集本身要等 Machine 轉 Running，大概 4 分鐘。那七個 Cluster API 物件是 kro 建的，你沒有碰它們。`;
 
 export const nA2S3 = `步驟 3，用平台使用者的方式擴容。patch nodes 等於 2，底下 MachineDeployment 跟著動，90 秒多一台。
 

@@ -7,6 +7,10 @@
 #   3. Object pass-through: kubeletExtraArgs is forwarded verbatim (whole block replaced at the anchor)
 #   4. Locked down: certSANs, hostpath-provisioner and friends are fixed in the template;
 #      fields the schema does not declare are rejected at apply time
+#
+# Object references use the v1beta2 apiVersion on purpose: Cluster API v1.13 stores v1beta2 and
+# rewrites ref apiVersions on read-back, so a v1beta1 ref makes kro see the resource as mutated
+# (instance READY stays False). The resources themselves stay on the v1beta1 kinds.
 # ============================================================================
 apiVersion: kro.run/v1alpha1
 kind: ResourceGraphDefinition
@@ -41,12 +45,12 @@ spec:
             services:
               cidrBlocks: ["${schema.spec.advanced.serviceCIDR}"]
           infrastructureRef:
-            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
             kind: DockerCluster
             name: ${schema.metadata.name}
             namespace: default
           controlPlaneRef:
-            apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+            apiVersion: controlplane.cluster.x-k8s.io/v1beta2
             kind: KubeadmControlPlane
             name: ${schema.metadata.name}-control-plane
             namespace: default
@@ -84,7 +88,7 @@ spec:
           replicas: '${schema.spec.profile == "ha" ? 3 : 1}'
           machineTemplate:
             infrastructureRef:
-              apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+              apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
               kind: DockerMachineTemplate
               name: ${schema.metadata.name}-control-plane
               namespace: default
@@ -147,12 +151,12 @@ spec:
               version: ${schema.spec.version}
               bootstrap:
                 configRef:
-                  apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+                  apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
                   kind: KubeadmConfigTemplate
                   name: ${schema.metadata.name}-md-0
                   namespace: default
               infrastructureRef:
-                apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+                apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
                 kind: DockerMachineTemplate
                 name: ${schema.metadata.name}-md-0
                 namespace: default
