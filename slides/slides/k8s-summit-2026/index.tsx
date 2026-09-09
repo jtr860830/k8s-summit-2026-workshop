@@ -465,9 +465,7 @@ const d0s6Lines: RLine[] = [
 ];
 const D0S6Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={6} total={9} title="幫新機器接上電源"
-    cmd={`# 把空白機器接上網路，開機。
-# 然後 —— 什麼都不用做。
-
+    cmd={`# 用 watch 觀察 Hardware 與 Workflow 的變化
 watch kubectl -n tinkerbell \\
   get hardware,workflow
 # 裝完補一手收尾（關 allowPXE）`}
