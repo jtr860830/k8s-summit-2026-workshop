@@ -119,7 +119,7 @@ const Logo = ({ height = 84 }: { height?: number }) => (
 const Cover: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
     <div style={{ position: 'absolute', right: 160, bottom: 88 }}><Logo height={120} /></div>
-    <Eyebrow dark>KUBESUMMIT 2026 · 體驗工作坊</Eyebrow>
+    <Eyebrow dark>KUBESUMMIT 2026 · WORKSHOP</Eyebrow>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 108, fontWeight: 800, margin: '36px 0 0', lineHeight: 1.2 }}>
       用 Kubernetes 打造<br />自動化私有雲基礎設施
     </h1>
@@ -234,7 +234,7 @@ const LayerRow = ({ name, tool, depth }: { name: string; tool: string; depth: nu
 );
 
 const Architecture: Page = () => (
-  <Light eyebrow="架構全景" title="每一層，都是 K8s 的 API">
+  <Light eyebrow="ARCHITECTURE" title="每一層，都是 K8s 的 API">
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginTop: 4 }}>
       <LayerRow name="自助服務" tool="kro" depth={0} />
       <LayerRow name="叢集生命週期" tool="Cluster API" depth={1} />
@@ -311,7 +311,7 @@ const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] })
 );
 
 const D0Intro: Page = () => (
-  <Light eyebrow="DAY-0 · 從零建起" title="步驟">
+  <Light eyebrow="DAY-0 · STEPS" title="步驟">
     <div style={{ display: 'flex', gap: 36, marginTop: 10 }}>
       <D0Phase title="準備起始機" steps={[['1', '裝 k3s'], ['2', '裝 Tinkerbell'], ['3', '準備作業系統映像']]} />
       <D0Phase title="自動上架" steps={[['4', '定義安裝範本'], ['5', '定義上架規則'], ['6', '插電，看它自己上架']]} />
@@ -321,7 +321,7 @@ const D0Intro: Page = () => (
 );
 
 const D0Prereq: Page = () => (
-  <Light eyebrow="DAY-0 · 開工前" title="機房最低配備">
+  <Light eyebrow="DAY-0 · PREREQUISITES" title="機房最低配備">
     <div style={{ display: 'flex', gap: 40, marginTop: 10 }}>
       <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
         <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 26 }}>需要</div>
@@ -488,7 +488,7 @@ const PairRow = ({ you, me }: { you: string; me: string }) => (
   </div>
 );
 const BackToDay0: Page = () => (
-  <Dark eyebrow="DEMO · DAY-0 後三步（約 9 分鐘）" title="放下鍵盤。你剛做的，真實機房做過一次" world="demo">
+  <Dark eyebrow="DEMO · DAY-0 STEPS 7–9（約 9 分鐘）" title="放下鍵盤。你剛做的，真實機房做過一次" world="demo">
     <div style={{ display: 'flex', gap: 20, marginBottom: 14, fontSize: 26, fontWeight: 800, letterSpacing: '0.1em' }}>
       <div style={{ flex: 1, color: '#9fd39f' }}>動手環境（kind + Docker）</div>
       <div style={{ width: 34 }} />
@@ -591,7 +591,7 @@ const TinkRow = ({ name, role }: { name: string; role: string }) => (
 );
 
 const TinkerbellStack: Page = () => (
-  <Light eyebrow="上架系統怎麼搭" title="Tinkerbell：五個元件">
+  <Light eyebrow="TINKERBELL" title="Tinkerbell：五個元件">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 2 }}>
       <TinkRow name="smee" role="監聽 PXE 廣播、補充開機資訊 —— 不搶機房 DHCP 的位置" />
       <TinkRow name="HookOS" role="只存在於記憶體的小型 Linux —— 回報硬體、執行安裝，不碰硬碟" />
@@ -614,7 +614,7 @@ const FlowStep = ({ n, text }: { n: string; text: string }) => (
 );
 
 const EnrollFlow: Page = () => (
-  <Light eyebrow="上架系統怎麼搭" title="插電之後，機器經歷了什麼">
+  <Light eyebrow="TINKERBELL" title="插電之後，機器經歷了什麼">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 34, marginTop: 12 }}>
       <FlowStep n="1" text="插電開機" />
       <FlowStep n="2" text="smee 補充開機資訊，機器載入 HookOS" />
@@ -674,7 +674,7 @@ const HowPxe: Page = () => (
 
 /* ── 10 Act 1 guide ───────────────────────────────────── */
 const Act1Guide: Page = () => (
-  <Light eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
+  <Light eyebrow="HANDS-ON · ACT 1（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`cd k8s-summit-2026-workshop
@@ -795,13 +795,15 @@ const LAB_HINT: Record<string, string> = {
   '第二幕': '跟著做 · labs/02-kro/README.md',
 };
 const worldOf = (act: string): World => (act in LAB_HINT ? 'lab' : 'demo');
+const ACT_EN: Record<string, string> = { '開始動手前': 'SETUP', '第一幕': 'ACT 1', '第二幕': 'ACT 2', 'DAY-0 建置': 'DAY-0' };
+const actEn = (act: string) => ACT_EN[act] ?? act.split(' · ')[0];
 
 const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: number; total: number; title: string; cmd: string; expect: string }) => {
   const world = worldOf(act);
   const demo = world === 'demo';
   return (
     <div style={{ ...fill, background: demo ? darkBg : 'var(--osd-bg)', color: demo ? '#ffffff' : 'var(--osd-text)', padding: 120, position: 'relative' }}>
-      <Eyebrow dark={demo}>{demo ? (act.startsWith('DEMO') ? act : `${WORLD.demo.name} · ${act} · 第 ${step}/${total} 步`) : `${WORLD.lab.name} · ${act} · 步驟 ${step}/${total}`}</Eyebrow>
+      <Eyebrow dark={demo}>{demo ? (act.startsWith('DEMO') ? actEn(act) : `${WORLD.demo.name} · ${actEn(act)} · STEP ${step}/${total}`) : `${WORLD.lab.name} · ${actEn(act)} · STEP ${step}/${total}`}</Eyebrow>
       <H>{title}</H>
       <div style={{ marginTop: 56 }}>
         <Code size={34}>{cmd}</Code>
@@ -993,7 +995,7 @@ const Step6Replay: Page = () => (
 
 /* ── 11 Act 1 recap ───────────────────────────────────── */
 const Act1Recap: Page = () => (
-  <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
+  <Light eyebrow="ACT 1 · RECAP" title="好用，但也真的很囉唆">
     <div style={{ display: 'flex', gap: 48 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: 40 }}>
         <div style={{ fontSize: 34, fontWeight: 800, color: '#3d7a3d' }}>得到的</div>
@@ -1020,7 +1022,7 @@ const Act1Recap: Page = () => (
 
 /* ── 12 Act 2 intro ───────────────────────────────────── */
 const Act2Intro: Page = () => (
-  <Dark eyebrow="第二幕" title={<>把 200 行，變成 6 行</>}>
+  <Dark eyebrow="ACT 2" title={<>把 200 行，變成 6 行</>}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'center' }}>
       <Code size={30}>{`apiVersion: kro.run/v1alpha1
 kind: WorkloadCluster
@@ -1046,7 +1048,7 @@ const FourLayer = ({ n, name, desc }: { n: string; name: string; desc: string })
 );
 
 const FourLayers: Page = () => (
-  <Light eyebrow="平台 API 的四層設計" title="高階好用，細節可調，危險碰不到">
+  <Light eyebrow="PLATFORM API" title="高階好用，細節可調，危險碰不到">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 4 }}>
       <FourLayer n="1" name="頂層精簡" desc="version / nodes / profile —— 全部有合理預設，spec: {} 就能開" />
       <FourLayer n="2" name="advanced 選填" desc="網段、kubelet 參數 —— 要調的人才需要知道它存在" />
@@ -1058,7 +1060,7 @@ const FourLayers: Page = () => (
 
 /* ── 14 Act 2 guide ───────────────────────────────────── */
 const Act2Guide: Page = () => (
-  <Light eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
+  <Light eyebrow="HANDS-ON · ACT 2（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
       <div style={{ flex: 1 }}>
         <Code size={32}>{`less labs/02-kro/README.md
@@ -1228,7 +1230,7 @@ const A2S7Replay: Page = () => (
 
 /* ── 15 Act 2 recap ───────────────────────────────────── */
 const Act2Recap: Page = () => (
-  <Light eyebrow="第二幕 · 你剛剛做了什麼" title="你在 K8s 裡加了一個新的 API">
+  <Light eyebrow="ACT 2 · RECAP" title="你在 K8s 裡加了一個新的 API">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>200 行變 6 行，少掉的部分是<Red>把第一幕的決定寫進 RGD</Red>：版本、CNI、控制平面數量、哪些欄位開放</Li>
       <Li>status、更新、刪除都照 K8s 原本的方式運作，使用者不需要知道底下有 Cluster API</Li>
@@ -1348,7 +1350,7 @@ const D3NodeReplay: Page = () => (
 
 /* ── Day-0 wrap-up: bootstrap and roles ───────────────── */
 const BootstrapFull: Page = () => (
-  <Dark eyebrow="DAY-0 · 收束" title="起始機做了什麼、沒做什麼">
+  <Dark eyebrow="DAY-0 · WRAP-UP" title="起始機做了什麼、沒做什麼">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={28}>起始機沒有建叢集，它只放了宣告；<Red>裝機、kubeadm、加入叢集都是機器自己跑完的</Red></Li>
       <Li gap={28}>起始機可以是一台筆電：接上機房網段、跑完九步、pivot、關機。管理叢集不依賴它</Li>
@@ -1367,7 +1369,7 @@ const RoleKnob = ({ q, a, detail }: { q: string; a: string; detail: string }) =>
 );
 
 const RoleDecision: Page = () => (
-  <Light eyebrow="DAY-0 · 收束" title="一台機器的角色，是怎麼決定的">
+  <Light eyebrow="DAY-0 · WRAP-UP" title="一台機器的角色，是怎麼決定的">
     <div style={{ display: 'flex', gap: 24, marginBottom: 30 }}>
       <RoleKnob q="哪一台？" a="標籤" detail="Hardware 上貼標籤，Machine template 用 hardwareAffinity 挑有對應標籤的機器。第 8 步的 day0/role: mgmt 就是這個" />
       <RoleKnob q="什麼角色？" a="誰建的 Machine" detail="KubeadmControlPlane 建的 Machine 是控制平面，MachineDeployment 建的是 worker。第一幕的 demo-md-0 就是後者" />
@@ -1382,7 +1384,7 @@ const RoleDecision: Page = () => (
 
 /* ── Pool policy ──────────────────────────────────────── */
 const PoolPolicy: Page = () => (
-  <Light eyebrow="DAY-0 · 收束" title="資源池的兩種待命方式">
+  <Light eyebrow="DAY-0 · WRAP-UP" title="資源池的兩種待命方式">
     <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
         <div style={{ fontSize: 30, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>HookOS 待命（上游預設）</div>
@@ -1410,7 +1412,7 @@ const PoolPolicy: Page = () => (
 /* ── 21 Ecosystem ─────────────────────────────────────── */
 
 const Ecosystem: Page = () => (
-  <Dark eyebrow="這條路換到什麼" title="都是 K8s 物件之後，現有工具直接能用">
+  <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={26}><Red>GitOps</Red>：機房狀態全進 Git —— 叢集、機器、上架規則可版控、可稽核、可重建</Li>
       <Li gap={26}><Red>RBAC</Red>：「誰能開機器、誰能刪叢集」—— 用管 Pod 的同一套權限模型管到裸機</Li>
@@ -1425,7 +1427,7 @@ const Ecosystem: Page = () => (
 
 /* ── 22 Roadmap ──────────────────────────────────────── */
 const Roadmap: Page = () => (
-  <Light eyebrow="下一步" title="還缺一個 controller">
+  <Light eyebrow="ROADMAP" title="還缺一個 controller">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>今天有三件事靠腳本或人手補：上架裝完關 allowPXE、補齊 Hardware 欄位讓 CAPT 能認領、決定角色貼標籤</Li>
       <Li>要寫一個 <Red>enrollment controller</Red> 接手，管機器從插電到退役；待命方式、貼標籤規則用 CRD 宣告</Li>
@@ -1446,7 +1448,7 @@ const CreditCol = ({ title, items }: { title: string; items: string[] }) => (
 );
 
 const OpenSourceCredits: Page = () => (
-  <Light eyebrow="致謝" title="這場工作坊，全部由開源軟體組成">
+  <Light eyebrow="CREDITS" title="這場工作坊，全部由開源軟體組成">
     <div style={{ display: 'flex', gap: 40, marginTop: 4 }}>
       <CreditCol title="平台核心" items={[
         'Kubernetes / kubeadm', 'Cluster API（CAPD/CAPT/CAPK）', 'Tinkerbell + HookOS',
