@@ -1327,7 +1327,7 @@ const D3NodeReplay: Page = () => (
 
 /* ── Day-0 wrap-up: bootstrap and roles ───────────────── */
 const BootstrapFull: Page = () => (
-  <Dark eyebrow="DAY-0 · WRAP-UP" title="起始機做了什麼、沒做什麼">
+  <Dark eyebrow="DAY-0 · WRAP-UP" title="起始機的作用">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={28}>起始機沒有建叢集，它只放了宣告；<Red>裝機、kubeadm、加入叢集都是機器自己跑完的</Red></Li>
       <Li gap={28}>起始機可以是一台筆電：接上機房網段、跑完九步、pivot、關機。管理叢集不依賴它</Li>
