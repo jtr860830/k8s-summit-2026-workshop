@@ -1481,9 +1481,11 @@ export default [
   Ecosystem, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
 
-// Speaker notes: index-aligned with the pages array above (presenter mode, press P)
+// Speaker notes: index-aligned with the pages array above (presenter mode, press P).
+// The public GitHub Pages build sets VITE_PUBLIC_DECK=1 so the notes are left out of the bundle.
+const PUBLIC_DECK = import.meta.env.VITE_PUBLIC_DECK === '1';
 const R = N.RAW_NOTE;
-export const notes: string[] = [
+const allNotes: string[] = [
   N.nCover, N.nAbout, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
   N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
@@ -1498,3 +1500,4 @@ export const notes: string[] = [
   N.nDemo2, N.nD2Cmd, N.nD2Replay, R, N.nDemo3, N.nD3Cmd, N.nD3Replay, N.nD3NodeReplay, R,
   N.nEcosystem, N.nRoadmap, N.nCredits, N.nThanks,
 ];
+export const notes: string[] | undefined = PUBLIC_DECK ? undefined : allNotes;

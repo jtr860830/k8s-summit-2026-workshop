@@ -31,6 +31,7 @@ jobs:
         working-directory: slides
         env:
           SLIDES_BASE: /k8s-summit-2026-workshop/
+          VITE_PUBLIC_DECK: '1'
       # SPA fallback: GitHub Pages serves 404.html for unknown paths
       - run: cp dist/index.html dist/404.html
         working-directory: slides
