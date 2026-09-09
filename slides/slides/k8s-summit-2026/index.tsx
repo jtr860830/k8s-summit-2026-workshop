@@ -1223,13 +1223,10 @@ const Act2Recap: Page = () => (
 /* ── 16 Demo 2 intro ──────────────────────────────────── */
 const Demo2: Page = () => (
   <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
-    <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
-      <Li gap={30}>HCI 節點上有分散式儲存（Ceph）—— 「換機哲學」最怕的就是它</Li>
-      <Li gap={30}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
-      <Li gap={30}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
-      <Li gap={30}>驗證：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid <Red>完全一致</Red></Li>
+    <ul style={{ fontSize: 44, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
+      <Li gap={40}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
+      <Li gap={40}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
     </ul>
-    <p style={{ fontSize: 30, color: mutedDark, marginTop: 34 }}>對照：第一幕步驟 6 你刪過一台 Machine，底下是 container。這次底下是裸機。</p>
   </Dark>
 );
 
