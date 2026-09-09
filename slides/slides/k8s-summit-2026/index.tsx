@@ -397,9 +397,9 @@ const d0s3Lines: RLine[] = [
 const D0S3Cmd: Page = () => (
   <StepCmd act="DAY-0 建置" step={3} total={9} title="備妥作業系統映像"
     cmd={`./fetch-artifacts.sh
-# 內容三件事：
-#   下載 Flatcar 原廠映像（驗 SHA512）
-#   下載 kubelet sysext（疊加映像）
+# 這支腳本做的事：
+#   下載 Flatcar 原廠映像，驗 SHA512
+#   下載 kubelet sysext
 #   放進映像伺服器目錄`}
     expect="SHA512 OK；目錄下兩個檔案（Flatcar 映像、kubelet sysext）；curl 映像伺服器回 HTTP 200" />
 );
