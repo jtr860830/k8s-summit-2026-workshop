@@ -380,9 +380,7 @@ const D0S2Cmd: Page = () => (
   oci://ghcr.io/tinkerbell/charts/tinkerbell \\
   --version v0.25.0 \\
   -n tinkerbell --create-namespace \\
-  -f tinkerbell-values.yaml --wait
-# values 只設四件事：收 PXE 廣播的網卡、
-# 兩個服務 IP、auto-proxy 模式、自動發現/上架開關`}
+  -f tinkerbell-values.yaml --wait`}
     expect="STATUS: deployed；tinkerbell namespace 三個 pod Running；kubectl get crd 多出 tinkerbell.org 一組" />
 );
 const D0S2Replay: Page = () => (
