@@ -329,15 +329,15 @@ const D0Intro: Page = () => (
 );
 
 const D0Prereq: Page = () => (
-  <Light eyebrow="DAY-0 · 開工前" title="機房最低配備 —— 就這四樣">
+  <Light eyebrow="DAY-0 · 開工前" title="機房最低配備">
     <div style={{ display: 'flex', gap: 24 }}>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
         <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
         <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
           <li>一個 L2 網段當裝機網段</li>
           <li>機房既有的 DHCP</li>
-          <li>一台 Linux 當起始機（seed），接外網與裝機網段</li>
-          <li>要納管的伺服器支援網路開機（開機順序網路優先）</li>
+          <li>一台 Linux 當起始機，接外網與裝機網段</li>
+          <li>要納管的伺服器支援網路開機</li>
         </ul>
       </div>
       <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
@@ -350,9 +350,6 @@ const D0Prereq: Page = () => (
         </ul>
       </div>
     </div>
-    <p style={{ fontSize: 31, marginTop: 30, fontWeight: 700 }}>
-      人只裝起始機這一台，其餘每台都是平台裝的。IP 還是機房 DHCP 發的，不需要動現有網路設定。
-    </p>
   </Light>
 );
 
