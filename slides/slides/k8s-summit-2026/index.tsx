@@ -244,7 +244,7 @@ const Architecture: Page = () => (
 /* ── 06b 名詞 ────────────────────────────────────────── */
 const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: string; accent?: boolean; children?: React.ReactNode }) => (
   <div style={{ background: '#fff', border: accent ? '2px solid var(--osd-accent)' : '1px solid #e8e2df', borderRadius: 10, padding: '14px 20px', textAlign: 'center' }}>
-    <div style={{ fontSize: 34, fontWeight: 800, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
+    <div style={{ fontSize: 34, fontWeight: 800, fontFamily: mono, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
     {sub && <div style={{ fontSize: 25, color: '#5a5148', marginTop: 6 }}>{sub}</div>}
     {children}
   </div>
@@ -259,14 +259,14 @@ const Glossary: Page = () => (
   <Light eyebrow="GLOSSARY" title="Cluster API">
     <div style={{ width: 1320, margin: '10px auto 0', display: 'flex', flexDirection: 'column', gap: 22 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
-        <div style={{ flex: 1 }}><GBox title="起始叢集" sub="跑在起始機上的 k3s；動手環境沒有這步" /></div>
+        <div style={{ flex: 1 }}><GBox title="bootstrap cluster" sub="跑在起始機上的 k3s；動手環境沒有這步" /></div>
         <div style={{ fontSize: 30, color: 'var(--osd-accent)', fontWeight: 800, whiteSpace: 'nowrap' }}>pivot →</div>
-        <div style={{ flex: 1.4 }}><GBox title="管理叢集" sub="Cluster API controller + provider" accent /></div>
+        <div style={{ flex: 1.4 }}><GBox title="management cluster" sub="Cluster API controller + provider" accent /></div>
       </div>
       <div style={{ textAlign: 'center', fontSize: 30, color: muted }}>↓ 開出、擴縮、升級、拆掉</div>
       <div style={{ display: 'flex', gap: 22 }}>
-        <div style={{ flex: 1 }}><GBox title="工作負載叢集 A" sub="Machine × 3 → Node × 3" /></div>
-        <div style={{ flex: 1 }}><GBox title="工作負載叢集 B" sub="Machine × 2 → Node × 2" /></div>
+        <div style={{ flex: 1 }}><GBox title="workload cluster A" sub="Machine × 3 → Node × 3" /></div>
+        <div style={{ flex: 1 }}><GBox title="workload cluster B" sub="Machine × 2 → Node × 2" /></div>
       </div>
       <div style={{ textAlign: 'center', fontSize: 28, color: muted, marginTop: 6 }}>Machine 底下是 container（動手環境）／裸機（真實機房）／虛擬機器</div>
     </div>
