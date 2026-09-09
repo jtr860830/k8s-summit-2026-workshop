@@ -422,7 +422,7 @@ python3 gen-template.py config.ign \\
   | kubectl apply -f -
 # base.bu：新機器的最小設定（主機名、SSH 金鑰、kubelet sysext）
 # 範本本身也只是一個 K8s 物件`}
-    expect="看到 template.tinkerbell.org/flatcar-install created；get template 列出一筆" />
+    expect="template.tinkerbell.org/flatcar-install created；get template 列出一筆" />
 );
 const D0S4Replay: Page = () => (
   <ReplayPage world="demo" title="DAY-0 · 第 4 步 —— 實際執行過程" lines={d0s4Lines} />
@@ -443,7 +443,7 @@ const D0S5Cmd: Page = () => (
 # match-all：任何新機器回報屬性
 # 就觸發安裝；正式環境可收斂成
 # 精準條件（例：特定機箱廠商）`}
-    expect="看到規則建立；Hardware 與 Workflow 都還是空的 —— 等第一台機器插電" />
+    expect="workflowruleset 建立；Hardware 與 Workflow 都還是空的，等第一台機器插電" />
 );
 const D0S5Replay: Page = () => (
   <ReplayPage world="demo" title="DAY-0 · 第 5 步 —— 實際執行過程" lines={d0s5Lines} />
@@ -516,7 +516,7 @@ const D0S7Cmd: Page = () => (
 #   provider 名錄要手動登記 tinkerbell
 #   CAPT 要知道 Tinkerbell 的位址
 #   Ignition feature gate 要在 init 前開`}
-    expect="看到 initialized successfully；core、bootstrap、control-plane、tinkerbell 四組 controller 全部 Running" />
+    expect="initialized successfully；core、bootstrap、control-plane、tinkerbell 四組 controller 全部 Running" />
 );
 const D0S7Replay: Page = () => (
   <ReplayPage world="demo" title="DAY-0 · 第 7 步 —— 實際執行過程" lines={d0s7Lines} />
