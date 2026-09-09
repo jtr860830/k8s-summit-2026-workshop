@@ -607,15 +607,15 @@ const TinkerbellStack: Page = () => (
 
 /* ── 07c Enrollment flow ──────────────────────────────── */
 const FlowStep = ({ n, text }: { n: string; text: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-    <div style={{ width: 56, height: 56, borderRadius: 28, background: 'var(--osd-accent)', color: '#fff', fontSize: 30, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
-    <div style={{ fontSize: 32, lineHeight: 1.4 }}>{text}</div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+    <div style={{ width: 72, height: 72, borderRadius: 36, background: 'var(--osd-accent)', color: '#fff', fontSize: 38, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+    <div style={{ fontSize: 42, lineHeight: 1.3 }}>{text}</div>
   </div>
 );
 
 const EnrollFlow: Page = () => (
   <Light eyebrow="上架系統怎麼搭" title="插電之後，機器經歷了什麼">
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 6 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 34, marginTop: 12 }}>
       <FlowStep n="1" text="插電開機" />
       <FlowStep n="2" text="smee 補充開機資訊，機器載入 HookOS" />
       <FlowStep n="3" text="HookOS 回報硬體規格" />
