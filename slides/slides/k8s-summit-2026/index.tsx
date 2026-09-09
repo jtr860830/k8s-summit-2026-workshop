@@ -1225,7 +1225,7 @@ const Demo2: Page = () => (
   <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
       <Li gap={36}>現場刪掉一台 Machine → 自動重灌作業系統 → 重新入列</Li>
-      <Li gap={36}>資料碟全程不動，Ceph <Red>原碟認領</Red></Li>
+      <Li gap={36}>資料碟全程不動，Ceph <Red>沿用原來的 OSD</Red></Li>
       <Li gap={36}>驗證：重灌前後的 <span style={{ fontFamily: mono }}>sha256</span> 與叢集 fsid 完全一致</Li>
     </ul>
   </Dark>
@@ -1255,7 +1255,7 @@ const d2Lines: RLine[] = [
   { t: 10.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  PENDING           |  HEALTH_WARN\n（新 Machine 已生成 —— 這裡 ssh 進去 reboot，機器 PXE 進 HookOS 接單）`, kind: 'frame' },
   { t: 13.5, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioning   |  write-image       |  HEALTH_WARN · osd: 2 up\n（只重寫 OS 碟 —— 資料碟 by-path 鎖定，一個位元都不碰）`, kind: 'frame' },
   { t: 17.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Provisioned    |  SUCCESS · reboot  |  HEALTH_WARN · osd: 2 up`, kind: 'frame' },
-  { t: 20.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Running        |  SUCCESS           |  HEALTH_OK · osd: 3 up, 3 in（原碟認領 —— 實測 +13 分鐘）`, kind: 'frame' },
+  { t: 20.0, text: `${d2wHdr}\nmgmt-cp-qh8fm   Running        |  SUCCESS           |  HEALTH_OK · osd: 3 up, 3 in（沿用原來的 OSD，實測 +13 分鐘）`, kind: 'frame' },
   { t: 22.5, text: './verify-after.sh', kind: 'cmd' },
   { t: 23.6, text: 'fsid-MATCH: 2e0e652d-3c57-48f8-98cc-23a958b9a66e\nsha256-MATCH: c1043a6162484b93396dbf2e01a2591b94bf34ef50a28c87c0a58b2b5b7ee084' },
   { t: 25.5, text: '重灌了一台 Ceph 節點 —— 資料一個位元都沒少', kind: 'ok' },

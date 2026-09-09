@@ -332,7 +332,7 @@ export const nDemo2 = `demo②，重灌一台節點，資料一個位元都不�
 
 【動作】切測試床終端。62 分按下的 delete 應該已經跑完，Machine Running、Ceph HEALTH_OK。
 
-這台節點上有 Ceph 的 OSD。換機哲學最怕的就是有狀態的節點，換一台等於資料要搬。我們的做法是：刪掉 Machine，Cluster API 自動重灌作業系統，重新入列，但資料碟全程不動，Ceph 用原來的碟認領回去。
+這台節點上有 Ceph 的 OSD。換機哲學最怕的就是有狀態的節點，換一台等於資料要搬。我們的做法是：刪掉 Machine，Cluster API 自動重灌作業系統，重新入列，但資料碟全程不動，Ceph 沿用原來的 OSD。
 
 驗證方式是重灌前後比對 sha256 跟叢集的 fsid。
 
@@ -347,7 +347,7 @@ export const nD2Cmd = `流程是這樣。先記下資料檔的 sha256 跟 Ceph �
 
 export const nD2Replay = `【動作】現場跑 verify-after.sh，看 fsid-MATCH、sha256-MATCH。
 
-現場沒跑完就用這頁重播，8 月 31 日排練實錄。看 Ceph 那欄：osd 從 2 up 回到 3 up，HEALTH_OK，原碟認領，實測 13 分鐘。
+現場沒跑完就用這頁重播，8 月 31 日排練實錄。看 Ceph 那欄：osd 從 2 up 回到 3 up，HEALTH_OK，沿用原來的 OSD，實測 13 分鐘。
 
 重灌了一台 Ceph 節點，資料一個位元都沒少。`;
 
