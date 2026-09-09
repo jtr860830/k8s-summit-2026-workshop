@@ -276,7 +276,7 @@ const GlossaryTerms: Page = () => (
   <Light eyebrow="GLOSSARY" title="Cluster API">
     <div style={{ display: 'flex', flexDirection: 'column', gap: 26, marginTop: -6 }}>
       <GTerm term="management cluster" zh="管理叢集" desc="放 Cluster API 的叢集，用它開別的叢集。" />
-      <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。今天的 demo、team-a。" />
+      <GTerm term="workload cluster" zh="工作負載叢集" desc="被開出來給人用的叢集。" />
       <GTerm term="bootstrap cluster" zh="起始叢集" desc="跑在起始機上的臨時管理叢集，只為了開出第一個正式的管理叢集，之後關掉。" />
       <GTerm term="Machine" desc="一台機器的 K8s 物件。叢集裡看到的 Node 是同一台機器的另一個名字。" />
       <GTerm term="provider" desc="Cluster API 接底層的外掛：docker、tinkerbell、kubevirt。換底層只換這個。" />
