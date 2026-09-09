@@ -1509,7 +1509,7 @@ export const meta: SlideMeta = {
 export default [
   Cover, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
-  Thesis, Claim, WhiteBox, Architecture, Glossary, GlossaryTerms, Principles,
+  Thesis, Claim, WhiteBox, Principles, Architecture, Glossary, GlossaryTerms,
   TinkerbellStack, EnrollFlow, HowPxe,
   D0Prereq, D0Intro, Demo1,
   D0S1Cmd, D0S1Replay, RawD0S1, D0S2Cmd, D0S2Replay, RawD0S2, D0S3Cmd, D0S3Replay, RawD0S3,
@@ -1527,7 +1527,7 @@ const R = N.RAW_NOTE;
 export const notes: string[] = [
   N.nCover, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
-  N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms, N.nPrinciples,
+  N.nThesis, N.nClaim, N.nWhiteBox, N.nPrinciples, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
   N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
   N.nD0Prereq, N.nD0Intro, N.nDemo1,
   N.nD0S1, N.nD0S1, R, N.nD0S2, N.nD0S2, R, N.nD0S3, N.nD0S3, R,
