@@ -537,8 +537,8 @@ const d0s9Hdr = 'NAME            CLUSTER   NODE NAME   READY   PHASE     AGE   V
 const d0s9Lines: RLine[] = [
   { t: 0.5, text: 'helm install tinkerbell ... --kubeconfig mgmt.kubeconfig -f tinkerbell-values-mgmt.yaml\nEXP_KUBEADM_BOOTSTRAP_FORMAT_IGNITION=true clusterctl init --kubeconfig mgmt.kubeconfig ...', kind: 'cmd' },
   { t: 2.0, text: 'STATUS: deployed\nYour management cluster has been initialized successfully!' },
-  { t: 4.0, text: '# 搬資料面：Hardware 與 Template（Workflow 歷史絕不搬）', kind: 'cmd' },
-  { t: 5.2, text: 'hardware.tinkerbell.org/discovery-bc-24-11-5e-4f-a9 created\nhardware.tinkerbell.org/mgmt-1 created\ntemplate.tinkerbell.org/flatcar-install created' },
+  { t: 4.0, text: 'kubectl -n tinkerbell get hardware,template -o yaml | kubectl --kubeconfig mgmt.kubeconfig apply -f -\nkubectl -n tinkerbell delete workflow --all', kind: 'cmd' },
+  { t: 5.2, text: 'hardware.tinkerbell.org/discovery-bc-24-11-5e-4f-a9 created\nhardware.tinkerbell.org/mgmt-1 created\ntemplate.tinkerbell.org/flatcar-install created\nworkflow.tinkerbell.org "enrollment-bc-24-11-5e-4f-a9" deleted' },
   { t: 7.2, text: 'clusterctl move --to-kubeconfig mgmt.kubeconfig', kind: 'cmd' },
   { t: 8.4, text: 'Creating objects in the target cluster\nDeleting objects from the source cluster' },
   { t: 10.4, text: 'kubectl --kubeconfig mgmt.kubeconfig get machines.cluster.x-k8s.io', kind: 'cmd' },
