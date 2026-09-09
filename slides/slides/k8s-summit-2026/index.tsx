@@ -867,7 +867,7 @@ const step3Lines: RLine[] = [
 ];
 
 const Step1Cmd: Page = () => (
-  <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 為第一幕動手做準備"
+  <StepCmd act="開始動手前" step={1} total={7} title="建立管理叢集 —— 準備第一個 hands-on"
     cmd={`# 管理叢集：放 Cluster API 的叢集，之後用它開別的叢集
 kind create cluster \\
   --config labs/01-capi/kind-mgmt.yaml --name mgmt
