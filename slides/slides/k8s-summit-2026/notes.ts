@@ -70,11 +70,11 @@ Machine。一台機器的 Kubernetes 物件。底下可能是 container、裸機
 
 後面聽到這五個詞，就回到前一頁那張圖。`;
 
-export const nBackToDay0 = `第一幕收了，放下鍵盤，看真實機房。
+export const nBackToDay0 = `第一幕收了，放下鍵盤，回到真實機房。
 
-接下來九分鐘講 day-0 後三步。你剛做的事，真實機房用同樣的指令做過一次，對照著看。步驟 2 的 clusterctl init，我的第 7 步是同一個指令，只是 infrastructure 從 docker 換成 tinkerbell。步驟 3 apply 七個物件開叢集，我的第 8 步是同一個結構，只是開在裸機上。第 9 步 pivot 你們沒做，因為 kind 用完就丟，不需要把管理權搬走。
+demo① 那台機器現在裝好 Flatcar，在資源池待命，還沒加入任何叢集。接下來三步是把 Cluster API 裝進起始機、在裸機上開出管理叢集、最後 pivot 讓它管理自己，起始機關機。
 
-看的時候留意底色：深底是示範，淺底是動手。`;
+你剛做的步驟 2 和步驟 3，在這裡會用同樣的指令再看一次，差別只有 provider 從 docker 換成 tinkerbell。`;
 
 export const nDemo1 = `九步講之前，先把機器開起來。接下來這一段是真實機房的示範，你們不用動手，看投影就好。
 
