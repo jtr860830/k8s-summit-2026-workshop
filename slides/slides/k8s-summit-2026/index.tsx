@@ -661,7 +661,7 @@ const Demo1: Page = () => (
 
 /* ── 09 PXE ───────────────────────────────────────────── */
 const HowPxe: Page = () => (
-  <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
+  <Light eyebrow="HOW IT WORKS" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
       <Li>網卡韌體會廣播：「我是 MAC xx:xx，有人要告訴我該做什麼嗎？」（PXE）</Li>
       <Li>Tinkerbell 只補充開機欄位 —— IP 照舊由機房 DHCP 發，<Red>不需要動現有網路設定</Red></Li>
