@@ -901,8 +901,7 @@ const Step2Cmd: Page = () => (
     cmd={`clusterctl init --core cluster-api:v1.13.4 \\
   --bootstrap kubeadm:v1.13.4 \\
   --control-plane kubeadm:v1.13.4 \\
-  --infrastructure docker:v1.14.0
-# 版本寫死：讀會前預載的本地定義檔，全程不需要網路`}
+  --infrastructure docker:v1.14.0`}
     expect="看到 initialized successfully；約 2–3 分鐘" />
 );
 const Step2Replay: Page = () => (
