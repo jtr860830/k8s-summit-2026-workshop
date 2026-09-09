@@ -1,0 +1,103 @@
+# In-place update extension: namespace + RBAC + Deployment + Service
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: inplace-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: inplace-ext
+  namespace: inplace-system
+---
+# Least privilege: nodes must be cluster-scoped (cordon, read state); jobs stay in this namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: inplace-ext-nodes
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: inplace-ext-nodes
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: inplace-ext-nodes
+subjects:
+  - kind: ServiceAccount
+    name: inplace-ext
+    namespace: inplace-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: inplace-ext-jobs
+  namespace: inplace-system
+rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: inplace-ext-jobs
+  namespace: inplace-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: inplace-ext-jobs
+subjects:
+  - kind: ServiceAccount
+    name: inplace-ext
+    namespace: inplace-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inplace-ext
+  namespace: inplace-system
+  labels: {app: inplace-ext}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: inplace-ext}
+  template:
+    metadata:
+      labels: {app: inplace-ext}
+    spec:
+      serviceAccountName: inplace-ext
+      containers:
+        - name: extension
+          # Replace with the image you built and pushed (see README); pin by digest in production
+          image: ttl.sh/inplace-update-ext:24h
+          imagePullPolicy: IfNotPresent
+          args:
+            - --cert-dir=/certs
+            # HTTP server hosting kubernetes-<version>-x86-64.raw sysext images
+            - --artifacts-url=http://172.16.90.4:7173
+            - --job-namespace=inplace-system
+          ports:
+            - containerPort: 9443
+          volumeMounts:
+            - {name: certs, mountPath: /certs, readOnly: true}
+      volumes:
+        - name: certs
+          secret:
+            secretName: inplace-ext-cert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inplace-ext
+  namespace: inplace-system
+spec:
+  selector: {app: inplace-ext}
+  ports:
+    - port: 443
+      targetPort: 9443

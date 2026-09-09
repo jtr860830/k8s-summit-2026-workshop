@@ -38,6 +38,7 @@ cd k8s-summit-2026-workshop
 | `labs/02-kro/` | 第二幕：kro 自助服務 —— 一個物件開出一個叢集 |
 | `labs/checkpoints/` | 各段落的追趕腳本 |
 | `rgd/` | 工作坊版 `WorkloadCluster` 平台 API（kro ResourceGraphDefinition） |
+| `inplace-update/` | demo③ 的 Cluster API in-place update extension（Go），含部署 manifests |
 | `slides/` | 簡報 |
 | `instructor/` | 講師用：示範 runbook 與時間表（學員不需閱讀） |
 

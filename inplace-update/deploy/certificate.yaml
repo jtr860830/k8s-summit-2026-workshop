@@ -1,0 +1,22 @@
+# Serving certificate for the extension (cert-manager is already installed by clusterctl init)
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: inplace-selfsigned
+  namespace: inplace-system
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: inplace-ext-cert
+  namespace: inplace-system
+spec:
+  secretName: inplace-ext-cert
+  dnsNames:
+    - inplace-ext.inplace-system.svc
+    - inplace-ext.inplace-system.svc.cluster.local
+  issuerRef:
+    name: inplace-selfsigned
+    kind: Issuer

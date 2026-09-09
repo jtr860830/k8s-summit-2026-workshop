@@ -1,0 +1,15 @@
+# Register the extension with Cluster API (RuntimeSDK and InPlaceUpdates feature gates must be on)
+# inject-ca-from-secret: cert-manager injects the CA bundle into clientConfig.caBundle
+apiVersion: runtime.cluster.x-k8s.io/v1alpha1
+kind: ExtensionConfig
+metadata:
+  name: inplace-updater
+  annotations:
+    runtime.cluster.x-k8s.io/inject-ca-from-secret: inplace-system/inplace-ext-cert
+spec:
+  clientConfig:
+    service:
+      name: inplace-ext
+      namespace: inplace-system
+      port: 443
+  namespaceSelector: {}
