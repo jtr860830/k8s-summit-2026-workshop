@@ -330,19 +330,19 @@ const D0Intro: Page = () => (
 
 const D0Prereq: Page = () => (
   <Light eyebrow="DAY-0 · 開工前" title="機房最低配備">
-    <div style={{ display: 'flex', gap: 24 }}>
-      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
-        <div style={{ fontSize: 29, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 16 }}>需要</div>
-        <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65 }}>
+    <div style={{ display: 'flex', gap: 40, marginTop: 10 }}>
+      <div style={{ flex: 1, background: '#fff', border: '2px solid var(--osd-accent)', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
+        <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 26 }}>需要</div>
+        <ul style={{ fontSize: 36, paddingLeft: 44, margin: 0, lineHeight: 1.9 }}>
           <li>一個 L2 網段當裝機網段</li>
           <li>機房既有的 DHCP</li>
           <li>一台 Linux 當起始機，接外網與裝機網段</li>
           <li>要納管的伺服器支援網路開機</li>
         </ul>
       </div>
-      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 32px' }}>
-        <div style={{ fontSize: 29, fontWeight: 800, marginBottom: 16 }}>不需要</div>
-        <ul style={{ fontSize: 29, paddingLeft: 36, margin: 0, lineHeight: 1.65, color: '#5a5148' }}>
+      <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '40px 48px' }}>
+        <div style={{ fontSize: 36, fontWeight: 800, marginBottom: 26 }}>不需要</div>
+        <ul style={{ fontSize: 36, paddingLeft: 44, margin: 0, lineHeight: 1.9, color: '#5a5148' }}>
           <li>BMC</li>
           <li>既有的 Kubernetes</li>
           <li>共享儲存、特殊交換器功能</li>
