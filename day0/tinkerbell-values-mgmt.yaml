@@ -1,10 +1,10 @@
-# Tinkerbell 安裝設定 — 管理叢集版（day-0 第 9 步：pivot 自我承載）
-# 與 seed 版差異：
-# - VIP 先用 .6/.7 暫代（seed 還在服役，正宮 .3/.4 交接時再換 — helm upgrade 即可）
-# - sourceInterface=eth0（Flatcar 節點的網卡名）
-# - hookos 檔案目錄改 /opt/hook（Flatcar 的 /tmp 是 tmpfs，重開機就消失）
+# Tinkerbell values for the management cluster (day-0 step 9: pivot to self-hosting)
+# Differences from the seed values:
+# - VIPs temporarily .6/.7 (the seed still owns .3/.4; switch with helm upgrade at handover)
+# - sourceInterface=eth0 (NIC name on Flatcar nodes)
+# - hookos artifacts under /opt/hook (Flatcar's /tmp is tmpfs and is lost on reboot)
 publicIP: 172.16.91.6
-trustedProxies: ["10.44.0.0/16"]   # 管理叢集 pod 網段
+trustedProxies: ["10.44.0.0/16"]   # management cluster pod CIDR
 artifactsFileServer: http://172.16.91.7:7173
 
 deployment:
@@ -23,7 +23,7 @@ deployment:
     tinkServer:
       autoDiscoveryEnabled: true
       autoDiscoveryNamespace: tinkerbell
-      autoEnrollmentEnabled: false   # 交接完成前不在 mgmt 上開自動裝機
+      autoEnrollmentEnabled: false   # keep auto-enrollment off on mgmt until handover is complete
 
 optional:
   kubevip:

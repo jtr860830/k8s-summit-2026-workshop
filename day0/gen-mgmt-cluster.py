@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""day-0 第 8 步（其二）：產生管理叢集的 Cluster API 定義（Flatcar 路徑）。
+"""day-0 step 8 (part 2): generate the Cluster API definition for the management cluster (Flatcar path).
 
-與 CAPT 原生路徑的差異：
-- TinkerbellCluster.spec.templateOverride = 我們的 Flatcar 安裝流程
-  （image2disk → 寫 OEM stub → 回報後重開機）
-- KubeadmControlPlane 的 format: ignition —— bootstrap 設定用 Ignition 格式產生
-- kube-vip 用靜態 Pod manifest 提供控制平面 VIP（Flatcar 跑不了
-  CAPT 預設的 ctr 生成指令），先用 super-admin.conf 避開 kubeadm 1.29+
-  的權限死鎖，裝完再換回 admin.conf
+Differences from the stock CAPT path:
+- TinkerbellCluster.spec.templateOverride = our Flatcar install workflow
+  (image2disk -> write OEM stub -> report, then reboot)
+- KubeadmControlPlane uses format: ignition, so bootstrap data is rendered as Ignition
+- kube-vip runs as a static Pod manifest for the control-plane VIP (Flatcar cannot run
+  the ctr command CAPT generates by default); it starts on super-admin.conf to dodge the
+  kubeadm 1.29+ RBAC deadlock and is switched back to admin.conf after install
 
-用法: python3 gen-mgmt-cluster.py <name> <replicas> <oem-stub.json 路徑> <ssh 公鑰> | kubectl apply -f -
+Usage: python3 gen-mgmt-cluster.py <name> <replicas> <path to oem-stub.json> <ssh pubkey> | kubectl apply -f -
 """
 import sys
 import yaml
@@ -42,7 +42,7 @@ override_inner = {
                 },
             },
             {
-                # Flatcar 的 OEM 分割區是 /dev/sda6（btrfs），開機讀 config.ign
+                # Flatcar's OEM partition is /dev/sda6 (btrfs); config.ign is read at boot
                 "name": "write-oem-stub",
                 "image": "quay.io/tinkerbell/actions/writefile:latest",
                 "timeout": 90,
@@ -60,7 +60,7 @@ override_inner = {
                 "timeout": 90,
                 "pid": "host",
                 "command": ["reboot"],
-                # 45 秒：等 controller 先關掉這台的 PXE 再重開（10 秒會輸掉競態）
+                # 45 s: give the controller time to disable PXE for this host before rebooting (10 s loses the race)
                 "environment": {"IMAGE": "alpine", "WAIT_SECONDS": "45"},
                 "volumes": ["/var/run/docker.sock:/var/run/docker.sock"],
             },
@@ -116,14 +116,14 @@ kubeadm_config_spec = {
         "content": KUBE_VIP_MANIFEST,
     }],
     "preKubeadmCommands": [
-        # kube-vip 在 VIP 未就緒時會退到 https://kubernetes:6443 ——
-        # 原廠 Flatcar 沒有這條 hosts 紀錄，要自己補
+        # kube-vip falls back to https://kubernetes:6443 while the VIP is not up;
+        # stock Flatcar has no such hosts entry, so add it
         "grep -q ' kubernetes' /etc/hosts || echo '127.0.0.1 kubernetes' >> /etc/hosts",
         "kubeadm config images pull",
     ],
     "postKubeadmCommands": [
         "sed -i 's#path: /etc/kubernetes/super-admin.conf#path: /etc/kubernetes/admin.conf#' /etc/kubernetes/manifests/kube-vip.yaml || true",
-        # join 節點沒有 super-admin.conf，kubelet 會建出空目錄，之後憑證換發會炸
+        # joining nodes have no super-admin.conf; kubelet creates an empty directory that breaks later cert renewal
         "[ -d /etc/kubernetes/super-admin.conf ] && rmdir /etc/kubernetes/super-admin.conf || true",
     ],
     "users": [{"name": "debug", "sshAuthorizedKeys": [PUB], "sudo": "ALL=(ALL) NOPASSWD:ALL"}],

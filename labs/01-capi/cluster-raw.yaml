@@ -1,6 +1,6 @@
 # ============================================================================
-# 第一幕：這就是「一個 Kubernetes 叢集」的原始定義 —— 請先感受一下它的份量。
-# 七個物件、環環相扣的名稱引用。第二幕我們會把它變成 6 行。
+# Act 1: this is the raw definition of one Kubernetes cluster. Take in the size of it.
+# Seven objects, chained by name references. Act 2 turns it into 6 lines.
 # ============================================================================
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
@@ -39,7 +39,7 @@ metadata:
 spec:
   template:
     spec:
-      # 指定 tag 引用：不指定時 CAPD 會用帶 digest 的引用去拉，離線環境會失敗
+      # Pin by tag: without it CAPD pulls by digest, which fails offline
       customImage: kindest/node:v1.34.0
       extraMounts:
         - containerPath: /var/run/docker.sock
@@ -67,7 +67,7 @@ spec:
           enable-hostpath-provisioner: "true"
     initConfiguration:
       nodeRegistration:
-        # 離線必要：kubeadm preflight 會嘗試拉 pause 映像檔的新小版（本地已有可用版）
+        # Required offline: kubeadm preflight tries to pull a newer pause image (a usable one is already local)
         ignorePreflightErrors: [ImagePull]
     joinConfiguration:
       nodeRegistration:

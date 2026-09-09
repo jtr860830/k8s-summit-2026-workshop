@@ -115,7 +115,7 @@ const Logo = ({ height = 84 }: { height?: number }) => (
   </div>
 );
 
-/* ── 01 封面 ─────────────────────────────────────────── */
+/* ── 01 Cover ─────────────────────────────────────────── */
 const Cover: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative' }}>
     <div style={{ position: 'absolute', right: 160, bottom: 88 }}><Logo height={120} /></div>
@@ -132,7 +132,7 @@ const Cover: Page = () => (
   </div>
 );
 
-/* ── 02 開場約定 ─────────────────────────────────────── */
+/* ── 02 Agenda ────────────────────────────────────────── */
 
 /* ── 02b Agenda ──────────────────────────────────────── */
 const AgendaRow = ({ time, name, world }: { time: string; name: string; world?: World }) => (
@@ -168,7 +168,7 @@ const Thesis: Page = () => (
   </div>
 );
 
-/* ── 03a 主張 ────────────────────────────────────────── */
+/* ── 03a Claim ────────────────────────────────────────── */
 const Claim: Page = () => (
   <Dark eyebrow="THESIS" title="用 K8s 管理整個基礎設施">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -179,7 +179,7 @@ const Claim: Page = () => (
   </Dark>
 );
 
-/* ── 04 在地優勢 ─────────────────────────────────────── */
+/* ── 04 Why now ───────────────────────────────────────── */
 const WhiteBox: Page = () => (
   <Light eyebrow="WHY NOW" title="從裸機到儲存，每一層都有成熟的開源專案">
     <div style={{ display: 'flex', gap: 40, alignItems: 'stretch', fontSize: 34, marginTop: 8 }}>
@@ -197,7 +197,7 @@ const WhiteBox: Page = () => (
   </Light>
 );
 
-/* ── 05 Pod 哲學系譜 ─────────────────────────────────── */
+/* ── 05 Reconcile by replacement ──────────────────────── */
 const Lineage: Page = () => (
   <Light eyebrow="RECONCILE BY REPLACEMENT" title="壞了不修，直接換 —— 從 Pod 到裸機">
     <div style={{ display: 'flex', gap: 40, fontSize: 34, marginTop: 8 }}>
@@ -219,7 +219,7 @@ const Lineage: Page = () => (
   </Light>
 );
 
-/* ── 06 架構全景 ─────────────────────────────────────── */
+/* ── 06 Architecture ──────────────────────────────────── */
 const LayerRow = ({ name, tool, depth }: { name: string; tool: string; depth: number }) => (
   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 1180,
     background: `rgba(38,38,38,${0.03 + depth * 0.035})`, border: '1px solid #e0d8d3', borderRadius: 8, padding: '18px 40px' }}>
@@ -241,7 +241,7 @@ const Architecture: Page = () => (
   </Light>
 );
 
-/* ── 06b 名詞 ────────────────────────────────────────── */
+/* ── 06b Glossary ─────────────────────────────────────── */
 const GBox = ({ title, sub, accent = false, children }: { title: string; sub?: string; accent?: boolean; children?: React.ReactNode }) => (
   <div style={{ background: '#fff', border: accent ? '2px solid var(--osd-accent)' : '1px solid #e8e2df', borderRadius: 10, padding: '14px 20px', textAlign: 'center' }}>
     <div style={{ fontSize: 34, fontWeight: 800, fontFamily: mono, color: accent ? 'var(--osd-accent)' : undefined }}>{title}</div>
@@ -289,7 +289,7 @@ const GlossaryTerms: Page = () => (
   </Light>
 );
 
-/* ── 07 選型原則 ─────────────────────────────────────── */
+/* ── 07 Principles ────────────────────────────────────── */
 const Principles: Page = () => (
   <Light eyebrow="選型原則" title="不被任何元件綁死">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
@@ -300,7 +300,7 @@ const Principles: Page = () => (
   </Light>
 );
 
-/* ── 07a2 建置步驟 ───────────────────────────────────── */
+/* ── 07a2 Day-0 overview ──────────────────────────────── */
 const D0Phase = ({ title, steps }: { title: string; steps: [string, string][] }) => (
   <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '26px 30px' }}>
     <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 18 }}>{title}</div>
@@ -356,7 +356,7 @@ const D0Prereq: Page = () => (
   </Light>
 );
 
-/* ── DAY-0 九組：指令頁 + 真實錄製重播頁 ─────────────── */
+/* ── DAY-0 nine steps: command page + recorded replay page ─ */
 const d0s1Lines: RLine[] = [
   { t: 0.5, text: 'curl -sfL https://get.k3s.io | sh -s - --disable traefik --disable servicelb', kind: 'cmd' },
   { t: 1.6, text: '[INFO]  Finding release for channel stable\n[INFO]  Using v1.36.3+k3s1 as release' },
@@ -490,7 +490,7 @@ const D0S6Replay: Page = () => (
   <ReplayPage world="demo" title="DAY-0 · 第 6 步 —— 插電，然後看著（實錄 5.5 分鐘）" lines={d0s6Lines} />
 );
 
-/* ── 第一幕 → day-0 後三步 過場 ─────────────────────── */
+/* ── Act 1 -> day-0 steps 7-9 transition ──────────────── */
 const PairRow = ({ you, me }: { you: string; me: string }) => (
   <div style={{ display: 'flex', gap: 20 }}>
     <div style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10, padding: '18px 26px', fontSize: 29, lineHeight: 1.45 }}>{you}</div>
@@ -593,7 +593,7 @@ const D0S9Replay: Page = () => (
   <ReplayPage world="demo" title="DAY-0 · 第 9 步 —— 實際執行過程" lines={d0s9Lines} />
 );
 
-/* ── 07b Tinkerbell 建置 ─────────────────────────────── */
+/* ── 07b Tinkerbell stack ─────────────────────────────── */
 const TinkRow = ({ name, role }: { name: string; role: string }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 28, background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '17px 30px' }}>
     <div style={{ width: 300, fontFamily: mono, fontSize: 30, fontWeight: 700, color: 'var(--osd-accent)' }}>{name}</div>
@@ -616,7 +616,7 @@ const TinkerbellStack: Page = () => (
   </Light>
 );
 
-/* ── 07c 上架流程 ────────────────────────────────────── */
+/* ── 07c Enrollment flow ──────────────────────────────── */
 const FlowStep = ({ n, text }: { n: string; text: string }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
     <div style={{ width: 56, height: 56, borderRadius: 28, background: 'var(--osd-accent)', color: '#fff', fontSize: 30, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
@@ -636,7 +636,7 @@ const EnrollFlow: Page = () => (
   </Light>
 );
 
-/* ── 03b 步驟 0：環境就緒 ────────────────────────────── */
+/* ── 03b Step 0: environment check ────────────────────── */
 const step0Lines: RLine[] = [
   { t: 0.5, text: 'cd k8s-summit-2026-workshop && ./setup/setup.sh', kind: 'cmd' },
   { t: 1.5, text: '==> 檢查 Docker\n ✓ CPU：4 核\n ✓ 記憶體：8 GB' },
@@ -659,7 +659,7 @@ const Step0Replay: Page = () => (
   <ReplayPage world="lab" title="開始動手前 —— 環境驗證" lines={step0Lines} />
 );
 
-/* ── 08 demo① 過場 ───────────────────────────────────── */
+/* ── 08 Demo 1 intro ──────────────────────────────────── */
 const Demo1: Page = () => (
   <Dark eyebrow="DEMO ①" title="插電，然後看著它自己上架" world="demo">
     <ul style={{ fontSize: 42, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -670,7 +670,7 @@ const Demo1: Page = () => (
   </Dark>
 );
 
-/* ── 09 Tinkerbell 原理 ──────────────────────────────── */
+/* ── 09 PXE ───────────────────────────────────────────── */
 const HowPxe: Page = () => (
   <Light eyebrow="它是怎麼辦到的" title="PXE：韌體內建的網路開機機制">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
@@ -683,7 +683,7 @@ const HowPxe: Page = () => (
   </Light>
 );
 
-/* ── 10 第一幕指引 ───────────────────────────────────── */
+/* ── 10 Act 1 guide ───────────────────────────────────── */
 const Act1Guide: Page = () => (
   <Light eyebrow="HANDS-ON · 第一幕（約 20 分鐘）" title="純 Cluster API：先看 200 行長什麼樣" world="lab" hint={LAB_HINT['第一幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
@@ -711,7 +711,7 @@ less labs/01-capi/README.md   # 跟著走
 );
 
 
-/* ── 終端重播元件 ────────────────────────────────────── */
+/* ── Terminal replay component ────────────────────────── */
 type RLine = { t: number; text: string; kind?: 'cmd' | 'ok' | 'frame' };
 
 const TerminalReplay = ({ lines, title, speed = 1 }: { lines: RLine[]; title: string; speed?: number }) => {
@@ -761,7 +761,7 @@ const ReplayPage = ({ world, title, lines }: { world: World; title: string; line
   </div>
 );
 
-/* ── 完整錄製檔頁（存證用，簡報時快速帶過）───────────── */
+/* ── Raw recording pages (evidence; skipped quickly) ─── */
 const RawLog = ({ k, title }: { k: string; title: string }) => (
   <div style={{ ...fill, background: darkBg, padding: '56px 80px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 20 }}>
@@ -825,7 +825,7 @@ const StepCmd = ({ act, step, total, title, cmd, expect }: { act: string; step: 
   );
 };
 
-// 真實輸出（2026-08-25 錄於驗收機；時間軸壓縮為演講節奏，雜訊行已剪）
+// Real output (recorded 2026-08-25 on the acceptance machine; timeline compressed for talk pacing, noise lines trimmed)
 const step1Lines: RLine[] = [
   { t: 0.5, text: 'kind create cluster --config labs/01-capi/kind-mgmt.yaml --name mgmt', kind: 'cmd' },
   { t: 1.2, text: 'Creating cluster "mgmt" ...' },
@@ -1002,7 +1002,7 @@ const Step6Replay: Page = () => (
   <ReplayPage world="lab" title="第一幕 · 步驟 6 —— 參考輸出（會前錄製）" lines={step6Lines} />
 );
 
-/* ── 11 第一幕回收 ───────────────────────────────────── */
+/* ── 11 Act 1 recap ───────────────────────────────────── */
 const Act1Recap: Page = () => (
   <Light eyebrow="第一幕 · 你剛剛做了什麼" title="好用，但也真的很囉唆">
     <div style={{ display: 'flex', gap: 48 }}>
@@ -1029,7 +1029,7 @@ const Act1Recap: Page = () => (
   </Light>
 );
 
-/* ── 12 第二幕過場 ───────────────────────────────────── */
+/* ── 12 Act 2 intro ───────────────────────────────────── */
 const Act2Intro: Page = () => (
   <Dark eyebrow="第二幕" title={<>把 200 行，變成 6 行</>}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'center' }}>
@@ -1047,7 +1047,7 @@ spec: {}`}</Code>
   </Dark>
 );
 
-/* ── 13 四層 API 設計 ────────────────────────────────── */
+/* ── 13 Four-layer API design ─────────────────────────── */
 const FourLayer = ({ n, name, desc }: { n: string; name: string; desc: string }) => (
   <div style={{ display: 'flex', gap: 26, alignItems: 'center', background: '#fff', border: '1px solid #e8e2df', borderRadius: 10, padding: '20px 32px' }}>
     <div style={{ fontFamily: mono, fontSize: 40, fontWeight: 800, color: 'var(--osd-accent)', width: 60 }}>{n}</div>
@@ -1067,7 +1067,7 @@ const FourLayers: Page = () => (
   </Light>
 );
 
-/* ── 14 第二幕指引 ───────────────────────────────────── */
+/* ── 14 Act 2 guide ───────────────────────────────────── */
 const Act2Guide: Page = () => (
   <Light eyebrow="HANDS-ON · 第二幕（約 25 分鐘）" title="kro 自助服務：三種角色輪流當" world="lab" hint={LAB_HINT['第二幕']}>
     <div style={{ display: 'flex', gap: 56, alignItems: 'flex-start' }}>
@@ -1237,7 +1237,7 @@ const A2S7Replay: Page = () => (
   <ReplayPage world="lab" title="第二幕 · 步驟 7 —— 參考輸出（會前錄製）" lines={a2s7Lines} />
 );
 
-/* ── 15 第二幕回收 ───────────────────────────────────── */
+/* ── 15 Act 2 recap ───────────────────────────────────── */
 const Act2Recap: Page = () => (
   <Light eyebrow="第二幕 · 你剛剛做了什麼" title="你在 K8s 裡加了一個新的 API">
     <ul style={{ fontSize: 'var(--osd-size-body)', paddingLeft: 46, margin: 0 }}>
@@ -1252,7 +1252,7 @@ const Act2Recap: Page = () => (
   </Light>
 );
 
-/* ── 16 demo② 過場 ───────────────────────────────────── */
+/* ── 16 Demo 2 intro ──────────────────────────────────── */
 const Demo2: Page = () => (
   <Dark eyebrow="DEMO ②" title="重灌一台節點，資料一個位元都不少" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -1265,7 +1265,7 @@ const Demo2: Page = () => (
   </Dark>
 );
 
-/* ── 16b demo② 指令與錄製 ────────────────────────────── */
+/* ── 16b Demo 2 command + recording ───────────────────── */
 const D2Cmd: Page = () => (
   <StepCmd act="DEMO ② · 重灌保資料" step={1} total={1} title="刪掉一台正在承載 Ceph 的節點"
     cmd={`# 先記下資料檔的 sha256 與 Ceph fsid
@@ -1299,7 +1299,7 @@ const D2Replay: Page = () => (
 );
 const RawD2: Page = () => <RawLog k="d2" title="DEMO ② · 重灌保資料" />;
 
-/* ── 17 demo③ 過場 ───────────────────────────────────── */
+/* ── 17 Demo 3 intro ──────────────────────────────────── */
 const Demo3: Page = () => (
   <Dark eyebrow="DEMO ③" title="升級 Kubernetes，機器不用重開機" world="demo">
     <ul style={{ fontSize: 40, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -1312,7 +1312,7 @@ const Demo3: Page = () => (
   </Dark>
 );
 
-/* ── 17b demo③ 指令與錄製 ────────────────────────────── */
+/* ── 17b Demo 3 command + recording ───────────────────── */
 const D3Cmd: Page = () => (
   <StepCmd act="DEMO ③ · 免重開升級" step={1} total={1} title="升級 Kubernetes，只改一個欄位"
     cmd={`kubectl patch kubeadmcontrolplane mgmt-cp \\
@@ -1357,7 +1357,7 @@ const D3NodeReplay: Page = () => (
   <ReplayPage world="demo" title="DEMO ③ · 節點內部視角 —— sysext 換版 + kubeadm 升級實錄" lines={d3jLines} />
 );
 
-/* ── day-0 章節收束：自舉與角色 ──────────────────────── */
+/* ── Day-0 wrap-up: bootstrap and roles ───────────────── */
 const BootstrapFull: Page = () => (
   <Dark eyebrow="DAY-0 · 收束" title="起始機做了什麼、沒做什麼">
     <ul style={{ fontSize: 38, paddingLeft: 46, margin: 0, color: '#f0f0f0' }}>
@@ -1391,7 +1391,7 @@ const RoleDecision: Page = () => (
   </Light>
 );
 
-/* ── 池策略（Roadmap 前橋接頁）─────────────────────────── */
+/* ── Pool policy ──────────────────────────────────────── */
 const PoolPolicy: Page = () => (
   <Light eyebrow="DAY-0 · 收束" title="資源池的兩種待命方式">
     <div style={{ display: 'flex', gap: 24, marginBottom: 26 }}>
@@ -1418,7 +1418,7 @@ const PoolPolicy: Page = () => (
   </Light>
 );
 
-/* ── 21 前沿稅 ───────────────────────────────────────── */
+/* ── 21 Ecosystem ─────────────────────────────────────── */
 
 const Ecosystem: Page = () => (
   <Dark eyebrow="這條路換到什麼" title="都是 K8s 物件之後，現有工具直接能用">
@@ -1446,7 +1446,7 @@ const Roadmap: Page = () => (
   </Light>
 );
 
-/* ── 23b 開源致謝 ────────────────────────────────────── */
+/* ── 23b Open source credits ──────────────────────────── */
 const CreditCol = ({ title, items }: { title: string; items: string[] }) => (
   <div style={{ flex: 1 }}>
     <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--osd-accent)', marginBottom: 14 }}>{title}</div>
@@ -1482,7 +1482,7 @@ const OpenSourceCredits: Page = () => (
   </Light>
 );
 
-/* ── 24 封底 ─────────────────────────────────────────── */
+/* ── 24 Closing ───────────────────────────────────────── */
 const Thanks: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 140, fontWeight: 800, margin: 0 }}>謝謝</h1>
@@ -1521,7 +1521,7 @@ export default [
   Ecosystem, Roadmap, OpenSourceCredits, Thanks,
 ] satisfies Page[];
 
-// 講者備忘：與上方頁面陣列同索引（簡報者模式按 P）
+// Speaker notes: index-aligned with the pages array above (presenter mode, press P)
 const R = N.RAW_NOTE;
 export const notes: string[] = [
   N.nCover, N.nAgenda,

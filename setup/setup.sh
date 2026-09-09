@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# 工作坊一鍵準備腳本：檢查工具鏈 → 預拉全部映像檔 → 產生離線快取 → 自我驗證
-# 成功結尾會輸出 SETUP-OK；請務必在工作坊前跑到看見它。
+# One-shot workshop prep: check the toolchain -> pre-pull all images -> build the offline cache -> self-check
+# Prints SETUP-OK on success; make sure you see it before the workshop.
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./versions.env
 
-# sudo 執行時快取仍放原使用者家目錄（否則之後 kind load 找不到）
+# Under sudo, keep the cache in the invoking user's home (kind load looks there later)
 REAL_HOME="${HOME}"
 [ -n "${SUDO_USER:-}" ] && REAL_HOME=$(eval echo "~${SUDO_USER}")
 CACHE_DIR="${REAL_HOME}/.summit-workshop"
@@ -74,11 +74,11 @@ done
 [ "${FAIL}" = 1 ] && { echo "有映像檔拉取失敗 —— 檢查網路後重跑（已成功的不會重拉）。"; exit 1; }
 
 say "產生離線快取（${CACHE_DIR}/images.tar）"
-# --platform 必要：新版 Docker（containerd 映像庫）的 save 會夾帶缺 blob 的
-# attestation manifest，之後 kind load 會以「digest not found」失敗
+# --platform is required: newer Docker (containerd image store) saves attestation manifests
+# with missing blobs, and kind load then fails with "digest not found"
 ARCH=$(docker version --format '{{.Server.Arch}}')
 docker save --platform "linux/${ARCH}" -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}" 2>/dev/null \
-  || docker save -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}"   # 舊版 Docker 無此 flag、也無此問題
+  || docker save -o "${CACHE_DIR}/images.tar" "${IMAGES[@]}"   # older Docker has no such flag and no such problem
 good "$(du -h "${CACHE_DIR}/images.tar" | cut -f1) 已存檔"
 
 say "預載 Cluster API provider 定義（離線 clusterctl init 用）"
@@ -99,7 +99,7 @@ curl -fsSLo "${REPO}/infrastructure-docker/${CAPD_VERSION}/metadata.yaml"       
 curl -fsSLo "${REPO}/cert-manager/${CERT_MANAGER_VERSION}/cert-manager.yaml" \
   "https://github.com/cert-manager/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml"
 
-# clusterctl 設定：providers 全部指向本地檔案（file://），init 就完全不需要網路
+# clusterctl config: every provider points at a local file:// so init needs no network
 mkdir -p "${REAL_HOME}/.config/cluster-api"
 cat > "${REAL_HOME}/.config/cluster-api/clusterctl.yaml" <<CLUSTERCTL_EOF
 cert-manager:

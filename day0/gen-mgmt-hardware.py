@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""day-0 第 8 步（其一）：產生管理節點的 Hardware。
+"""day-0 step 8 (part 1): generate the Hardware object for a management node.
 
-管理節點不走 match-all 上架規則，而是預先登記：固定 IP、貼上角色標籤，
-讓 CAPT 之後用標籤挑機器（hardwareAffinity）。
+Management nodes skip the match-all enrollment rule and are pre-registered instead:
+fixed IP plus a role label, so CAPT can pick them by label (hardwareAffinity).
 
-用法: python3 gen-mgmt-hardware.py <idx:1-3> <mac> | kubectl apply -f -
-IP/主機名由 idx 推導（172.16.91.2X / mgmt-X），需與 DHCP 靜態租約一致
-（tootles 按來源 IP 配對開機設定，三方視圖必須對齊）。
+Usage: python3 gen-mgmt-hardware.py <idx:1-3> <mac> | kubectl apply -f -
+IP/hostname derive from idx (172.16.91.2X / mgmt-X) and must match the DHCP static lease
+(tootles matches boot config by source IP, so all three views have to agree).
 """
 import sys
 import yaml
@@ -21,10 +21,10 @@ hw = {
         "labels": {"day0/role": "mgmt"},
     },
     "spec": {
-        # agentID 必要：tink-server 以此配對 agent，缺了會被 auto-discovery
-        # 當成新機器再登記一次（同 MAC 重複 → smee 放棄回應）
+        # agentID is required: tink-server matches the agent on it; without it auto-discovery
+        # registers the host again as new (duplicate MAC -> smee stops answering)
         "agentID": mac,
-        # CAPT 必要：metadata.instance.id 會被當成 workflow 的 device_1
+        # Required by CAPT: metadata.instance.id becomes device_1 in the workflow
         "metadata": {
             "instance": {
                 "id": mac,

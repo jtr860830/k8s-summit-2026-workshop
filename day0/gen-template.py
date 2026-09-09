@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""day-0 第 4 步：產生安裝範本（Template）。
+"""day-0 step 4: generate the install Template.
 
-流程三個動作：把 OS 映像寫進磁碟 → 把 Ignition 設定寫進 OEM 分割區 → 重開機。
-worker 欄位用 "{{.worker_id}}" —— 由 WorkflowRuleSet 匹配到新機器時自動填入。
+Three actions: write the OS image to disk -> write the Ignition config to the OEM partition -> reboot.
+The worker field is "{{.worker_id}}", filled in by the WorkflowRuleSet when a new machine matches.
 
-用法: python3 gen-template.py <config.ign 路徑> | kubectl apply -f -
+Usage: python3 gen-template.py <path to config.ign> | kubectl apply -f -
 """
 import sys
 import yaml
@@ -33,7 +33,7 @@ template_inner = {
                 },
             },
             {
-                # Flatcar 的 OEM 分割區是 /dev/sda6（btrfs），開機時讀 config.ign
+                # Flatcar's OEM partition is /dev/sda6 (btrfs); config.ign is read at boot
                 "name": "write-ignition",
                 "image": "quay.io/tinkerbell/actions/writefile:latest",
                 "timeout": 90,
@@ -46,8 +46,8 @@ template_inner = {
                 },
             },
             {
-                # waitdaemon：先向 tink-server 回報完成、再重開機（否則回報不出去）
-                # 45 秒緩衝：留時間給「裝後收尾」把 allowPXE 關掉，重開機才會落到硬碟
+                # waitdaemon: report completion to tink-server first, then reboot (otherwise the report never leaves)
+                # 45 s buffer: gives the post-install step time to flip allowPXE off so the reboot lands on disk
                 "name": "reboot",
                 "image": "ghcr.io/jacobweinstock/waitdaemon:latest",
                 "timeout": 90,

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# 學員用（現場備援）：從 USB 備援包載入環境，效果等同跑過 setup.sh
-# 用法：./setup/load-from-usb.sh /path/to/usb-dir
+# For attendees (on-site fallback): load the environment from the USB bundle; equivalent to running setup.sh
+# Usage: ./setup/load-from-usb.sh /path/to/usb-dir
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./versions.env

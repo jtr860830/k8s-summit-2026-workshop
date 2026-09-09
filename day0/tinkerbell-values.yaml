@@ -1,36 +1,36 @@
-# Tinkerbell 安裝設定（day-0 建置第 2 步）
-# 環境假設：裝機網段 172.16.91.0/24、本機第二張網卡 ens19 接在該網段、
-# 機房既有 DHCP 照常發 IP（Tinkerbell 只補充開機資訊，不搶位）
+# Tinkerbell values (day-0 step 2)
+# Assumptions: provisioning network 172.16.91.0/24, second NIC ens19 on that network,
+# the existing DHCP server keeps handing out IPs (Tinkerbell only adds boot info)
 
-publicIP: 172.16.91.3                       # Tinkerbell 本體（DHCP 應答/TFTP/HTTP/gRPC）
-trustedProxies: ["10.42.0.0/16"]            # k3s 預設 pod 網段
+publicIP: 172.16.91.3                       # Tinkerbell itself (DHCP replies / TFTP / HTTP / gRPC)
+trustedProxies: ["10.42.0.0/16"]            # k3s default pod CIDR
 artifactsFileServer: http://172.16.91.4:7173
 
 deployment:
   init:
-    sourceInterface: ens19                  # 必填：收 PXE 廣播的網卡（預設會抓錯到出網卡）
+    sourceInterface: ens19                  # required: NIC that receives PXE broadcasts (default picks the uplink NIC)
   resources:
     limits:
       cpu: 500m
-      memory: 512Mi                         # 預設 128Mi 會被 OOM 反覆重啟（實測）
+      memory: 512Mi                         # default 128Mi gets OOM-killed repeatedly (observed)
     requests:
       cpu: 500m
       memory: 256Mi
   envs:
     smee:
-      # auto-proxy：已登記的機器走保留行為；未知機器 IP 由機房 DHCP 發、smee 只補開機資訊
+      # auto-proxy: registered hosts get reservations; unknown hosts get IPs from the site DHCP and smee only adds boot info
       dhcpMode: auto-proxy
     tinkServer:
-      autoDiscoveryEnabled: true            # 未知機器 → 自動建立 Hardware
+      autoDiscoveryEnabled: true            # unknown host -> Hardware created automatically
       autoDiscoveryNamespace: tinkerbell
-      autoEnrollmentEnabled: true           # 符合規則 → 自動觸發安裝
+      autoEnrollmentEnabled: true           # rule matched -> install triggered automatically
 
 optional:
   kubevip:
     interface: ens19
   osie:
     service:
-      loadBalancerIP: "172.16.91.4"         # HookOS 與 OS 映像的檔案伺服器
+      loadBalancerIP: "172.16.91.4"         # file server for HookOS and OS images
   hookos:
     arch: x86_64
     kernelVersion: "6.6"

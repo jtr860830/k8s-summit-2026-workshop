@@ -1,6 +1,6 @@
-// 講者講稿（簡報者模式按 P 顯示）。純文字、保留換行。
-// 每頁：可照念的口語講稿 → 【動作】切畫面或按扳機 → 【若被問】聽眾常問。
-// 時間表、demo 扳機時點、裁減順序見 instructor/script.md。
+// Speaker script (shown in presenter mode, press P). Plain text, newlines preserved.
+// Per page: spoken script -> 【動作】 screen switches / demo triggers -> 【若被問】 likely questions.
+// Timeline, demo trigger timing and cut order live in instructor/script.md.
 
 export const RAW_NOTE = '完整錄製檔，帶過。有人問細節時停在這頁往下捲。';
 

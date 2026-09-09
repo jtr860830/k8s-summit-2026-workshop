@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# 追趕腳本：一鍵到達「第二幕結束」狀態（kro + RGD 就緒，所有 instance 已拆）
-# 冪等；內部先確保第一幕終點。約需 7 分鐘。
+# Catch-up script: jump to the end-of-act-2 state (kro + RGD ready, all instances gone)
+# Idempotent; ensures the act-1 endpoint first. About 7 minutes.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 

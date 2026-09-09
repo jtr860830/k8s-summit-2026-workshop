@@ -1,7 +1,7 @@
-# day-0 第 5 步：上架規則（WorkflowRuleSet）
-# 新機器的 agent 回報硬體屬性 → 規則匹配 → tink-server 自動建 Workflow 裝機
-# 這裡先用 match-all（任何 MAC 都收）；正式環境可收斂成精準規則，
-# 例如只收特定機箱廠商：{"chassis": {"vendor": ["QEMU"]}}
+# day-0 step 5: enrollment rule (WorkflowRuleSet)
+# A new machine's agent reports hardware attributes -> rule matches -> tink-server creates a Workflow
+# This one is match-all (any MAC); production can narrow it, e.g. a single chassis vendor:
+# {"chassis": {"vendor": ["QEMU"]}}
 apiVersion: tinkerbell.org/v1alpha1
 kind: WorkflowRuleSet
 metadata:

@@ -1,6 +1,6 @@
-# day-0 第 4 步：新機器的最小 Ignition 設定（Butane 格式，人類可讀）
-# 用 butane 轉成 Ignition JSON 後嵌進安裝範本
-# @@SSH_PUBKEY@@ 換成你自己的公鑰
+# day-0 step 4: minimal Ignition config for a new machine (Butane format, human-readable)
+# Convert with butane to Ignition JSON and embed it in the install template
+# Replace @@SSH_PUBKEY@@ with your own public key
 variant: flatcar
 version: 1.1.0
 passwd:
@@ -15,7 +15,7 @@ storage:
       overwrite: true
       contents:
         inline: pool-node
-    # kubelet sysext：先放進資源池備著，之後轉正成 K8s 節點會用到
+    # kubelet sysext: staged now so the machine can become a K8s node later
     - path: /opt/extensions/kubernetes-v1.34.6-x86-64.raw
       mode: 0644
       contents:

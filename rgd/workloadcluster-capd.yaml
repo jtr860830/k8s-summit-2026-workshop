@@ -1,12 +1,12 @@
 # ============================================================================
-# 平台 API：WorkloadCluster —— 第一幕那 200 行的「產品化」版本
+# Platform API: WorkloadCluster, the productized version of the 200 lines from act 1
 #
-# 四層設計（與我們真實私有雲平台的 API 完全同構）：
-#   1. 頂層精簡：version / nodes / profile，全部有預設值
-#   2. advanced 選填：網段、kubelet 參數 —— 要調的人才需要知道
-#   3. object 逃生門：kubeletExtraArgs 原樣透傳到底層（錨點整段替換）
-#   4. 紀律鎖死：certSANs、hostpath-provisioner 等寫死在模板 ——
-#      schema 沒宣告的欄位，apply 時會被直接拒絕
+# Four-layer design (same shape as the API of our real private cloud):
+#   1. Minimal top level: version / nodes / profile, all with defaults
+#   2. Optional advanced: CIDRs, kubelet args; only people who tune them need to know
+#   3. Object pass-through: kubeletExtraArgs is forwarded verbatim (whole block replaced at the anchor)
+#   4. Locked down: certSANs, hostpath-provisioner and friends are fixed in the template;
+#      fields the schema does not declare are rejected at apply time
 # ============================================================================
 apiVersion: kro.run/v1alpha1
 kind: ResourceGraphDefinition
@@ -68,7 +68,7 @@ spec:
         spec:
           template:
             spec:
-              customImage: kindest/node:v1.34.0                    # 鎖死：平台指定節點映像
+              customImage: kindest/node:v1.34.0                    # locked: platform-chosen node image
               extraMounts:
                 - containerPath: /var/run/docker.sock
                   hostPath: /var/run/docker.sock
@@ -80,7 +80,7 @@ spec:
           name: ${schema.metadata.name}-control-plane
           namespace: default
         spec:
-          # D4 profile：ha → 3 台 control plane、single-node → 1 台
+          # profile: ha -> 3 control-plane nodes, single-node -> 1
           replicas: '${schema.spec.profile == "ha" ? 3 : 1}'
           machineTemplate:
             infrastructureRef:
@@ -91,14 +91,14 @@ spec:
           kubeadmConfigSpec:
             clusterConfiguration:
               apiServer:
-                certSANs: [localhost, 127.0.0.1, 0.0.0.0, host.docker.internal]   # 鎖死
+                certSANs: [localhost, 127.0.0.1, 0.0.0.0, host.docker.internal]   # locked
               controllerManager:
                 extraArgs:
-                  enable-hostpath-provisioner: "true"                              # 鎖死
+                  enable-hostpath-provisioner: "true"                              # locked
             initConfiguration:
               nodeRegistration:
-                ignorePreflightErrors: [ImagePull]                                 # 鎖死：離線環境
-                kubeletExtraArgs: ${schema.spec.advanced.kubeletExtraArgs}         # 逃生門
+                ignorePreflightErrors: [ImagePull]                                 # locked: offline environment
+                kubeletExtraArgs: ${schema.spec.advanced.kubeletExtraArgs}         # pass-through
             joinConfiguration:
               nodeRegistration:
                 ignorePreflightErrors: [ImagePull]
@@ -114,7 +114,7 @@ spec:
         spec:
           template:
             spec:
-              customImage: kindest/node:v1.34.0                    # 鎖死
+              customImage: kindest/node:v1.34.0                    # locked
     - id: bootstrapTemplate
       template:
         apiVersion: bootstrap.cluster.x-k8s.io/v1beta1

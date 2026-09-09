@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# 講師用：產生 USB 備援包（給現場沒完成前置作業的學員）
-# 內容：映像檔 tar、CAPI provider 離線倉庫、三平台工具 binary、kro chart、repo 快照、sha256 清單
-# 用法：./setup/offline-bundle.sh /path/to/usb-dir
+# For the instructor: build the USB fallback bundle (for attendees who did not finish the prerequisites)
+# Contents: image tar, CAPI provider offline repo, tool binaries for three platforms, kro chart, repo snapshot, sha256 list
+# Usage: ./setup/offline-bundle.sh /path/to/usb-dir
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./versions.env
@@ -11,7 +11,7 @@ mkdir -p "${OUT}/bin"/{linux-amd64,darwin-amd64,darwin-arm64}
 echo "==> 映像檔（沿用本機快取，缺少會先 pull）"
 IMAGES=("${KINDEST_NODE_IMAGE}" "${KRO_IMAGE}" "${CAPI_IMAGES[@]}")
 for img in "${IMAGES[@]}"; do docker image inspect "${img}" >/dev/null 2>&1 || docker pull -q "${img}"; done
-# Docker 29 的 containerd store 會把 attestation manifest 一起存進 tar，之後 kind load 會失敗 —— 指定平台
+# Docker 29's containerd store saves attestation manifests into the tar and kind load then fails; pin the platform
 ARCH=$(docker version --format '{{.Server.Arch}}')
 docker save --platform "linux/${ARCH}" -o "${OUT}/images.tar" "${IMAGES[@]}" 2>/dev/null \
   || docker save -o "${OUT}/images.tar" "${IMAGES[@]}"

@@ -1,5 +1,5 @@
-# 管理叢集：掛載 docker socket 是 CAPD 的硬前置 ——
-# CAPD controller 在叢集內，需透過這個 socket 請宿主的 Docker 開「機器」容器
+# Management cluster: mounting the docker socket is a hard requirement for CAPD.
+# The CAPD controller runs inside the cluster and uses this socket to ask the host's Docker for "machine" containers
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
