@@ -1495,7 +1495,7 @@ const Thanks: Page = () => (
     <p style={{ fontSize: 27, color: mutedDark, marginTop: 18 }}>
       會後在 Q&A 區或寬橋攤位，都找得到我 —— 歡迎來交流。
     </p>
-    <div style={{ position: 'absolute', bottom: 88 }}><Logo height={52} /></div>
+    <div style={{ marginTop: 84 }}><Logo height={52} /></div>
   </div>
 );
 
