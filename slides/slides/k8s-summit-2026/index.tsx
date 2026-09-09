@@ -1367,10 +1367,10 @@ const PoolPolicy: Page = () => (
 /* ── 21 Ecosystem ─────────────────────────────────────── */
 
 const Ecosystem: Page = () => (
-  <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用" world={undefined}>
-    <div style={{ display: 'flex', gap: 32, marginTop: 40 }}>
+  <Dark eyebrow="WHAT YOU GET" title="都是 K8s 物件之後，現有工具直接能用">
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, marginTop: 24 }}>
       {['GitOps', 'RBAC', 'Policy', '觀測'].map((t) => (
-        <div key={t} style={{ flex: 1, background: 'rgba(240,181,161,0.10)', border: '2px solid rgba(240,181,161,0.55)', borderRadius: 'var(--osd-radius)', padding: '84px 24px', textAlign: 'center', fontSize: 48, fontWeight: 800, color: '#f0b5a1' }}>{t}</div>
+        <div key={t} style={{ background: 'rgba(240,181,161,0.10)', border: '2px solid rgba(240,181,161,0.55)', borderRadius: 'var(--osd-radius)', height: 230, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 56, fontWeight: 800, color: '#f0b5a1' }}>{t}</div>
       ))}
     </div>
   </Dark>
