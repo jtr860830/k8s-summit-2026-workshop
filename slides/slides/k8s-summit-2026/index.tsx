@@ -1337,10 +1337,10 @@ const BootstrapFull: Page = () => (
   </Dark>
 );
 
-const RoleKnob = ({ q, a }: { q: string; a: string }) => (
-  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '64px 40px', textAlign: 'center' }}>
+const RoleKnob = ({ q, a }: { q: string; a: React.ReactNode }) => (
+  <div style={{ flex: 1, background: '#fff', border: '1px solid #e8e2df', borderRadius: 'var(--osd-radius)', padding: '64px 32px', textAlign: 'center' }}>
     <div style={{ fontSize: 34, fontWeight: 800, color: '#5a5148', marginBottom: 24 }}>{q}</div>
-    <div style={{ fontSize: 48, fontWeight: 800, color: 'var(--osd-accent)' }}>{a}</div>
+    <div style={{ fontSize: 42, fontWeight: 800, color: 'var(--osd-accent)', lineHeight: 1.3 }}>{a}</div>
   </div>
 );
 
@@ -1348,7 +1348,7 @@ const RoleDecision: Page = () => (
   <Light eyebrow="DAY-0 · WRAP-UP" title="一台機器的角色，是怎麼決定的">
     <div style={{ display: 'flex', gap: 36, marginTop: 30 }}>
       <RoleKnob q="哪一台？" a="標籤" />
-      <RoleKnob q="什麼角色？" a="誰建的 Machine" />
+      <RoleKnob q="什麼角色？" a={<>KubeadmControlPlane<br />MachineDeployment</>} />
       <RoleKnob q="幾台？" a="replicas" />
     </div>
   </Light>
