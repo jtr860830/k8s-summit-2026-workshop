@@ -570,7 +570,7 @@ const d0s9Lines: RLine[] = [
   { t: 18.4, text: '起始機已關 —— 平台管理著自己。day-0 完成', kind: 'ok' },
 ];
 const D0S9Cmd: Page = () => (
-  <StepCmd act="DAY-0 建置" step={9} total={9} title="pivot —— 平台開始管理自己"
+  <StepCmd act="DAY-0 建置" step={9} total={9} title="pivot —— 讓 management cluster 自我管理"
     cmd={`clusterctl move \\
   --to-kubeconfig mgmt.kubeconfig
 sudo systemctl stop k3s   # seed 停役`}
