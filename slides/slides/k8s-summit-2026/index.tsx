@@ -153,6 +153,16 @@ const About: Page = () => (
   </div>
 );
 
+/* ── 02a Links ─────────────────────────────────────────── */
+const Links: Page = () => (
+  <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
+    <Eyebrow dark>講義 · 簡報 · 教材</Eyebrow>
+    <p style={{ fontFamily: mono, fontSize: 132, fontWeight: 700, color: '#7ee787', margin: '40px 0 0', letterSpacing: '0.02em' }}>josh.tw/ks26</p>
+    <p style={{ fontSize: 34, color: mutedDark, marginTop: 48 }}>今天所有指令、設定檔和這份簡報都在這裡</p>
+    <Footer dark />
+  </div>
+);
+
 /* ── 02 Agenda ────────────────────────────────────────── */
 
 /* ── 02b Agenda ──────────────────────────────────────── */
@@ -1466,7 +1476,7 @@ export const meta: SlideMeta = {
 };
 
 export default [
-  Cover, About, Agenda,
+  Cover, About, Links, Agenda,
   Step0Cmd, Step0Replay, RawS0, Step1Cmd, Step1Replay, RawS1,
   Thesis, Claim, WhiteBox, Architecture, Glossary, GlossaryTerms,
   TinkerbellStack, EnrollFlow, HowPxe,
@@ -1486,7 +1496,7 @@ export default [
 const PUBLIC_DECK = import.meta.env.VITE_PUBLIC_DECK === '1';
 const R = N.RAW_NOTE;
 const allNotes: string[] = [
-  N.nCover, N.nAbout, N.nAgenda,
+  N.nCover, N.nAbout, N.nLinks, N.nAgenda,
   N.nStep0, N.nStep0, R, N.nStep1, N.nStep1, R,
   N.nThesis, N.nClaim, N.nWhiteBox, N.nArchitecture, N.nGlossary, N.nGlossaryTerms,
   N.nTinkerbellStack, N.nEnrollFlow, N.nHowPxe,
