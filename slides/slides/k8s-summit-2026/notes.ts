@@ -301,7 +301,7 @@ export const nA2S5 = `步驟 5，換角色，當破壞者。塞一個 certSANs �
 
 注意這不是 webhook 擋的，是這個欄位不在 schema 裡。使用者連碰都碰不到。`;
 
-export const nA2S6 = `步驟 6，但進階設定有入口。advanced.kubeletExtraArgs 原樣到底層 kubeadm，去 get kcp 可以看到 v 等於 2。
+export const nA2S6 = `步驟 6，進階設定的方式。advanced.kubeletExtraArgs 原樣到底層 kubeadm，去 get kcp 可以看到 v 等於 2。
 
 同時注意另一件事：控制平面開始滾動換機。改了 kubeadm 設定，Cluster API 的做法就是換機器，這是正常行為。記住這個，demo② 要講它在裸機上的代價。`;
 

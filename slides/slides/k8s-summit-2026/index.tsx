@@ -1048,7 +1048,7 @@ const FourLayers: Page = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 4 }}>
       <FourLayer n="1" name="頂層精簡" desc="version / nodes / profile —— 全部有合理預設，spec: {} 就能開" />
       <FourLayer n="2" name="advanced 選填" desc="網段、kubelet 參數 —— 要調的人才需要知道它存在" />
-      <FourLayer n="3" name="進階設定入口" desc="進階設定原樣傳到底層 —— 但只在平台指定的位置" />
+      <FourLayer n="3" name="進階設定方式" desc="進階設定原樣傳到底層 —— 但只在平台指定的位置" />
       <FourLayer n="4" name="其餘鎖死" desc="schema 沒宣告的欄位直接被拒 —— 哪些不可調，本身就是設計" />
     </div>
   </Light>
