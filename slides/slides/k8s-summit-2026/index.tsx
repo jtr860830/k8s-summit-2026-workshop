@@ -158,7 +158,6 @@ const Links: Page = () => (
   <div style={{ ...fill, background: darkBg, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
     <Eyebrow dark>講義 · 簡報 · 教材</Eyebrow>
     <p style={{ fontFamily: mono, fontSize: 132, fontWeight: 700, color: '#7ee787', margin: '40px 0 0', letterSpacing: '0.02em' }}>josh.tw/ks26</p>
-    <p style={{ fontSize: 34, color: mutedDark, marginTop: 48 }}>今天所有指令、設定檔和這份簡報都在這裡</p>
     <Footer dark />
   </div>
 );
