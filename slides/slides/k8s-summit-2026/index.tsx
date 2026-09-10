@@ -1193,7 +1193,7 @@ const a2s6Lines: RLine[] = [
   { t: 9.5, text: '  改了 kubeadm 設定，Cluster API 就照換機哲學行動）', kind: 'ok' },
 ];
 const A2S6Cmd: Page = () => (
-  <StepCmd act="第二幕" step={6} total={7} title="但保留進階設定的入口"
+  <StepCmd act="第二幕" step={6} total={7} title="保留進階設定的方式"
     cmd={`spec:
   nodes: 2
   advanced:
