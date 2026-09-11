@@ -325,13 +325,20 @@ Pod 是這樣，換一個的成本趨近於零，所以敢這樣做。Cluster AP
 
 到了裸機，換一台是重灌、搬資料、好幾個小時。這個落差就是接下來兩個示範要解的。`;
 
-export const nDemo2 = `demo②，重灌一台節點，資料一個位元都不少。這段也是錄製，8 月 31 日排練實錄。
+export const nDemo2 = `demo②，重灌一台節點，資料一個位元都不少。這段是錄製，8 月 31 日排練實錄。
 
-這台節點上有 Ceph 的 OSD。換機哲學最怕的就是有狀態的節點，換一台等於資料要搬。我們的做法是：刪掉 Machine，Cluster API 自動重灌作業系統，重新入列，但資料碟全程不動，Ceph 沿用原來的 OSD。
+這台節點有兩顆碟。系統碟裝 Flatcar 和 kubelet，資料碟交給 Ceph，Ceph 在上面跑一個 OSD 存資料。
 
-驗證方式是重灌前後比對 sha256 跟叢集的 fsid。
+我刪掉 Machine，Cluster API 把這台重灌。重灌的 Workflow 只寫系統碟，資料碟連碰都不碰。
 
-【若被問 Ceph 冗餘】三副本，一顆 OSD 離線是 HEALTH_WARN degraded，資料還有兩份。Rook 的 PDB 擋住 drain，不讓第二台同時走。OSD 離線約 10 分鐘會被標 out 開始搬資料，重灌要在這之前完成。
+重灌的十幾分鐘裡，這顆 OSD 離線，Ceph 變 HEALTH_WARN，但資料有三份，另外兩份還在。Rook 的 PDB 擋住不讓第二台同時走，十分鐘內回來就不會觸發搬資料。
+
+機器裝好新系統加回叢集，Rook 在節點上看到那顆資料碟，碟上有 Ceph 自己寫的標記：屬於哪個叢集、是第幾號 OSD。Rook 就把原本那個 OSD 直接啟動起來，不是建一個新的，也不用從其他副本把資料抄回來。這就是「沿用原來的 OSD」。
+
+驗證看兩個值。fsid 一樣，代表還是同一個 Ceph 叢集；資料檔的 sha256 一樣，代表資料就是原本那份。
+
+一句話：換的是系統碟上的作業系統，資料碟從頭到尾沒動，Ceph 回來認得自己的碟。
+
 【若被問 HEALTH_OK 後面的 muted】Ceph 19.2.6 新增的 cephx 金鑰稽核，lab 內刻意靜音，Summit 後做金鑰輪替。`;
 
 export const nD2Cmd = `流程是這樣。先記下資料檔的 sha256 跟 Ceph 的 fsid。delete Machine，要用全名 machines.cluster.x-k8s.io，短名被 BMC 的 CRD 搶走了。
@@ -348,9 +355,17 @@ export const nD2Replay = `【動作】翻到重播頁播完，25 秒。
 
 export const nDemo3 = `demo③，升級 Kubernetes，機器不用重開機。也是錄製，8 月 26 日實錄 v1.34.6 升 7。
 
-裸機照換機哲學升級，每台都要重灌加資料重建，三台控制平面就是三次。Cluster API 現在有 in-place update，把升級交給一個外掛在節點上原地執行，Machine 不換。這個外掛的程式在 repo 的 inplace-update 目錄。
+Cluster API 原本升級的方式是換機：開一台新的裝新版，再把舊的拆掉。雲上很合理，裸機不行，機房沒有備機，換一台還要搬資料。
 
-驗證方式：Machine 的 uid 不變，uptime 不歸零。`;
+所以 Cluster API 新加了 in-place update。我改 KubeadmControlPlane 的版本欄位，它不直接換機，先問一個外掛：這個變更你能不能在機器上原地做？外掛說能，它就逐台交給外掛去做。這個外掛的程式在 repo 的 inplace-update 目錄。
+
+外掛在每台機器上做三件事。第一，換 kubelet 和 kubeadm 的執行檔。Flatcar 沒有套件管理，這些檔案是用 sysext 疊在系統上的一層，換一個檔、refresh 一下就生效，不用重開機。第二，跑 kubeadm upgrade，把 apiserver、etcd 這些控制平面元件換成新版。第三，重啟 kubelet。
+
+順序和安全還是 Cluster API 管：一台做完、確認健康，才輪下一台，etcd 全程維持法定人數。
+
+驗證看三個值。Machine 的 uid 沒變，代表沒換機；uptime 沒歸零，代表沒重開機；kubelet 版本變新。
+
+一句話：改一個版本欄位，Cluster API 不換機器，改派一個外掛到每台機器上原地換版。`;
 
 export const nD3Cmd = `只改 kubeadmcontrolplane 的 version 一個欄位，之後什麼都不用做。KCP 逐台編排，落後最多的先動，一台好了才輪下一台。
 
