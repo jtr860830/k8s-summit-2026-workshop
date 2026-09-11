@@ -141,7 +141,10 @@ export const nD0S2 = `第二步，裝 Tinkerbell。helm 一行，values 只設�
 
 export const nD0S3 = `第三步，準備作業系統映像。三件事：下載 Flatcar 原廠映像，驗 SHA512；下載 kubelet 的 sysext，這是疊在映像上的一層；放進映像伺服器目錄。
 
-為什麼選 Flatcar。它是不可變的作業系統，沒有套件管理，升級是整個 /usr 換掉。demo③ 的免重開升級就是靠這個特性。`;
+為什麼選 Flatcar。它是不可變的作業系統，沒有套件管理，升級是整個 /usr 換掉。demo③ 的免重開升級就是靠這個特性。
+
+【什麼是 sysext】systemd 的 system extension。一個 .raw 映像檔，裡面是 /usr 底下的一棵目錄樹。把它放到 /etc/extensions，跑 systemd-sysext merge 或 refresh，系統用 overlay 把它疊到 /usr 上，檔案就出現了；換掉那個檔再 refresh，就換成另一版。
+Flatcar 的 /usr 是唯讀的，沒有 apt、yum，官方就用 sysext 提供 Kubernetes、Docker 這類額外元件，每個 Kubernetes 版本一個檔，檔名就是 kubernetes-v1.34.6-x86-64.raw。對我們的好處：kubelet 換版本等於換一個檔，不用重灌、不用重開機。第 4 步的 base.bu 就是把這個檔連結到 /etc/extensions，demo③ 的升級也是靠這個。`;
 
 export const nD0S4 = `第四步，安裝範本，定義進來的機器怎麼裝。
 
@@ -389,7 +392,9 @@ export const nD3NodeReplay = `這頁是節點內部視角，升級外掛在節�
 
 下載新版 kubelet 的 sysext，換掉 /usr 上的疊加層，systemd-sysext refresh。kubeadm version 已經是新版。然後 kubeadm upgrade node，換 etcd 跟 apiserver 的 static pod。最後 restart kubelet。全程沒有重開機。
 
-【若被問 為什麼可以不重開】Flatcar 的 kubelet 是 sysext 疊加層，refresh 換層不用重開。kubeadm upgrade 本來就是換 static pod。`;
+【若被問 為什麼可以不重開】Flatcar 的 kubelet 是 sysext 疊加層，refresh 換層不用重開。kubeadm upgrade 本來就是換 static pod。
+
+【回指】sysext 在 day-0 第 3 步講過：一個 .raw 檔疊在 /usr 上，換檔再 refresh 就是新版。這裡看到的 systemd-sysext refresh 就是那一步，所以 kubelet 和 kubeadm 換版不用重開機。`;
 
 export const nEcosystem = `都變成 Kubernetes 物件之後，你換到什麼。
 
